@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graph.cs" />
+    <Compile Include="ImportMatrix.cs" />
+    <Compile Include="IParseGraph.cs" />
     <Compile Include="Kante.cs" />
     <Compile Include="Knoten.cs" />
     <Compile Include="Program.cs" />
