@@ -12,14 +12,14 @@ namespace MMI
         {
             Console.WriteLine("Hallo Mama!");
             Console.ReadKey();
-            Program.readFile();
+            Program.readFile(new ImportMatrix());
         }
 
-        static void readFile()
+        static void readFile(IParseGraph parseG)
         {
             int counter = 0;
             string line;
-            string[] lineSplit;
+            List<string> lines = new List<string>();
 
             // Read the file and display it line by line.  
             System.IO.StreamReader file = new System.IO.StreamReader(@"c:\run\Graph3.txt");
@@ -27,18 +27,15 @@ namespace MMI
             System.Console.WriteLine("Head: " + line);
             while ((line = file.ReadLine()) != null)
             {
-                System.Console.WriteLine(line);
-                System.Console.WriteLine("");
-                lineSplit = line.Split('\t');
-                foreach(string str in lineSplit)
-                {
-                    System.Console.Write(str + " ## ");
-                }
+                lines.Add(line);                
                 counter++;
             }
 
             file.Close();
             System.Console.WriteLine("There were {0} lines.", counter);
+
+            parseG.parseGraph(lines.ToArray());
+            
             // Suspend the screen.  
             System.Console.ReadLine();
         }
