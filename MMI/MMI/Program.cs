@@ -22,9 +22,10 @@ namespace MMI
             List<string> lines = new List<string>();
 
             // Read the file and display it line by line.  
-            System.IO.StreamReader file = new System.IO.StreamReader(@"c:\run\Graph3.txt");
+            System.IO.StreamReader file = new System.IO.StreamReader(@"c:\run\Graph1.txt");
             line = file.ReadLine();
             System.Console.WriteLine("Head: " + line);
+            lines.Add(line);
             while ((line = file.ReadLine()) != null)
             {
                 lines.Add(line);                
@@ -34,7 +35,7 @@ namespace MMI
             file.Close();
             System.Console.WriteLine("There were {0} lines.", counter);
 
-            parseG.parseGraph(lines.ToArray());
+            parseG.parseGraph(lines.ToArray(), false);
             
             // Suspend the screen.  
             System.Console.ReadLine();

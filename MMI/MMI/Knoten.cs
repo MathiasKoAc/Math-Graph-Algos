@@ -8,7 +8,40 @@ namespace MMI
 {
     class Knoten
     {
-        private string Name;
-        private List<Kante> Kanten;
+        private int wert;
+        private List<Kante> kanten;
+
+        public Knoten()
+        {
+            this.kanten = new List<Kante>();
+        }
+
+        public Knoten(int wert)
+        {
+            this.kanten = new List<Kante>();
+            this.wert = wert;
+        }
+
+        public void AddKante(Kante k)
+        {
+            kanten.Add(k);
+        }
+
+        public int Wert
+        {
+            get
+            {
+                return wert;
+            }
+        }
+
+        public List<Kante> Kanten
+        {
+            get
+            {
+                return kanten;
+            }
+        }
+        
     }
 }
