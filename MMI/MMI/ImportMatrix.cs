@@ -15,6 +15,7 @@ namespace MMI
             string[] lineSplit;
 
             Knoten kn = null;
+            //ueber die Lines / Zeilen
             for (int i = 1; i < lines.Length; i++)
             {
                 if (!knoten.TryGetValue(i, out kn))
@@ -25,6 +26,7 @@ namespace MMI
                 lineSplit = lines[i].Split('\t');
                 Knoten knLink = null;
 
+                //ueber die Elemente einer Zeile
                 for (int j = 0; j < lineSplit.Length; j++)
                 {
                     int gewicht = Int32.Parse(lineSplit[j]);

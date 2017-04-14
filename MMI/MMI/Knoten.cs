@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMI
 {
-    class Knoten
+    public class Knoten
     {
         private int wert;
         private List<Kante> kanten;

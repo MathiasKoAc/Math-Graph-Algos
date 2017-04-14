@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMI
 {
-    class Kante
+    public class Kante
     {
         private int _gewicht;
         private Knoten toKnoten;

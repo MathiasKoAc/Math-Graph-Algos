@@ -10,22 +10,23 @@ namespace MMI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hallo Mama!");
-            Console.ReadKey();
-            Program.readFile(new ImportMatrix());
+            writeMessage("Hallo Graph!", true);
+            Program.readFile(new ImportKantenList(), @"c:\run\Graph3.txt");
         }
 
-        static void readFile(IParseGraph parseG)
+        static Graph readFile(IParseGraph parseG, string path)
         {
             int counter = 0;
             string line;
             List<string> lines = new List<string>();
 
-            // Read the file and display it line by line.  
-            System.IO.StreamReader file = new System.IO.StreamReader(@"c:\run\Graph1.txt");
+            //Kopf lesen
+            System.IO.StreamReader file = new System.IO.StreamReader(path);
             line = file.ReadLine();
-            System.Console.WriteLine("Head: " + line);
+            writeMessage("Head: " + line);
             lines.Add(line);
+
+            //Rumpf lesen
             while ((line = file.ReadLine()) != null)
             {
                 lines.Add(line);                
@@ -33,12 +34,22 @@ namespace MMI
             }
 
             file.Close();
-            System.Console.WriteLine("There were {0} lines.", counter);
+            Console.WriteLine("{0} Zeilen.", counter);
 
-            parseG.parseGraph(lines.ToArray(), false);
-            
-            // Suspend the screen.  
-            System.Console.ReadLine();
+            Graph gra = parseG.parseGraph(lines.ToArray(), false);
+            writeMessage("Graph erstellt", true);
+
+            return gra;
+        }
+
+        static void writeMessage (string Msg, bool needEnter = false)
+        {
+            Console.WriteLine(Msg);
+            if(needEnter)
+            {
+                Console.WriteLine("Weiter mit <_|");
+                Console.ReadLine();
+            }
         }
     }
 }

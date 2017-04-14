@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMI
 {
-    class Graph
+    public class Graph
     {
         private List<Kante> kanten;
         private Dictionary<int, Knoten> knoten;

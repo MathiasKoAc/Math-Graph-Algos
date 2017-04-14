@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graph.cs" />
+    <Compile Include="ImportKantenList.cs" />
     <Compile Include="ImportMatrix.cs" />
     <Compile Include="IParseGraph.cs" />
     <Compile Include="Kante.cs" />
