@@ -16,5 +16,26 @@ namespace MMI
             kanten = Kanten;
             knoten = Knoten;
         }
+
+        public Dictionary<int, Knoten> Konten{
+            get {
+                return knoten;
+            }
+            set {
+                knoten = value;
+            }
+        }
+
+        public List<Kante> Kanten
+        {
+            get
+            {
+                return kanten;
+            }
+            set
+            {
+                kanten = value;
+            }
+        }
     }
 }
