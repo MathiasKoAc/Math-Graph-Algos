@@ -11,7 +11,8 @@ namespace MMI
         static void Main(string[] args)
         {
             writeMessage("Hallo Graph!", true);
-            Program.readFile(new ImportKantenList(), @"c:\run\Graph3.txt");
+            int count = countZhk(new CountZhkTief() ,readFile(new ImportKantenList(), @"c:\run\Graph2.txt"));
+            writeMessage("Count ZHK: " + count, true);
         }
 
         static Graph readFile(IParseGraph parseG, string path)
@@ -40,6 +41,11 @@ namespace MMI
             writeMessage("Graph erstellt", true);
 
             return gra;
+        }
+
+        static int countZhk(ICountZusammenhangskomp cZhk, Graph gra)
+        {
+            return cZhk.CountZhk(gra);
         }
 
         static void writeMessage (string Msg, bool needEnter = false)

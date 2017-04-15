@@ -43,11 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountZhkTief.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="ImportKantenList.cs" />
     <Compile Include="ImportMatrix.cs" />
+    <Compile Include="ICountZusammenhangskomp.cs" />
     <Compile Include="IParseGraph.cs" />
     <Compile Include="Kante.cs" />
+    <Compile Include="KeyValuePair.cs" />
     <Compile Include="Knoten.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
