@@ -15,7 +15,7 @@ namespace MIISI
 		{
 			Dictionary<int, List<int>> kantenMap = new Dictionary<int, List<int>>();
 	
-			string[] lines = System.IO.File.ReadAllLines(@"../../Graph4.txt");
+			string[] lines = System.IO.File.ReadAllLines(@"../../GraphSI.txt");
 
 			if (lines.Length <= 1)
 			{
@@ -91,8 +91,8 @@ namespace MIISI
 			}
 
 
-			Console.WriteLine(string.Format("Anzahl Knoten: {0}", anzahlKanten));
-			//Console.WriteLine(string.Format("Anzahl Kanten: {0}", edgesList.Count));
+			Console.WriteLine(string.Format("Anzahl Knoten: {0}", graph.graphMap.Count));
+			Console.WriteLine(string.Format("Anzahl Kanten: {0}", (lines.Length - 1)));
 			Console.WriteLine(string.Format("Anzahl Graphen: {0}", gefundenGraphen.Count));
 			foreach (var item in gefundenGraphen)
 			{
