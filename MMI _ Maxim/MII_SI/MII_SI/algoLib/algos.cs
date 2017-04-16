@@ -11,7 +11,7 @@ namespace MII_SI
 		{
 		}
 
-    	public HashSet<Knoten> DFS(MMI_SI.Graph graph, Knoten start, HashSet<Knoten> visited, Action<Knoten> preVisit = null)
+    	public HashSet<Knoten> BFS(MMI_SI.Graph graph, Knoten start, HashSet<Knoten> visited, Action<Knoten> preVisit = null)
 		{
 			if (!graph.graphMap.ContainsKey(start))
 			{

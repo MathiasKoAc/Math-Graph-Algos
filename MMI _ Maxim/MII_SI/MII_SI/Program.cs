@@ -61,7 +61,7 @@ namespace MIISI
                 var pfad = new List<Knoten>();
 
 
-				var ergebnis = algorithms.DFS(graph, startKnoten, visited, v => pfad.Add(v));
+				var ergebnis = algorithms.BFS(graph, startKnoten, visited, v => pfad.Add(v));
 
 				string stringPfad = "";
 
