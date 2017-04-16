@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Graph2.txt" />
+    <None Include="Graph3.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="algoLib\" />

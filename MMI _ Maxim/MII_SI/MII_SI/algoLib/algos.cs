@@ -11,32 +11,34 @@ namespace MII_SI
 		{
 		}
 
-    	public HashSet<Knoten> DFS(MMI_SI.Graph graph, Knoten start, Action<Knoten> preVisit = null)
+    	public HashSet<Knoten> DFS(MMI_SI.Graph graph, Knoten start, HashSet<Knoten> visited, Action<Knoten> preVisit = null)
 		{
-			var visited = new HashSet<Knoten>();
-
 			if (!graph.graphMap.ContainsKey(start))
-			        return visited;
-			        
-			            var queue = new Queue<Knoten>();
-			            queue.Enqueue(start);
+			{
+				return visited;
+			}        
 
-			            while (queue.Count > 0) {
-			                var knoten = queue.Dequeue();
+			var queue = new Queue<Knoten>();
+			queue.Enqueue(start);
 
-			                if (visited.Contains(knoten))
-			                    continue;
+			while (queue.Count > 0) {
+			var knoten = queue.Dequeue();
 
-			                if (preVisit != null)
+			if (visited.Contains(knoten))
+				 continue;
 
-								preVisit(knoten);
+			if (preVisit != null)
 
-			                visited.Add(knoten);
+			preVisit(knoten);
 
-				            foreach(var kante in graph.graphMap[knoten])
-					        if (!visited.Contains(kante.ToKnoten))
-						    queue.Enqueue(kante.ToKnoten);
-			            }
+			visited.Add(knoten);
+
+				var kanten = graph.graphMap[knoten];
+
+			foreach(var kante in kanten)
+				if (!visited.Contains(kante.ToKnoten))
+					 queue.Enqueue(kante.ToKnoten);
+			}
 
 			    return visited;
 	}
