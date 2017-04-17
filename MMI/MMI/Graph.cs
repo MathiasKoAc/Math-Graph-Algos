@@ -17,6 +17,16 @@ namespace MMI
             knoten = Knoten;
         }
 
+        public int getAnzKnoten()
+        {
+            return knoten.Count;
+        }
+
+        public int getAnzKanten()
+        {
+            return kanten.Count;
+        }
+
         public Dictionary<int, Knoten> Konten{
             get {
                 return knoten;

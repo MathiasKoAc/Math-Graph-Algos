@@ -11,7 +11,7 @@ namespace MMI
         static void Main(string[] args)
         {
             writeMessage("Hallo Graph!", true);
-            int count = countZhk(new CountZhkTief() ,readFile(new ImportKantenList(), @"../../Graph2.txt"));
+            int count = countZhk(new CountZhkTief() ,readFile(new ImportKantenList(), @"files/Graph4.txt"));
             writeMessage("Count ZHK: " + count, true);
         }
 
@@ -38,7 +38,11 @@ namespace MMI
             Console.WriteLine("{0} Zeilen.", counter);
 
             Graph gra = parseG.parseGraph(lines.ToArray(), false);
-            writeMessage("Graph erstellt", true);
+            writeMessage("Graph erstellt");
+
+            writeMessage("Anz Knoten: " + gra.getAnzKnoten());
+            writeMessage("Anz Kanten: " + gra.getAnzKanten(), true);
+
 
             return gra;
         }
