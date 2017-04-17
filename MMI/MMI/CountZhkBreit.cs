@@ -46,20 +46,30 @@ namespace MMI
             while (queue.Count > 0)
             {
                 Knoten knoten = queue.Dequeue();
-
                 if (knoten.Tag == -1)
                 {
                     knoten.Tag = tagLv;
                     Console.WriteLine("Knoten: " + knoten.Wert);
                     foreach (var kante in kn.Kanten)
                     {
-                        queue.Enqueue(kante.ToKnoten);                 
-                    }
-                } else if (knoten.Tag < tagLv)
+                        if (!queue.Contains(kante.ToKnoten))
+                        {
+                            queue.Enqueue(kante.ToKnoten);
+                        }
+                        if (!queue.Contains(kante.FromKnoten))
+                        {
+                            queue.Enqueue(kante.FromKnoten);
+                        }
+                        else if (kante.ToKnoten.Tag < tagLv)
+                        {
+                            neuerZHK = false;
+                        }
+                }   
+                }
+                else if (knoten.Tag < tagLv)
                 {
                     neuerZHK = false;
                 }
-                //Console.WriteLine(queue.Count);
             }
             
             return neuerZHK;

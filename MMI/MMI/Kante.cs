@@ -32,5 +32,13 @@ namespace MMI
                 return toKnoten;
             }
         }
+
+        public Knoten FromKnoten
+        {
+            get
+            {
+                return fromKnoten;
+            }
+        }
     }
 }
