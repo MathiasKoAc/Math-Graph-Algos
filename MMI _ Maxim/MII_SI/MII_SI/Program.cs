@@ -15,7 +15,7 @@ namespace MIISI
 		{
 			Dictionary<int, List<int>> kantenMap = new Dictionary<int, List<int>>();
 	
-			string[] lines = System.IO.File.ReadAllLines(@"../../GraphSI.txt");
+			string[] lines = System.IO.File.ReadAllLines(@"../../Graph2.txt");
 
 			if (lines.Length <= 1)
 			{
@@ -61,7 +61,7 @@ namespace MIISI
                 var pfad = new List<Knoten>();
 
 
-				var ergebnis = algorithms.BFS(graph, startKnoten, visited, v => pfad.Add(v));
+				algorithms.BFS(graph, startKnoten, visited, v => pfad.Add(v));
 
 				string stringPfad = "";
 
@@ -79,7 +79,7 @@ namespace MIISI
 				  startKnoten = idMap.Values.First();
 				}
 
-				visited = ergebnis;
+
 
 				foreach (var knote in pfad)
 				{
@@ -90,7 +90,6 @@ namespace MIISI
 				gefundenGraphen.Add(stringPfad);
 			}
 
-
 			Console.WriteLine(string.Format("Anzahl Knoten: {0}", graph.graphMap.Count));
 			Console.WriteLine(string.Format("Anzahl Kanten: {0}", (lines.Length - 1)));
 			Console.WriteLine(string.Format("Anzahl Graphen: {0}", gefundenGraphen.Count));
@@ -98,6 +97,22 @@ namespace MIISI
 			{
 				Console.WriteLine(item);
 			}
+
+
+			/* DFS
+				var pfadDFS = new List<Knoten>();
+				visited = new HashSet<Knoten>();
+				algorithms.DFSRekrusiv(graph, graph.graphMap.Keys.First(), visited, v => pfadDFS.Add(v));
+
+				string stringPfadDFS = "";
+				foreach (var knote in pfadDFS)
+				{
+					stringPfadDFS += string.Format("{0} ", knote.Wert);
+				}
+
+				Console.WriteLine(stringPfadDFS);
+			*/
+
 		}
 	}
 }
