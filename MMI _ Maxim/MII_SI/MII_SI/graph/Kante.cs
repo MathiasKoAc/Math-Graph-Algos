@@ -8,20 +8,18 @@ namespace MMI_SI
 {
     public class Kante
     {
-        private int _gewicht;
+        private int _gewicht = 0;
         private Knoten toKnoten;
-        private Knoten fromKnoten;
 
-        public Kante(Knoten fromK, Knoten toK, int gewicht)
+        public Kante(Knoten toK, int gewicht)
         {
-            fromKnoten = fromK;
+
             toKnoten = toK;
             _gewicht = gewicht;
         }
 
         public Kante(Knoten fromK, Knoten toK)
         {
-            fromKnoten = fromK;
             toKnoten = toK;
         }
 

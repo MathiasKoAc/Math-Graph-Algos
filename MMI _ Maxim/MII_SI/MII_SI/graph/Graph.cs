@@ -12,7 +12,9 @@ namespace MMI_SI
 		public Dictionary<Knoten, HashSet<Kante>> graphMap  { set;get; }  = new Dictionary<Knoten, HashSet<Kante>>();
 		public Dictionary<int, Knoten> idMap { set;get; } = new Dictionary<int, Knoten>();
 
-		public Graph (int AnzahlKnoten, Dictionary<int, List<int>> kantenMap)
+		public int anzahlKanten = 0;
+
+		public Graph (Dictionary<int, List<int>> kantenMap)
         {
 			Dictionary<int, Knoten> knotenMap = new Dictionary<int, Knoten>();
 			foreach (var values in kantenMap)
@@ -47,13 +49,14 @@ namespace MMI_SI
 
 					Knoten knotenTo = knotenMap[knotenToIndex];
 
-					Kante KanteFrom = new Kante(knotenFrom, knotenTo, -1);
-					Kante KanteTo = new Kante(knotenTo, knotenFrom, -1);
+					Kante KanteFrom = new Kante(knotenTo, -1);
+					Kante KanteTo = new Kante(knotenFrom, -1);
 
 					if (graphMap.ContainsKey(knotenFrom) && graphMap.ContainsKey(knotenTo))
 					{
 						graphMap[knotenFrom].Add(KanteFrom);
 						graphMap[knotenTo].Add(KanteTo);
+						anzahlKanten++;
 					}
 
 				}
@@ -64,9 +67,5 @@ namespace MMI_SI
 				idMap.Add(item.Wert, item);
 			}
         }
-
-
-
-
-    }
+   }
 }
