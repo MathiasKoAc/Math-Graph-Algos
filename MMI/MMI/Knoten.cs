@@ -10,17 +10,30 @@ namespace MMI
     {
         private int wert;
         private List<Kante> kanten;
-        private int tag;
+        private Tag tag;
 
         public Knoten()
         {
-            this.tag = -1;
+            this.tag = new MMI.Tag();
             this.kanten = new List<Kante>();
         }
 
         public Knoten(int wert)
         {
-            this.tag = -1;
+            this.tag = new MMI.Tag();
+            this.kanten = new List<Kante>();
+            this.wert = wert;
+        }
+
+        public Knoten(Tag tag)
+        {
+            this.tag = tag;
+            this.kanten = new List<Kante>();
+        }
+
+        public Knoten(int wert, Tag tag)
+        {
+            this.tag = tag;
             this.kanten = new List<Kante>();
             this.wert = wert;
         }
@@ -38,7 +51,7 @@ namespace MMI
             }
         }
 
-        public int Tag
+        public Tag Tag
         {
             get
             {

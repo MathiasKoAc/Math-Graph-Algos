@@ -16,9 +16,12 @@ namespace MMI
         public int CountZhk(Graph Gra, Knoten StartKn)
         {
             int tagLevel = 0; //entsprich der anz der ZHK
-            StartKn.Tag = tagLevel;
+            List<Tag> tags = new List<Tag>();
+            Tag aktTag = new Tag(0);
+            tags.Add(aktTag);
+            StartKn.Tag = aktTag;
             foreach(KeyValuePair<int, Knoten> kVP in Gra.Konten) {
-                if (kVP.Value.Tag == -1)
+                if (kVP.Value.Tag.Wert == -1)
                 {
                     //neuer Knoten in der Liste -> potentieller neuer ZHK
                     if (deep(kVP.Value, tagLevel))
