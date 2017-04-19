@@ -46,6 +46,7 @@
     <Compile Include="CountZhkBreit.cs" />
     <Compile Include="CountZhkTief.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="ImportKantenListUngerichtet.cs" />
     <Compile Include="ImportKantenList.cs" />
     <Compile Include="ImportMatrix.cs" />
     <Compile Include="ICountZusammenhangskomp.cs" />
