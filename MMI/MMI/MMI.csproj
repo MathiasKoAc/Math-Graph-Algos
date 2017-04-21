@@ -43,15 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbsImportKantenList.cs" />
-    <Compile Include="CountZhkBreit.cs" />
-    <Compile Include="CountZhkTief.cs" />
+    <Compile Include="Imports\AbsImportKantenList.cs" />
+    <Compile Include="Algos\CountZhkBreit.cs" />
+    <Compile Include="Algos\CountZhkTief.cs" />
     <Compile Include="Graph.cs" />
-    <Compile Include="ImportKantenList.cs" />
-    <Compile Include="ImportKantenListUngerichtet.cs" />
-    <Compile Include="ImportMatrix.cs" />
-    <Compile Include="ICountZusammenhangskomp.cs" />
-    <Compile Include="IParseGraph.cs" />
+    <Compile Include="Imports\ImportKantenList.cs" />
+    <Compile Include="Imports\ImportKanLisUngrGew.cs" />
+    <Compile Include="Imports\ImportKantenListUngerichtet.cs" />
+    <Compile Include="Imports\ImportMatrix.cs" />
+    <Compile Include="Algos\ICountZusammenhangskomp.cs" />
+    <Compile Include="Imports\IParseGraph.cs" />
     <Compile Include="Kante.cs" />
     <Compile Include="KeyValuePair.cs" />
     <Compile Include="Knoten.cs" />

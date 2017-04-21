@@ -48,6 +48,8 @@ namespace MMI
 
             }
 
+            kanten.Sort();
+
             return new Graph(kanten, knoten);
         }
     }

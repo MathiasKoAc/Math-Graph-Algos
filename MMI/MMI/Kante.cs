@@ -8,11 +8,11 @@ namespace MMI
 {
     public class Kante
     {
-        private int _gewicht;
+        private double _gewicht;
         private Knoten toKnoten;
         private Knoten fromKnoten;
 
-        public Kante(Knoten fromK, Knoten toK, int gewicht)
+        public Kante(Knoten fromK, Knoten toK, double gewicht)
         {
             fromKnoten = fromK;
             toKnoten = toK;
