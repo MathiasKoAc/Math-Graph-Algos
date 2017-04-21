@@ -7,7 +7,7 @@ namespace MMI
     public class ImportKantenList : IParseGraph
     {
 
-        public Graph parseGraph(string[] lines, bool debug)
+        public Graph parseGraph(int count, string[] lines, bool debug)
         {
             List<Kante> kanten = new List<Kante>();
             Dictionary<int, Knoten> knoten = new Dictionary<int, Knoten>();

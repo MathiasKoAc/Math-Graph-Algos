@@ -18,13 +18,12 @@ namespace MMI
                     //neuer Knoten in der Liste -> potentieller neuer ZHK
                     if (breit(kVP.Value, tagLevel))
                     {
-                        //deep == true also neues ZHK
                         tagLevel++;
-                        Console.WriteLine("Breit Neuer Khz");
+                        //Console.WriteLine("Breit Neuer Khz");
                     }
                     else
                     {
-                        Console.WriteLine("Breit Alter Khz");
+                        //Console.WriteLine("Breit Alter Khz");
                     }
                 }
             }
@@ -42,7 +41,6 @@ namespace MMI
             while (queue.Count > 0)
             {
                 Knoten knoten = queue.Dequeue();
-                Console.WriteLine("Knoten: " + knoten.Wert);
 
                 foreach (var kante in knoten.Kanten)
                 {

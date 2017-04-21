@@ -8,6 +8,6 @@ namespace MMI
 {
     interface IParseGraph
     {
-        Graph parseGraph(string[] lines, bool debug);
+        Graph parseGraph(int count, string[] lines, bool debug);
     }
 }
