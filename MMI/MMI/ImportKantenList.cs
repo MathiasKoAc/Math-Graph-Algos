@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace MMI
 {
-    public class ImportKantenList : IParseGraph
+    public class ImportKantenList : AbsImportKantenList
     {
 
-        public Graph parseGraph(int count, string[] lines, bool debug)
+        public override Graph parseGraph(int count, string[] lines, bool debug)
         {
             List<Kante> kanten = new List<Kante>();
-            Dictionary<int, Knoten> knoten = new Dictionary<int, Knoten>();
+            Dictionary<int, Knoten> knoten = createKnotenDict(count);
             string[] lineSplit;
 
             Knoten kn1;

@@ -4,22 +4,10 @@ using System.Collections.Generic;
 
 namespace MMI
 {
-    public class ImportKantenListUngerichtet : IParseGraph
+    public class ImportKantenListUngerichtet : AbsImportKantenList
     {
 
-        protected Dictionary<int, Knoten> createKnotenDict(int count)
-        {
-            Dictionary<int, Knoten> knoten = new Dictionary<int, Knoten>();
-
-            for(int i = 0; i < count; i++)
-            {
-                knoten.Add(i, new Knoten(i));
-            }
-
-            return knoten;
-        }
-
-        public Graph parseGraph(int count, string[] lines, bool debug)
+        public override Graph parseGraph(int count, string[] lines, bool debug)
         {
             List<Kante> kanten = new List<Kante>();
             Dictionary<int, Knoten> knoten = createKnotenDict(count);
