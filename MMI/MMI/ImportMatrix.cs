@@ -8,7 +8,7 @@ namespace MMI
 {
     class ImportMatrix : IParseGraph
     {
-        public Graph parseGraph(string[] lines, bool debug = false)
+        public Graph parseGraph(int count, string[] lines, bool debug = false)
         {
             List<Kante> kanten = new List<Kante>();
             Dictionary<int, Knoten> knoten = new Dictionary<int, Knoten>();

@@ -11,12 +11,13 @@ namespace MMI
         static void Main(string[] args)
         {
             writeMessage("Hallo Graph!", true);
-            int count = countZhk(new CountZhkBreit() ,readFile(new ImportKantenListUngerichtet(), @"files/Graph2.txt"));
+            int count = countZhk(new CountZhkBreit() ,readFile(new ImportKantenListUngerichtet(), @"files/Graph3.txt"));
             writeMessage("Count ZHK: " + count, true);
         }
 
         static Graph readFile(IParseGraph parseG, string path)
         {
+            int anzKnoten = 0; //aus Head
             int counter = 0;
             string line;
             List<string> lines = new List<string>();
@@ -26,6 +27,7 @@ namespace MMI
             line = file.ReadLine();
             writeMessage("Head: " + line);
             lines.Add(line);
+            anzKnoten = Int32.Parse(line);
 
             //Rumpf lesen
             while ((line = file.ReadLine()) != null)
@@ -37,7 +39,7 @@ namespace MMI
             file.Close();
             Console.WriteLine("{0} Zeilen.", counter);
 
-            Graph gra = parseG.parseGraph(lines.ToArray(), false);
+            Graph gra = parseG.parseGraph(anzKnoten, lines.ToArray(), false);
             writeMessage("Graph erstellt");
 
             writeMessage("Anz Knoten: " + gra.getAnzKnoten());
