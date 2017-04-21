@@ -36,22 +36,22 @@ namespace MMI
             Queue<Knoten> queue = new Queue<Knoten>();
             queue.Enqueue(kn);
             bool neuerZHK = true;
+            kn.Tag = tagLv;
 
             //Mache solange bis Warteschlange größer als 0 ist
             while (queue.Count > 0)
             {
                 Knoten knoten = queue.Dequeue();
-
-                knoten.Tag = tagLv;
                 Console.WriteLine("Knoten: " + knoten.Wert);
-                foreach (var kante in kn.Kanten)
+
+                foreach (var kante in knoten.Kanten)
                 {
-                    if (!queue.Contains(kante.ToKnoten) && kante.ToKnoten.Tag == -1)
+                    if (kante.ToKnoten.Tag == -1)
                     {
                         queue.Enqueue(kante.ToKnoten);
                         kante.ToKnoten.Tag = tagLv;
                     }
-                    if (kante.ToKnoten.Tag < tagLv || kante.FromKnoten.Tag < tagLv)
+                    else if (kante.ToKnoten.Tag < tagLv)
                     {
                         neuerZHK = false;
                     }
