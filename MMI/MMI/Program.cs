@@ -11,7 +11,7 @@ namespace MMI
         static void Main(string[] args)
         {
             writeMessage("Hallo Graph!", true);
-            int count = countZhk(new CountZhkTief() ,readFile(new ImportKantenListUngerichtet(), @"files/Graph2.txt"));
+            int count = countZhk(new CountZhkBreit() ,readFile(new ImportKantenListUngerichtet(), @"files/G_100_200.txt"));
             writeMessage("Count ZHK: " + count, true);
         }
 

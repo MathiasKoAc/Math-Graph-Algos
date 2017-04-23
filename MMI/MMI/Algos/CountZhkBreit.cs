@@ -10,6 +10,8 @@ namespace MMI
     {
         public int CountZhk(Graph Gra)
         {
+            DateTime dTime = DateTime.Now;
+            long t1 = dTime.Millisecond;
             int tagLevel = 0; //entsprich der anz der ZHK
             foreach (KeyValuePair<int, Knoten> kVP in Gra.Konten)
             {
@@ -27,6 +29,9 @@ namespace MMI
                     }
                 }
             }
+
+            long tend = dTime.Millisecond;
+            Console.WriteLine("Time " + tend + "ms");
             return tagLevel;
         }
 
