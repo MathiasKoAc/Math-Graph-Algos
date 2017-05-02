@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace MMI
 {
-    public class Kante
+    public class Kante : IComparable<Kante>
     {
         private double _gewicht;
         private Knoten toKnoten;
         private Knoten fromKnoten;
+        private int tag;
 
         public Kante(Knoten fromK, Knoten toK, double gewicht)
         {
@@ -38,6 +39,38 @@ namespace MMI
             get
             {
                 return fromKnoten;
+            }
+        }
+
+        public double Gewicht
+        {
+            get
+            {
+                return _gewicht;
+            }
+        }
+
+        public int Tag
+        {
+            get
+            {
+                return tag;
+            }
+            set
+            {
+                tag = value;
+            }
+        }
+
+        public int CompareTo(Kante comparePart)
+        {
+            // A null value means that this object is greater.
+            if (comparePart == null)
+            {
+                return 1;
+            } else
+            {
+                return this._gewicht.CompareTo(comparePart.Gewicht);
             }
         }
     }

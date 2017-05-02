@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MMI
+namespace MMI.Algos
 {
-    public interface ICountZusammenhangskomp
+    interface ICountMST
     {
-        int CountZhk(Graph Gra);
+        int CountMST(Graph Gra);
     }
 }

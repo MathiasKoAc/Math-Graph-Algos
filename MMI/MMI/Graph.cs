@@ -17,6 +17,10 @@ namespace MMI
             knoten = Knoten;
         }
 
+        /* ------------------------ */
+        /* -- GET / SET / Params -- */
+        /* ------------------------ */
+
         public int getAnzKnoten()
         {
             return knoten.Count;
@@ -46,6 +50,15 @@ namespace MMI
             {
                 kanten = value;
             }
+        }
+
+        /* ------------- */
+        /* -- Methods -- */
+        /* ------------- */
+
+        public int countZhk(ICountZusammenhangskomp cZhk)
+        {
+            return cZhk.CountZhk(this);
         }
     }
 }

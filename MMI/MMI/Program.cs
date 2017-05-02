@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MMI
 {
@@ -11,7 +8,7 @@ namespace MMI
         static void Main(string[] args)
         {
             writeMessage("Hallo Graph!", true);
-            int count = countZhk(new CountZhkBreit() ,readFile(new ImportKantenListUngerichtet(), @"files/G_100_200.txt"));
+            int count = readFile(new ImportKanLisUngrGew(), @"files/G_1_20.txt").countZhk(new CountZhkBreit());
             writeMessage("Count ZHK: " + count, true);
         }
 
@@ -47,11 +44,6 @@ namespace MMI
 
 
             return gra;
-        }
-
-        static int countZhk(ICountZusammenhangskomp cZhk, Graph gra)
-        {
-            return cZhk.CountZhk(gra);
         }
 
         static void writeMessage (string Msg, bool needEnter = false)
