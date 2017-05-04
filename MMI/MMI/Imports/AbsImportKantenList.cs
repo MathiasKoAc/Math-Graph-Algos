@@ -19,7 +19,7 @@ namespace MMI
             return knoten;
         }
 
-        public abstract Graph parseGraph(int count, string[] lines, bool debug);
+        public abstract Graph parseGraph(int count, string[] lines, bool ungerichtet = true);
         
     }
 }

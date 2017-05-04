@@ -18,12 +18,14 @@ namespace MMI
             fromKnoten = fromK;
             toKnoten = toK;
             _gewicht = gewicht;
+            tag = -1;
         }
 
         public Kante(Knoten fromK, Knoten toK)
         {
             fromKnoten = fromK;
             toKnoten = toK;
+            tag = -1;
         }
 
         public Knoten ToKnoten

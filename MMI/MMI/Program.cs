@@ -8,12 +8,20 @@ namespace MMI
     {
         static void Main(string[] args)
         {
+            bool gerichtet = true;
             writeMessage("Hallo Graph!", true);
-            double count = readFile(new ImportKanLisUngrGew(), @"files/G_100_200.txt").countMST(new Kruskal());
+            
+            //Kurskal
+            //double count = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet).countMST(new Kruskal());
+
+            //Prim
+            Graph g = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet);
+            double count = new Prim().CountMST(g, g.Konten[0]);
+
             writeMessage("Count MST: " + count, true);
         }
 
-        static Graph readFile(IParseGraph parseG, string path)
+        static Graph readFile(IParseGraph parseG, string path, bool gerichtet)
         {
             int anzKnoten = 0; //aus Head
             int counter = 0;
@@ -37,7 +45,7 @@ namespace MMI
             file.Close();
             Console.WriteLine("{0} Zeilen.", counter);
 
-            Graph gra = parseG.parseGraph(anzKnoten, lines.ToArray(), false);
+            Graph gra = parseG.parseGraph(anzKnoten, lines.ToArray(), !gerichtet);
             writeMessage("Graph erstellt");
 
             writeMessage("Anz Knoten: " + gra.getAnzKnoten());

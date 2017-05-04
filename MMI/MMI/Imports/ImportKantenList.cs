@@ -7,7 +7,7 @@ namespace MMI
     public class ImportKantenList : AbsImportKantenList
     {
 
-        public override Graph parseGraph(int count, string[] lines, bool debug)
+        public override Graph parseGraph(int count, string[] lines, bool ungerichtet = true)
         {
             List<Kante> kanten = new List<Kante>();
             Dictionary<int, Knoten> knoten = createKnotenDict(count);
@@ -15,7 +15,8 @@ namespace MMI
 
             Knoten kn1;
             Knoten kn2;
-            Kante kant;
+            Kante kant1;
+            Kante kant2;
 
             //ueber die Lines / Zeilen
             for (int i = 1; i < lines.Length; i++)
@@ -37,9 +38,17 @@ namespace MMI
                     knoten.Add(knWert2, kn2);
                 }
 
-                kant = new Kante(kn1, kn2);
-                kanten.Add(kant);
-                kn1.AddKante(kant);
+                kant1 = new Kante(kn1, kn2);
+                kanten.Add(kant1);
+                kn1.AddKante(kant1);
+
+                if (ungerichtet)
+                {
+                    kant2 = new Kante(kn2, kn1);
+                    kanten.Add(kant2);
+                    kn2.AddKante(kant2);
+                }
+                
 
             }
 
