@@ -70,9 +70,14 @@ namespace MMI
             if (comparePart == null)
             {
                 return 1;
-            } else
+            }
+            /*else if (comparePart.Gewicht == _gewicht)
             {
-                return this._gewicht.CompareTo(comparePart.Gewicht);
+                return 1;
+            }*/
+            else
+            {    
+                return _gewicht.CompareTo(comparePart.Gewicht);
             }
         }
     }

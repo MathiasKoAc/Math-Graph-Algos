@@ -16,11 +16,6 @@ namespace MMI.Algos
             Knoten toKnoten = k.ToKnoten;
             Knoten fromKnoten = k.FromKnoten;
 
-            /*
-            System.Console.WriteLine("");
-            System.Console.WriteLine("Kante " + fromKnoten.Wert + " -> " + toKnoten.Wert);
-            System.Console.WriteLine("Tag from " + fromKnoten.Tag + " # Tag to " + toKnoten.Tag); 
-            */
 
             //neue lose Kante
             if (toKnoten.Tag == -1 && fromKnoten.Tag == -1)
