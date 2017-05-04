@@ -46,7 +46,8 @@
     <Compile Include="Algos\AbsMST.cs" />
     <Compile Include="Algos\Kruskal.cs" />
     <Compile Include="Algos\ICountMST.cs" />
-    <Compile Include="Algos\Prim.cs" />
+    <Compile Include="Algos\PrimFast.cs" />
+    <Compile Include="FastLink.cs" />
     <Compile Include="Imports\AbsImportKantenList.cs" />
     <Compile Include="Algos\CountZhkBreit.cs" />
     <Compile Include="Algos\CountZhkTief.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Kante.cs" />
     <Compile Include="KeyValuePair.cs" />
     <Compile Include="Knoten.cs" />
+    <Compile Include="Prim.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

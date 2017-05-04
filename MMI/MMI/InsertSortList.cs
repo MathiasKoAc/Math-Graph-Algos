@@ -10,6 +10,11 @@ namespace MMI
     {
         private FastLink erster;
         
+        public bool IsLeer()
+        {
+            return (erster == null);
+        }
+
         public void Add(Kante k)
         {
             if(erster == null)
@@ -20,6 +25,7 @@ namespace MMI
             {
                 bool added = false;
                 FastLink runner = erster;
+                FastLink preRunner = null;
                 while(runner != null && !added)
                 {
                     if(runner.K.Gewicht >= k.Gewicht)
@@ -36,7 +42,15 @@ namespace MMI
                         }
                         
                     }
+                    preRunner = runner;
                     runner = runner.Back;
+                }
+
+                if(!added && preRunner != null)
+                {
+                    FastLink f = new FastLink(k);
+                    preRunner.Back = f;
+                    f.Front = preRunner;
                 }
             }
         }
@@ -45,8 +59,12 @@ namespace MMI
         {
             FastLink tmp = erster;
             erster = tmp.Back;
-            erster.Front = null;
             tmp.Back = null;
+            if (erster != null)
+            {
+                erster.Front = null;
+            }
+            
             return tmp.K;
         }
     }
