@@ -8,49 +8,46 @@ namespace MMI
 {
     class InsertSortList
     {
-        /*private List<Kante> inList;
-
-        public InsertSortList()
-        {
-            inList = new List<Kante>();
-        }
-
+        private FastLink erster;
+        
         public void Add(Kante k)
         {
-            if(inList.Count == 0)
+            if(erster == null)
             {
-                inList[0] = k;
-            } else
+                erster = new FastLink(k);
+            }
+            else
             {
-                for (int i = 0; i < inList.Count; i++)
+                bool added = false;
+                FastLink runner = erster;
+                while(runner != null && !added)
                 {
-                    if (inList[i].Gewicht >= k.Gewicht)
+                    if(runner.K.Gewicht >= k.Gewicht)
                     {
-                        inList
+                        if(runner.Front == null)
+                        {
+                            FastLink f = new FastLink(k, runner);
+                            erster = f;
+                            added = true;
+                        } else
+                        {
+                            FastLink f = new FastLink(k, runner.Front, runner);
+                            added = true;
+                        }
+                        
                     }
+                    runner = runner.Back;
                 }
-            }            
-        }
-
-        public Kante Min()
-        {
-            return inList.Min();
-        }
-
-        public Kante Max()
-        {
-            return inList.Max();
+            }
         }
 
         public Kante PullMin()
         {
-
+            FastLink tmp = erster;
+            erster = tmp.Back;
+            erster.Front = null;
+            tmp.Back = null;
+            return tmp.K;
         }
-
-        public Kante PullMax()
-        {
-
-        }
-        */
     }
 }
