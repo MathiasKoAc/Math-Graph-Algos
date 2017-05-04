@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMI.Algos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,6 +60,11 @@ namespace MMI
         public int countZhk(ICountZusammenhangskomp cZhk)
         {
             return cZhk.CountZhk(this);
+        }
+
+        public double countMST(ICountMST obj)
+        {
+            return obj.CountMST(this);
         }
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    interface ICountMST
+    public interface ICountMST
     {
-        int CountMST(Graph Gra);
+        double CountMST(Graph Gra);
     }
 }

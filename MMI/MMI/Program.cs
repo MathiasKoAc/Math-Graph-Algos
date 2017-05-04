@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MMI.Algos;
 
 namespace MMI
 {
@@ -8,8 +9,8 @@ namespace MMI
         static void Main(string[] args)
         {
             writeMessage("Hallo Graph!", true);
-            int count = readFile(new ImportKanLisUngrGew(), @"files/G_1_20.txt").countZhk(new CountZhkBreit());
-            writeMessage("Count ZHK: " + count, true);
+            double count = readFile(new ImportKanLisUngrGew(), @"files/G_100_200.txt").countMST(new Kruskal());
+            writeMessage("Count MST: " + count, true);
         }
 
         static Graph readFile(IParseGraph parseG, string path)
@@ -51,8 +52,9 @@ namespace MMI
             Console.WriteLine(Msg);
             if(needEnter)
             {
-                Console.WriteLine("Weiter mit <_|");
+                Console.Write("Weiter mit <_|");
                 Console.ReadLine();
+                Console.WriteLine("-ok");
             }
         }
     }
