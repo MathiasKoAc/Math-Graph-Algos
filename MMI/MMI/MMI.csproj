@@ -56,6 +56,7 @@
     <Compile Include="Imports\ImportMatrix.cs" />
     <Compile Include="Algos\ICountZusammenhangskomp.cs" />
     <Compile Include="Imports\IParseGraph.cs" />
+    <Compile Include="InsertSortList.cs" />
     <Compile Include="Kante.cs" />
     <Compile Include="KeyValuePair.cs" />
     <Compile Include="Knoten.cs" />

@@ -8,14 +8,17 @@ namespace MMI
     {
         static void Main(string[] args)
         {
-            bool gerichtet = true;
+            bool gerichtet = false;
             writeMessage("Hallo Graph!", true);
-            
+
+            //Graph g = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
+            //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
+
             //Kurskal
-            //double count = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet).countMST(new Kruskal());
+            //double count = g.countMST(new Kruskal());
 
             //Prim
-            Graph g = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet);
             double count = new Prim().CountMST(g, g.Konten[0]);
 
             writeMessage("Count MST: " + count, true);

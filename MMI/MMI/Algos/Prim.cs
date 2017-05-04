@@ -20,7 +20,7 @@ namespace MMI.Algos
             int knotenCount = 0;
 
             List<Kante> ZielKanten = new List<Kante>();
-            SortedSet<Kante> umgebungsKanten = new SortedSet<Kante>();
+            List<Kante> umgebungsKanten = new List<Kante>();
 
             int maxTag = 0;
             double mstSize = 0;
@@ -29,7 +29,6 @@ namespace MMI.Algos
 
             //starten...
             addKantenVonKnoten(startKnoten, ref umgebungsKanten);
-
             int debug = 0;
 
             do
@@ -37,9 +36,11 @@ namespace MMI.Algos
                 focusKante = pullKante(ref umgebungsKanten);
                 if (focusKante != null)
                 {
-                    System.Console.WriteLine("#" + debug++);
+                    //System.Console.WriteLine("Kante " + focusKante.FromKnoten.Wert + " -> " + focusKante.ToKnoten.Wert);
+                    //System.Console.WriteLine("#" + debug++);
                     tmpMstSize = addKante(focusKante, ref ZielKanten, ref maxTag);
-                    if (tmpMstSize > 0)
+                    //Console.WriteLine("Kanten size: " + tmpMstSize);
+                    if (tmpMstSize > 0f)
                     {
                         knotenCount++;
                         mstSize += tmpMstSize;
@@ -53,19 +54,25 @@ namespace MMI.Algos
             return mstSize;
         }
 
-        private Kante pullKante(ref SortedSet<Kante> sortSet)
+        private Kante pullKante(ref List<Kante> sortSet)
         {
-            Kante focusKante = sortSet.Min;
-            sortSet.Remove(focusKante);
-            return focusKante;
+            if(sortSet.Count > 0)
+            {
+                Kante focusKante = sortSet[0];
+                sortSet.Remove(focusKante);
+                return focusKante;
+            }
+            return null;
         }
 
-        private void addKantenVonKnoten(Knoten knot, ref SortedSet<Kante> sortSet)
+        private void addKantenVonKnoten(Knoten knot, ref List<Kante> sortSet)
         {
             foreach (Kante kant in knot.Kanten)
             {
+                //Console.WriteLine("von knoten " + kant.FromKnoten.Wert + " zu " + kant.ToKnoten.Wert);
                 sortSet.Add(kant);               
             }
+            sortSet.Sort();
         }
     }
 }
