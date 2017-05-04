@@ -29,17 +29,14 @@ namespace MMI.Algos
 
             //starten...
             addKantenVonKnoten(startKnoten, ref umgebungsKanten);
-            int debug = 0;
 
             do
             {
                 focusKante = pullKante(ref umgebungsKanten);
                 if (focusKante != null)
                 {
-                    //System.Console.WriteLine("Kante " + focusKante.FromKnoten.Wert + " -> " + focusKante.ToKnoten.Wert);
-                    //System.Console.WriteLine("#" + debug++);
+
                     tmpMstSize = addKante(focusKante, ref ZielKanten, ref maxTag);
-                    //Console.WriteLine("Kanten size: " + tmpMstSize);
                     if (tmpMstSize > 0f)
                     {
                         knotenCount++;
@@ -58,7 +55,7 @@ namespace MMI.Algos
         {
             if(sortSet.Count > 0)
             {
-                Kante focusKante = sortSet[0];
+                Kante focusKante = sortSet.Min();
                 sortSet.Remove(focusKante);
                 return focusKante;
             }
@@ -69,10 +66,11 @@ namespace MMI.Algos
         {
             foreach (Kante kant in knot.Kanten)
             {
-                //Console.WriteLine("von knoten " + kant.FromKnoten.Wert + " zu " + kant.ToKnoten.Wert);
-                sortSet.Add(kant);               
+                if(kant.ToKnoten.Tag == -1 || kant.FromKnoten.Tag == -1)
+                {
+                    sortSet.Add(kant);
+                }                
             }
-            sortSet.Sort();
         }
     }
 }
