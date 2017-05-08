@@ -14,11 +14,11 @@ namespace MMI
             //Graph g = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_20.txt", gerichtet);
-            //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_20.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/G_10_20.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
-            Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
+            //Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
 
-            //Kurskal
+            //Kruskal
             double count = g.countMST(new Kruskal());
 
             //Prim

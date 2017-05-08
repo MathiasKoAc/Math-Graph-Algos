@@ -43,25 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algos\AbsMST.cs" />
-    <Compile Include="Algos\Kruskal.cs" />
-    <Compile Include="Algos\ICountMST.cs" />
-    <Compile Include="Algos\PrimFast.cs" />
-    <Compile Include="FastLink.cs" />
+    <Compile Include="Algos\MST\AbsMST.cs" />
+    <Compile Include="Algos\MST\Kruskal.cs" />
+    <Compile Include="Algos\MST\ICountMST.cs" />
+    <Compile Include="Algos\MST\PrimFast.cs" />
+    <Compile Include="Strucktur\FastLink.cs" />
     <Compile Include="Imports\AbsImportKantenList.cs" />
-    <Compile Include="Algos\CountZhkBreit.cs" />
-    <Compile Include="Algos\CountZhkTief.cs" />
+    <Compile Include="Algos\ZhK\CountZhkBreit.cs" />
+    <Compile Include="Algos\ZhK\CountZhkTief.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Imports\ImportKantenListGew.cs" />
     <Compile Include="Imports\ImportKantenList.cs" />
     <Compile Include="Imports\ImportMatrix.cs" />
-    <Compile Include="Algos\ICountZusammenhangskomp.cs" />
+    <Compile Include="Algos\ZhK\ICountZusammenhangskomp.cs" />
     <Compile Include="Imports\IParseGraph.cs" />
-    <Compile Include="InsertSortList.cs" />
-    <Compile Include="Kante.cs" />
-    <Compile Include="KeyValuePair.cs" />
-    <Compile Include="Knoten.cs" />
-    <Compile Include="Prim.cs" />
+    <Compile Include="Strucktur\InsertSortList.cs" />
+    <Compile Include="Strucktur\Kante.cs" />
+    <Compile Include="Strucktur\KeyValuePair.cs" />
+    <Compile Include="Strucktur\Knoten.cs" />
+    <Compile Include="Algos\MST\Prim.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
