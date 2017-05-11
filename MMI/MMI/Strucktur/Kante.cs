@@ -80,5 +80,10 @@ namespace MMI
                 return _gewicht.CompareTo(comparePart.Gewicht);
             }
         }
+
+        public override string ToString()
+        {
+            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + _gewicht;
+        }
     }
 }

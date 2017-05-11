@@ -14,12 +14,14 @@ namespace MMI
             //Graph g = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_20.txt", gerichtet);
-            Graph g = readFile(new ImportKantenListGew(), @"files/G_10_20.txt", gerichtet);
+            //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_20.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
 
+            Graph g = readFile(new ImportKantenListGew(), @"files/K_10.txt", gerichtet);
+
             //Kruskal
-            double count = g.countMST(new Kruskal());
+            //double count = g.countMST(new Kruskal());
 
             //Prim
             //double count = new Prim().CountMST(g, g.Konten[0]);
@@ -27,7 +29,13 @@ namespace MMI
             //PrimFaster
             //double count = new PrimFast().CountMST(g, g.Konten[0]);
 
-            writeMessage("Count MST: " + count, true);
+            //NearestN
+            //double countDt = g.countTSPTripp(new NearestNeigbor());
+
+            //DoubleTree
+            double countDt = g.countTSPTripp(new DoubleTree());
+
+            writeMessage("Count TSP: " + countDt, true);
         }
 
         static Graph readFile(IParseGraph parseG, string path, bool gerichtet)

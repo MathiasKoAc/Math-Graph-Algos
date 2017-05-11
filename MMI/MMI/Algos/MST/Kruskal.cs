@@ -8,10 +8,10 @@ namespace MMI.Algos
 {
     class Kruskal : AbsMST
     {
-        public override double CountMST(Graph Gra)
+        public override double CountMST(Graph Gra, out List<Kante> Kanten)
         {
             int maxTag = 0;
-            List<Kante> Kanten = new List<Kante>();
+            Kanten = new List<Kante>();
             double mstSize = 0;
 
             foreach(Kante k in Gra.Kanten)

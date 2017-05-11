@@ -47,6 +47,9 @@
     <Compile Include="Algos\MST\Kruskal.cs" />
     <Compile Include="Algos\MST\ICountMST.cs" />
     <Compile Include="Algos\MST\PrimFast.cs" />
+    <Compile Include="Algos\TSP\DoubleTree.cs" />
+    <Compile Include="Algos\TSP\ICountTSP.cs" />
+    <Compile Include="Algos\TSP\NearestNeigbor.cs" />
     <Compile Include="Strucktur\FastLink.cs" />
     <Compile Include="Imports\AbsImportKantenList.cs" />
     <Compile Include="Algos\ZhK\CountZhkBreit.cs" />

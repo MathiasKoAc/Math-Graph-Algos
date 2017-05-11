@@ -53,6 +53,31 @@ namespace MMI
             }
         }
 
+        public Kante findKante(Knoten vonK, Knoten zuK)
+        {
+            Kante findK = null;
+            if(vonK != null && zuK != null)
+            {
+                foreach (Kante kant in kanten)
+                {
+                    if (kant.ToKnoten == zuK && kant.FromKnoten == vonK)
+                    {
+                        findK = kant;
+                        break;
+                    }
+                }
+            }
+
+            if (findK == null)
+            {
+                Console.WriteLine(vonK.Wert + " -> " + zuK.Wert + " = null");
+            } else
+            {
+                Console.WriteLine(vonK.Wert + " -> " + zuK.Wert + " != null");
+            }
+            return findK;
+        }
+
         /* ------------- */
         /* -- Methods -- */
         /* ------------- */
@@ -64,7 +89,19 @@ namespace MMI
 
         public double countMST(ICountMST obj)
         {
-            return obj.CountMST(this);
+            List<Kante> mKanten;
+            return obj.CountMST(this, out mKanten);
+        }
+
+        public double countTSPTripp(ICountTSP cTsp)
+        {
+            List<Knoten> Knotens;
+            double count = cTsp.roundTripp(this, this.Konten[0], out Knotens);
+            foreach(Knoten k in Knotens)
+            {
+                Console.WriteLine("#" + k.Wert);
+            }
+            return count;
         }
     }
 }

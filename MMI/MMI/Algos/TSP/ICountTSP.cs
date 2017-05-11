@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    public interface ICountMST
+    public interface ICountTSP
     {
-        double CountMST(Graph Gra, out List<Kante> kanten);
+        double roundTripp(Graph g, Knoten startKnoten, out List<Knoten> tour);
     }
 }

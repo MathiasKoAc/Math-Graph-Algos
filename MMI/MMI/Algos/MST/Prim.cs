@@ -9,17 +9,17 @@ namespace MMI.Algos
     class Prim : AbsMST
     {
 
-        public override double CountMST(Graph Gra)
+        public override double CountMST(Graph Gra, out List<Kante> Kanten)
         {
-            return CountMST(Gra, Gra.Konten[0]);
+            return CountMST(Gra, out Kanten, Gra.Konten[0]);
         }
 
-        public double CountMST(Graph Gra, Knoten startKnoten)
+        public double CountMST(Graph Gra, out List<Kante> ZielKanten, Knoten startKnoten)
         {
             int knotenMaxAnz = Gra.Konten.Count;
             int knotenCount = 0;
 
-            List<Kante> ZielKanten = new List<Kante>();
+            ZielKanten = new List<Kante>();
             List<Kante> umgebungsKanten = new List<Kante>();
 
             int maxTag = 0;

@@ -8,7 +8,7 @@ namespace MMI.Algos
 {
     abstract class AbsMST : ICountMST
     {
-        public abstract double CountMST(Graph Gra);
+        public abstract double CountMST(Graph Gra, out List<Kante> Kanten);
 
         protected double addKante(Kante k, ref List<Kante> Kanten, ref int maxTag)
         {
