@@ -15,28 +15,18 @@ namespace MMI.Algos
             double gewicht = prim.CountMST(g, out mst, startKnoten);
 
             List<Kante> doppel = doppleKantenList(mst);
+            g.resetKnotenTag();
 
             List<Kante> fertig;
-            //tiefenSucheOfKanten(doppel, out fertig);
-            geheUeberAlleUndLink(doppel);
+            int tagLevel = 0;
+            Stack<Knoten> stack = new Stack<Knoten>();
+            dfs(startKnoten, stack, doppel, out tour, tagLevel);
 
-            //Ausnahme::::
-            tour = new List<Knoten>();
-
-            /*
-
-            Kante lastKant = g.findKante(startKnoten, mst[mst.Count-1].ToKnoten);
-            if(lastKant.Gewicht < gewicht)
+            foreach(Knoten kno in tour)
             {
-                gewicht += lastKant.Gewicht;
+                Console.WriteLine("Tour: " + kno.Wert);
             }
-            else
-            {
-                gewicht += gewicht;
-            }
-            tour = KantenListToKnotenList(mst);
-            tour.Add(startKnoten);
-            */
+
             return gewicht;
         }
 
@@ -54,6 +44,29 @@ namespace MMI.Algos
 
             Console.WriteLine("----");
             return doppelKanten;
+        }
+
+        private void dfs(Knoten startKnoten, Stack<Knoten> stack, List<Kante> kanten, out List<Knoten> path, int tagLevel)
+        {
+            Knoten aktKnoten;
+            path = new List<Knoten>();
+
+            if(startKnoten != null)
+            {                
+                Kante kant;
+                while ((kant = findeKante(kanten, startKnoten, tagLevel)) != null)
+                {
+                    kant.Tag = 1;
+                    startKnoten.Tag++;
+                    stack.Push(kant.ToKnoten);
+                }
+                while (stack.Count > 0)
+                {
+                    aktKnoten = stack.Pop();
+                    dfs(aktKnoten, stack, kanten, out path, tagLevel);
+                    path.Add(startKnoten);
+                }
+            }
         }
 
         private List<Kante> sortiereKanten(List<Kante> kanten)
@@ -75,7 +88,7 @@ namespace MMI.Algos
             Kante findKant = null;
             foreach(Kante kant in kanten)
             {
-                if(kant.FromKnoten.Wert == fromKnoten.Wert && kant.Tag < tag)
+                if(kant.FromKnoten.Wert == fromKnoten.Wert && kant.Tag == -1 && kant.ToKnoten.Tag < tag)
                 {
                     findKant = kant;
                     kant.Tag = tag;
@@ -111,6 +124,7 @@ namespace MMI.Algos
         private void tiefenSucheOfKanten(List<Kante> kanten, out List<Kante> kantenPath)
         {
             Kante startKant = kanten[0];
+            startKant.FromKnoten.Tag = 1;
             subTief(startKant, kanten, out kantenPath);
             
             foreach(Kante kant in kantenPath)
@@ -128,6 +142,7 @@ namespace MMI.Algos
             }
             else
             {
+
                 foreach (Kante kant in kanten)
                 {
                     if (startKant.ToKnoten.Wert == kant.FromKnoten.Wert)

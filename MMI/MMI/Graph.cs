@@ -82,6 +82,14 @@ namespace MMI
         /* -- Methods -- */
         /* ------------- */
 
+        public void resetKnotenTag()
+        {
+            foreach(KeyValuePair<int, Knoten> pair in this.knoten)
+            {
+                pair.Value.Tag = -1;
+            }
+        }
+
         public int countZhk(ICountZusammenhangskomp cZhk)
         {
             return cZhk.CountZhk(this);
