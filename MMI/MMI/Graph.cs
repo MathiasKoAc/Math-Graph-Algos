@@ -68,13 +68,6 @@ namespace MMI
                 }
             }
 
-            if (findK == null)
-            {
-                Console.WriteLine(vonK.Wert + " -> " + zuK.Wert + " = null");
-            } else
-            {
-                Console.WriteLine(vonK.Wert + " -> " + zuK.Wert + " != null");
-            }
             return findK;
         }
 
@@ -101,14 +94,18 @@ namespace MMI
             return obj.CountMST(this, out mKanten);
         }
 
-        public double countTSPTripp(ICountTSP cTsp)
+        public double countTSPTripp(ICountTSP cTsp, bool show)
         {
             List<Knoten> Knotens;
             double count = cTsp.roundTripp(this, this.Konten[0], out Knotens);
-            foreach(Knoten k in Knotens)
+            if(show)
             {
-                Console.WriteLine("#" + k.Wert);
-            }
+                Console.WriteLine("\n----");
+                foreach (Knoten k in Knotens)
+                {
+                    Console.WriteLine("#" + k.Wert);
+                }
+            }            
             return count;
         }
     }

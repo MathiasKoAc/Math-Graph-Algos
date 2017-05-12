@@ -8,26 +8,99 @@ namespace MMI.Algos
 {
     class DoubleTree : ICountTSP
     {
+        List<Kante> treeRun;
+
         public double roundTripp(Graph g, Knoten startKnoten,  out List<Knoten> tour)
         {
             List<Kante> mst;
             PrimFast prim = new PrimFast();
             double gewicht = prim.CountMST(g, out mst, startKnoten);
-
             List<Kante> doppel = doppleKantenList(mst);
+            Console.WriteLine("MST-Gewicht: " + gewicht);
             g.resetKnotenTag();
 
             List<Kante> fertig;
             int tagLevel = 0;
-            Stack<Knoten> stack = new Stack<Knoten>();
-            dfs(startKnoten, stack, doppel, out tour, tagLevel);
+            Stack<Kante> stack = new Stack<Kante>();
+            treeRun = new List<Kante>();
+            Console.WriteLine("\n----");
+            KantenTiefenSuche(findeKante(g.Kanten, startKnoten, 0), stack, doppel, out fertig, tagLevel);
 
-            foreach(Knoten kno in tour)
-            {
-                Console.WriteLine("Tour: " + kno.Wert);
-            }
+            gewicht = tourAusgebenRechen(this.treeRun);
+            Console.WriteLine("---");
+            List<Kante> kantenOpt = dreieckOptimierung(g, treeRun);
+            gewicht = tourAusgebenRechen(kantenOpt);
+
+            tour = KantenListToKnotenList(treeRun);
 
             return gewicht;
+        }
+
+        private double tourAusgebenRechen(List<Kante> kantens)
+        {
+            double gewicht = 0;
+            foreach (Kante kan in kantens)
+            {
+                if(kan != null)
+                {
+                    Console.WriteLine("Tour: " + kan.ToString());
+                    gewicht += kan.Gewicht;
+                }                
+            }
+            return gewicht;
+        }
+
+        private List<Kante> dreieckOptimierung(Graph g, List<Kante> kanten)
+        {
+            List<Knoten> Knotens = new List<Knoten>();
+            List<Kante> Kantens = new List<Kante>();
+
+            Knotens.Add(kanten[0].FromKnoten);
+            bool added = false;
+            int startI;
+            for (int i = 0; i < kanten.Count; i++)
+            {
+                added = false;
+                startI = i;
+
+                var toK = kanten[i].ToKnoten;
+                if (Knotens.Contains(kanten[i].ToKnoten))
+                {
+                    //umweg
+                    double umweg = 0;
+                    //gibt nachste Kante wo toKnoten ein neuer ist
+                    for(i++; i < kanten.Count && !added; )
+                    {
+                        umweg += kanten[i].Gewicht;
+                        if(!Knotens.Contains(kanten[i].ToKnoten))
+                        {
+                            Kante schleichweg = g.findKante(kanten[startI].FromKnoten, kanten[i].ToKnoten);
+                            if(schleichweg != null && schleichweg.Gewicht < umweg)
+                            {
+                                Knotens.Add(kanten[startI].ToKnoten);
+                                Kantens.Add(schleichweg);
+                                added = true;
+                            }
+                        }
+                        
+                        if(!added)
+                        {
+                            i++;
+                        }
+                    }
+                }
+
+                //Normal weg
+                if(!added && i < kanten.Count)
+                {
+                    Knotens.Add(kanten[startI].ToKnoten);
+                    Kantens.Add(kanten[startI]);
+                }
+            }
+
+            //Rückweg
+            Kantens.Add(g.findKante(Knotens.Last(), Knotens.First()));
+            return Kantens;
         }
 
         private List<Kante> doppleKantenList(List<Kante> kanten)
@@ -41,46 +114,31 @@ namespace MMI.Algos
                 doppelKanten.Add(kant);
                 doppelKanten.Add(new Kante(kant.ToKnoten, kant.FromKnoten, kant.Gewicht));
             }
-
-            Console.WriteLine("----");
             return doppelKanten;
         }
 
-        private void dfs(Knoten startKnoten, Stack<Knoten> stack, List<Kante> kanten, out List<Knoten> path, int tagLevel)
+        private void KantenTiefenSuche(Kante startKante, Stack<Kante> stack, List<Kante> kanten, out List<Kante> path, int tagLevel)
         {
-            Knoten aktKnoten;
-            path = new List<Knoten>();
+            Kante aktKante;
+            path = new List<Kante>();
 
-            if(startKnoten != null)
-            {                
+            if(startKante != null)
+            {
+                treeRun.Add(startKante);
                 Kante kant;
-                while ((kant = findeKante(kanten, startKnoten, tagLevel)) != null)
+                while ((kant = findeKante(kanten, startKante.ToKnoten, tagLevel)) != null)
                 {
                     kant.Tag = 1;
-                    startKnoten.Tag++;
-                    stack.Push(kant.ToKnoten);
+                    startKante.Tag++;
+                    stack.Push(kant);
                 }
                 while (stack.Count > 0)
                 {
-                    aktKnoten = stack.Pop();
-                    dfs(aktKnoten, stack, kanten, out path, tagLevel);
-                    path.Add(startKnoten);
+                    aktKante = stack.Pop();
+                    KantenTiefenSuche(aktKante, stack, kanten, out path, tagLevel);
+                    path.Add(startKante);
                 }
             }
-        }
-
-        private List<Kante> sortiereKanten(List<Kante> kanten)
-        {
-            List<Kante> sortKanten = new List<Kante>();
-            int tag = 1;
-            Knoten startKnoten = kanten[0].FromKnoten;
-            Kante nextKante;
-            while ((nextKante = findeKante(kanten, startKnoten, tag)) != null)
-            {
-                startKnoten = nextKante.ToKnoten;
-                sortKanten.Add(nextKante);
-            }
-            return sortKanten;
         }
 
         private Kante findeKante(List<Kante> kanten, Knoten fromKnoten, int tag)
@@ -97,66 +155,7 @@ namespace MMI.Algos
             }
             return findKant;
         }
-
-        private void geheUeberAlleUndLink(List<Kante> kanten)
-        {
-            Knoten lastKnoten = null;
-            foreach(Kante kant in kanten)
-            {
-                if(lastKnoten == null)
-                {
-                    Console.WriteLine("Start with null");
-                    lastKnoten = kant.ToKnoten;
-                } 
-                else if(lastKnoten.Wert == kant.FromKnoten.Wert)
-                {
-                    Console.WriteLine("weiter mit: " + kant.ToString());
-                    lastKnoten = kant.ToKnoten;
-                }
-                else
-                {
-                    Console.WriteLine("jump: " + kant.ToString());
-                    lastKnoten = kant.ToKnoten;
-                }
-            }
-        }
-
-        private void tiefenSucheOfKanten(List<Kante> kanten, out List<Kante> kantenPath)
-        {
-            Kante startKant = kanten[0];
-            startKant.FromKnoten.Tag = 1;
-            subTief(startKant, kanten, out kantenPath);
-            
-            foreach(Kante kant in kantenPath)
-            {
-                Console.WriteLine("tief:" + kant.ToString());
-            }
-        }
-
-        private void subTief(Kante startKant, List<Kante> kanten, out List<Kante> kantenPath)
-        {
-            kantenPath = null;
-            if (kanten.Count == 0)
-            {
-                kantenPath = new List<Kante>();
-            }
-            else
-            {
-
-                foreach (Kante kant in kanten)
-                {
-                    if (startKant.ToKnoten.Wert == kant.FromKnoten.Wert)
-                    {
-                        Console.WriteLine("tiefff: " + kant.ToString());
-                        List<Kante> neuKanten = new List<Kante>(kanten.ToArray());
-                        neuKanten.Remove(kant);
-                        subTief(startKant, neuKanten, out kantenPath);
-                        kantenPath.Add(kant);
-                    }
-                }
-            }            
-        }
-        
+                
         private List<Knoten> KantenListToKnotenList(List<Kante> kanten)
         {
             List<Knoten> knotens = new List<Knoten>();
@@ -166,7 +165,6 @@ namespace MMI.Algos
 
             foreach (Kante kant in kanten)
             {
-                Console.WriteLine(kant.ToString());
                 knotens.Add(kant.ToKnoten);
             }
             return knotens;

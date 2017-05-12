@@ -30,10 +30,10 @@ namespace MMI
             //double count = new PrimFast().CountMST(g, g.Konten[0]);
 
             //NearestN
-            //double countDt = g.countTSPTripp(new NearestNeigbor());
+            //double countDt = g.countTSPTripp(new NearestNeigbor(), true);
 
             //DoubleTree
-            double countDt = g.countTSPTripp(new DoubleTree());
+            double countDt = g.countTSPTripp(new DoubleTree(), false);
 
             writeMessage("Count TSP: " + countDt, true);
         }
