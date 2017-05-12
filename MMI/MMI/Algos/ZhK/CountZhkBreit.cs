@@ -13,7 +13,7 @@ namespace MMI.Algos
             DateTime dTime = DateTime.Now;
             long t1 = dTime.Millisecond;
             int tagLevel = 0; //entsprich der anz der ZHK
-            foreach (KeyValuePair<int, Knoten> kVP in Gra.Konten)
+            foreach (KeyValuePair<int, Knoten> kVP in Gra.Knoten)
             {
                 if (kVP.Value.Tag == -1)
                 {

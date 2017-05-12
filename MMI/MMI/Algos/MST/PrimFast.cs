@@ -11,12 +11,12 @@ namespace MMI.Algos
 
         public override double CountMST(Graph Gra, out List<Kante> Kanten)
         {
-            return CountMST(Gra, out Kanten, Gra.Konten[0]);
+            return CountMST(Gra, out Kanten, Gra.Knoten[0]);
         }
 
         public double CountMST(Graph Gra, out List<Kante> ZielKanten, Knoten startKnoten)
         {
-            int knotenMaxAnz = Gra.Konten.Count;
+            int knotenMaxAnz = Gra.Knoten.Count;
             int knotenCount = 0;
 
             ZielKanten = new List<Kante>();

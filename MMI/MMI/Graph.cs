@@ -32,7 +32,7 @@ namespace MMI
             return kanten.Count;
         }
 
-        public Dictionary<int, Knoten> Konten{
+        public Dictionary<int, Knoten> Knoten{
             get {
                 return knoten;
             }
@@ -97,7 +97,7 @@ namespace MMI
         public double countTSPTripp(ICountTSP cTsp, bool show)
         {
             List<Knoten> Knotens;
-            double count = cTsp.roundTripp(this, this.Konten[0], out Knotens);
+            double count = cTsp.roundTripp(this, this.Knoten[0], out Knotens);
             if(show)
             {
                 Console.WriteLine("\n----");

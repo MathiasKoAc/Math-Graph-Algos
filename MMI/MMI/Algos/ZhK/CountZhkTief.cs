@@ -17,7 +17,7 @@ namespace MMI.Algos
         {
             int tagLevel = 0; //entsprich der anz der ZHK
             StartKn.Tag = tagLevel;
-            foreach(KeyValuePair<int, Knoten> kVP in Gra.Konten) {
+            foreach(KeyValuePair<int, Knoten> kVP in Gra.Knoten) {
                 if (kVP.Value.Tag == -1)
                 {
                     //neuer Knoten in der Liste -> potentieller neuer ZHK
