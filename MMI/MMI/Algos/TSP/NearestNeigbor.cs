@@ -17,7 +17,6 @@ namespace MMI.Algos
             Knoten lastKnoten = null;
             nextKnoten.Tag = 1;
             tour.Add(nextKnoten);
-            wert = nextKnoten.Wert;
 
             Kante bestKante = null;
             
@@ -38,6 +37,7 @@ namespace MMI.Algos
                     nextKnoten = bestKante.ToKnoten;
                     nextKnoten.Tag = 1;
                     tour.Add(nextKnoten);
+                    Console.WriteLine("Z: " + bestKante.ToString());
                     wert += bestKante.Gewicht;
                 }
             }
@@ -49,6 +49,7 @@ namespace MMI.Algos
             if(lastStartKant != null && lastStartKant.Gewicht < wert)
             {
                 wert += lastStartKant.Gewicht;
+                Console.WriteLine("Z: " + lastStartKant.ToString());
             }
             else
             {

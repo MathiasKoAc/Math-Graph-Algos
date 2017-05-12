@@ -69,7 +69,7 @@ namespace MMI.Algos
                     //umweg
                     double umweg = 0;
                     //gibt nachste Kante wo toKnoten ein neuer ist
-                    for(i++; i < kanten.Count && !added; )
+                    for(; i < kanten.Count && !added; )
                     {
                         umweg += kanten[i].Gewicht;
                         if(!Knotens.Contains(kanten[i].ToKnoten))
