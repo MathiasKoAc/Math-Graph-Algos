@@ -18,7 +18,7 @@ namespace MMI
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
 
-            Graph g = readFile(new ImportKantenListGew(), @"files/K_10e.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/K_15.txt", gerichtet);
 
             //Kruskal
             //double count = g.countMST(new Kruskal());
@@ -41,17 +41,23 @@ namespace MMI
             //AlleTouren
             BackTrackAll bTA = new BackTrackAll();
             var touren = new List<List<Kante>>();
-            bTA.allRoundTripps(g, g.Knoten[0], out touren);
+            var besttour = new List<Kante>();
+            double gewicht = bTA.allRoundTripps(g, g.Knoten[0], out touren, out besttour, true);
+            writeMessage("berechnet", true);
 
-            foreach(List<Kante> kanten in touren)
+            writeMessage("Beste Tour: ", false);
+            writeMessage(besttour, false);
+            writeMessage("", false);
+
+            writeMessage("Einige andere Touren", true);
+
+            for (int i = 0; i < 15 && i < touren.Count; i++)
             {
-                foreach(Kante kant in kanten)
-                {
-                    writeMessage(kant.ToString(), false);
-                }
+                List<Kante> kanten = touren[i];
+                writeMessage(kanten);
                 writeMessage("------", false);
             }
-
+            writeMessage("-", true);
         }
 
         static Graph readFile(IParseGraph parseG, string path, bool gerichtet)
@@ -97,6 +103,22 @@ namespace MMI
                 Console.ReadLine();
                 Console.WriteLine("-ok");
             }
+        }
+
+        static void writeMessage(Kante kant, bool needEnter = false)
+        {
+            writeMessage(kant.ToString(), needEnter);
+        }
+
+        static void writeMessage(List<Kante> kanten, bool needEnter = false)
+        {
+            double gewicht = 0d;
+            foreach(Kante kant in kanten)
+            {
+                writeMessage(kant, needEnter);
+                gewicht += kant.Gewicht;
+            }
+            writeMessage("--> " + gewicht, needEnter);
         }
     }
 }
