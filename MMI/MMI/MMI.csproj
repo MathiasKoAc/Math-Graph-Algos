@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algos\BackTrackAll.cs" />
     <Compile Include="Algos\MST\AbsMST.cs" />
     <Compile Include="Algos\MST\Kruskal.cs" />
     <Compile Include="Algos\MST\ICountMST.cs" />
