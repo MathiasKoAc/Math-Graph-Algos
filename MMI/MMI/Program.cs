@@ -18,7 +18,7 @@ namespace MMI
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
 
-            Graph g = readFile(new ImportKantenListGew(), @"files/K_15.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/K_10.txt", gerichtet);
 
             //Kruskal
             //double count = g.countMST(new Kruskal());
@@ -42,16 +42,16 @@ namespace MMI
             BackTrackAll bTA = new BackTrackAll();
             var touren = new List<List<Kante>>();
             var besttour = new List<Kante>();
-            double gewicht = bTA.allRoundTripps(g, g.Knoten[0], out touren, out besttour, true);
+            double gewicht = bTA.allRoundTripps(g, g.Knoten[0], out touren, out besttour, false);
             writeMessage("berechnet", true);
 
             writeMessage("Beste Tour: ", false);
             writeMessage(besttour, false);
             writeMessage("", false);
 
-            writeMessage("Einige andere Touren", true);
+            writeMessage("Einige andere Touren (" + touren.Count + ")", true);
 
-            for (int i = 0; i < 15 && i < touren.Count; i++)
+            for (int i = 0; i < 10 && i < touren.Count; i++)
             {
                 List<Kante> kanten = touren[i];
                 writeMessage(kanten);

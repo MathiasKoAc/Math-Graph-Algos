@@ -12,6 +12,7 @@ namespace MMI.Algos
         private List<List<Kante>> kantenListListe;
         private List<Kante> bestkantenList;
         private double bestGesamtGewicht;
+        private Knoten _startKnoten;
 
         public double allRoundTripps(Graph g, Knoten startKnoten, out List<List<Kante>> touren, out List<Kante> bestTour, bool branchAndBound = false)
         {
@@ -19,10 +20,14 @@ namespace MMI.Algos
             this.bestkantenList = null;
             this.kantenListListe = new List<List<Kante>>();
             this.bestGesamtGewicht = Double.MaxValue;
+            this._startKnoten = startKnoten;
 
-            foreach(Kante kant in startKnoten.Kanten)
+            HashSet<byte> knotenCheck = new HashSet<byte>();
+            knotenCheck.Add((byte)startKnoten.Wert);
+
+            foreach (Kante kant in startKnoten.Kanten)
             {
-                deep(kant, new List<Kante>(), new HashSet<byte>(), 0d, branchAndBound);
+                deep(kant, new List<Kante>(), new HashSet<byte>(knotenCheck), 0d, branchAndBound);
             }
             touren = kantenListListe;
             bestTour = bestkantenList;
@@ -44,9 +49,14 @@ namespace MMI.Algos
             if (knoten.Count == graph.Knoten.Count)
             {
                 //letzter Knoten
-                this.kantenListListe.Add(kanten);
-                this.setIfBest(kanten, gesamtGewicht);
-
+                Kante letzteKante = graph.findKante(startKant.ToKnoten, _startKnoten);
+                if (letzteKante != null)
+                {
+                    kanten.Add(letzteKante);
+                    gesamtGewicht += letzteKante.Gewicht;
+                    this.kantenListListe.Add(kanten);
+                    this.setIfBest(kanten, gesamtGewicht);
+                }
             } else
             {
                 Knoten toKn;
