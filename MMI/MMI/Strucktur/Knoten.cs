@@ -11,11 +11,14 @@ namespace MMI
         private int wert;
         private List<Kante> kanten;
         private int tag;
+        private double distance;
+        private Knoten vorgaenger;
 
         public Knoten()
         {
             this.tag = -1;
             this.kanten = new List<Kante>();
+            this.distance = Double.MaxValue;
         }
 
         public Knoten(int wert)
@@ -23,6 +26,7 @@ namespace MMI
             this.tag = -1;
             this.kanten = new List<Kante>();
             this.wert = wert;
+            this.distance = Double.MaxValue;
         }
 
         public void AddKante(Kante k)
@@ -48,6 +52,32 @@ namespace MMI
             set
             {
                 tag = value;
+            }
+        }
+
+        public double Distance
+        {
+            get
+            {
+                return this.distance;
+            }
+
+            set
+            {
+                this.distance = value;
+            }
+        }
+
+        public Knoten Vorgaenger
+        {
+            get
+            {
+                return this.vorgaenger;
+            }
+
+            set
+            {
+                this.vorgaenger = value;
             }
         }
 

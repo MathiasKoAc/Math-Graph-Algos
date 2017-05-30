@@ -48,6 +48,7 @@
     <Compile Include="Algos\MST\Kruskal.cs" />
     <Compile Include="Algos\MST\ICountMST.cs" />
     <Compile Include="Algos\MST\PrimFast.cs" />
+    <Compile Include="Strucktur\Class1.cs" />
     <Compile Include="Algos\TSP\DoubleTree.cs" />
     <Compile Include="Algos\TSP\ICountTSP.cs" />
     <Compile Include="Algos\TSP\NearestNeigbor.cs" />
@@ -63,7 +64,6 @@
     <Compile Include="Imports\IParseGraph.cs" />
     <Compile Include="Strucktur\InsertSortList.cs" />
     <Compile Include="Strucktur\Kante.cs" />
-    <Compile Include="Strucktur\KeyValuePair.cs" />
     <Compile Include="Strucktur\Knoten.cs" />
     <Compile Include="Algos\MST\Prim.cs" />
     <Compile Include="Program.cs" />
@@ -71,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Algos\SW\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
