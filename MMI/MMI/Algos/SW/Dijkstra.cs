@@ -29,8 +29,8 @@ namespace MMI.Algos
                     pair.Value.Vorgaenger = pair.Value;
                 } else
                 {
-                    pair.Value.Distance = 100000d;
-                    //pair.Value.Distance = Double.MaxValue;
+                    //pair.Value.Distance = 100000d;
+                    pair.Value.Distance = Double.MaxValue;
                     pair.Value.Vorgaenger = null;
 
                 }
@@ -65,7 +65,7 @@ namespace MMI.Algos
                     }
                 }
 
-                Console.WriteLine("Konten: " + best.Wert + "Dist: " + best.Distance);
+                //Console.WriteLine("Konten: " + best.Wert + "Dist: " + best.Distance);
 
                 knotens.Remove(best);
                 return best;

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algos\BackTrackAll.cs" />
+    <Compile Include="Algos\BellmanFord.cs" />
     <Compile Include="Algos\MFL\EdmundsKarp.cs" />
     <Compile Include="Algos\MST\AbsMST.cs" />
     <Compile Include="Algos\MST\Kruskal.cs" />

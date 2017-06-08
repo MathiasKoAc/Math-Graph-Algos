@@ -37,7 +37,9 @@ namespace MMI
 
             //doAlleTouren();
 
-            doDijkstra();
+            doBellManFord();
+
+            //doDijkstra();
 
             //doMaxFluss();
         }
@@ -61,6 +63,19 @@ namespace MMI
             Graph g = readFile(new ImportKantenListGew(), @"files/Wege1.txt", gerichtet);
             Dijkstra Dij = new Dijkstra();
             Dij.sortestWay(ref g, g.Knoten[2]);
+            writeMessage("Kürzester Weg: " + g.Knoten[0].Distance, true);
+        }
+
+        static void doBellManFord()
+        {
+            bool gerichtet = true;
+
+            //Graph g = readFile(new ImportKantenListGew(), @"files/Wege1.txt", gerichtet);
+            //Graph g = readFile(new ImportKantenListGew(), @"files/Wege2.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/Wege3.txt", gerichtet);
+
+            BellmanFord BellFord = new BellmanFord();
+            BellFord.sortestWay(ref g, g.Knoten[2]);
             writeMessage("Kürzester Weg: " + g.Knoten[0].Distance, true);
         }
 
