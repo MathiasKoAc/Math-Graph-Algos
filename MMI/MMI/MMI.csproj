@@ -44,11 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algos\BackTrackAll.cs" />
+    <Compile Include="Algos\MFL\EdmundsKarp.cs" />
     <Compile Include="Algos\MST\AbsMST.cs" />
     <Compile Include="Algos\MST\Kruskal.cs" />
     <Compile Include="Algos\MST\ICountMST.cs" />
     <Compile Include="Algos\MST\PrimFast.cs" />
-    <Compile Include="Strucktur\Class1.cs" />
+    <Compile Include="Algos\SW\Dijkstra.cs" />
     <Compile Include="Algos\TSP\DoubleTree.cs" />
     <Compile Include="Algos\TSP\ICountTSP.cs" />
     <Compile Include="Algos\TSP\NearestNeigbor.cs" />
@@ -72,9 +73,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Algos\SW\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

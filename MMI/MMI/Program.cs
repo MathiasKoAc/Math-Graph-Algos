@@ -18,7 +18,7 @@ namespace MMI
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
 
-            Graph g = readFile(new ImportKantenListGew(), @"files/K_10.txt", gerichtet);
+            //Graph g = readFile(new ImportKantenListGew(), @"files/Wege1.txt", gerichtet);
 
             //Kruskal
             //double count = g.countMST(new Kruskal());
@@ -37,7 +37,34 @@ namespace MMI
 
             //writeMessage("Count TSP: " + count, true);
 
+            //doAlleTouren();
 
+            //doDijkstra();
+
+            doMaxFluss();
+        }
+
+        static void doMaxFluss()
+        {
+            bool gerichtet = true;
+            bool debug = false;
+            //Graph g = readFile(new ImportKantenListGew(), @"files/Fluss.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
+            double maxFlussWert =  new EdmundsKarp().calcMaxFluss(g, g.Knoten[0], g.Knoten[7], debug);
+            writeMessage("Max-Fluss-Wert: " + maxFlussWert, true);
+        }
+
+        static void doDijkstra()
+        {
+            //Djikstra
+            Dictionary<Knoten, Knoten> vorgaengerNachfolgerDict;
+            Dijkstra Dij = new Dijkstra();
+            Dij.sortestWay(g, g.Knoten[2], out vorgaengerNachfolgerDict);
+            writeMessage("Kürzester Weg" + g.Knoten[0].Distance, true);
+        }
+
+        static void doAlleTouren()
+        {
             //AlleTouren
             BackTrackAll bTA = new BackTrackAll();
             var touren = new List<List<Kante>>();

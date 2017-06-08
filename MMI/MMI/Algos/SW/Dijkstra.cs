@@ -6,17 +6,20 @@ namespace MMI.Algos
 {
     public class Dijkstra
     {
-        public void sortestWay(Graph gra, Knoten Startknoten)
+        Dictionary<Knoten, Knoten> nachfolgerVorgaengerDict;
+
+        public void sortestWay(Graph gra, Knoten Startknoten, out Dictionary<Knoten, Knoten> vorgaengerDict)
         {
             List<Knoten> sortList = new List<Knoten>();
             initialisiere(ref gra, ref Startknoten, ref sortList);
             Knoten nextKnoten;
-            //<Vorgaenger, Nachfolger>
-            Dictionary<Knoten, Knoten> vorgaengerDict = new Dictionary<Knoten, Knoten>();
+            //<Nachfolger, Vorgaenger>
+            vorgaengerDict = new Dictionary<Knoten, Knoten>();
             while (sortList.Count > 0) {
                 nextKnoten = pullWithShortesDistanz(ref sortList);
                 updateDistanz(nextKnoten, ref vorgaengerDict);
             }
+            this.nachfolgerVorgaengerDict = vorgaengerDict;
         }
 
         private void initialisiere(ref Graph g,  ref Knoten Startknoten, ref List<Knoten> List)
@@ -37,23 +40,23 @@ namespace MMI.Algos
             } 
         }
 
-        private void updateDistanz(Knoten k, ref Dictionary<Knoten, Knoten> vorgaengerList)
+        private void updateDistanz(Knoten fokusKnoten, ref Dictionary<Knoten, Knoten> nachfolgerVorgaengerList)
         {
             double neuDistance = 0d;
             Knoten nachfolger;
-            foreach(Kante kant in k.Kanten)
+            foreach(Kante kant in fokusKnoten.Kanten)
             {
-                neuDistance = k.Distance + kant.Gewicht;
+                neuDistance = fokusKnoten.Distance + kant.Gewicht;
                 if(kant.ToKnoten.Distance > neuDistance)
                 {
 
-                    if (vorgaengerList.TryGetValue(kant.ToKnoten.Vorgaenger, out nachfolger))
+                    if (kant.ToKnoten.Vorgaenger != null && nachfolgerVorgaengerList.TryGetValue(kant.ToKnoten.Vorgaenger, out nachfolger))
                     {
-                        vorgaengerList.Remove(kant.ToKnoten.Vorgaenger);
+                        nachfolgerVorgaengerList.Remove(kant.ToKnoten.Vorgaenger);
                     }
-                    vorgaengerList.Add(k, kant.ToKnoten);
+                    nachfolgerVorgaengerList.Add(fokusKnoten, kant.ToKnoten);
                     kant.ToKnoten.Distance = neuDistance;
-                    kant.ToKnoten.Vorgaenger = k;
+                    kant.ToKnoten.Vorgaenger = fokusKnoten;
                 }
             }
         }

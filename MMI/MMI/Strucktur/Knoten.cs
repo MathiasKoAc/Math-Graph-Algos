@@ -8,16 +8,19 @@ namespace MMI
 {
     public class Knoten
     {
-        private int wert;
+        private int wert;       //entspricht dem Namen
         private List<Kante> kanten;
+        private List<Kante> residualKanten;
         private int tag;
         private double distance;
         private Knoten vorgaenger;
+        private Kante vorgaengerKante;
 
         public Knoten()
         {
             this.tag = -1;
             this.kanten = new List<Kante>();
+            this.residualKanten = new List<Kante>();
             this.distance = Double.MaxValue;
         }
 
@@ -25,6 +28,7 @@ namespace MMI
         {
             this.tag = -1;
             this.kanten = new List<Kante>();
+            this.residualKanten = new List<Kante>();
             this.wert = wert;
             this.distance = Double.MaxValue;
         }
@@ -32,6 +36,11 @@ namespace MMI
         public void AddKante(Kante k)
         {
             kanten.Add(k);
+        }
+
+        public void AddResidualKante(Kante k)
+        {
+            residualKanten.Add(k);
         }
 
         public int Wert
@@ -81,13 +90,20 @@ namespace MMI
             }
         }
 
-        public List<Kante> Kanten
+        public Kante VorgaengerKante
         {
             get
             {
-                return kanten;
+                return this.vorgaengerKante;
+            }
+
+            set
+            {
+                this.vorgaengerKante = value;
             }
         }
-        
+
+        public ref List<Kante> ResidualKanten => ref residualKanten;
+        public ref List<Kante> Kanten => ref kanten;
     }
 }
