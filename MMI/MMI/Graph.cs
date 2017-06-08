@@ -32,14 +32,7 @@ namespace MMI
             return kanten.Count;
         }
 
-        public Dictionary<int, Knoten> Knoten{
-            get {
-                return knoten;
-            }
-            set {
-                knoten = value;
-            }
-        }
+        public ref Dictionary<int, Knoten> Knoten => ref knoten;
 
         public List<Kante> Kanten
         {
