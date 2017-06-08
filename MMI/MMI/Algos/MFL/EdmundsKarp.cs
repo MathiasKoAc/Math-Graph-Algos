@@ -11,15 +11,11 @@ namespace MMI.Algos
 
         public double calcMaxFluss(Graph g, Knoten startKnoten, Knoten endKnoten, bool debug = false)
         {
-            double flussWert = 0d;
-
             createResidualGraph(ref g);
 
             updateResidualGraph(ref g, ref startKnoten, ref endKnoten,debug);
 
-            flussWert = checkUpStartKnoten(startKnoten);
-
-            return flussWert;
+            return checkUpStartKnoten(startKnoten);
         }
 
         private void createResidualGraph(ref Graph g)
@@ -56,6 +52,7 @@ namespace MMI.Algos
 
                 for (int i = weg.Count - 1; i >= 0; i--)
                 {
+                    //hier muss keine unterscheidung zwischen Kanten und ResiKante gemacht werden weil auch die Resikante ein Fluss und ein Kapa hat
                     weg[i].Fluss += muee;
                     weg[i].ResiKante.Fluss -= muee;
                     if (debug) { Console.WriteLine("Kante: " + weg[i] + " #resi=" + weg[i].IsResidualKante); }
@@ -69,6 +66,7 @@ namespace MMI.Algos
 
             double muee = Double.MaxValue;
             Knoten fokusKnoten = endKnoten;
+
             while(fokusKnoten.Wert != startKnoten.Wert)
             {
                 if(fokusKnoten.VorgaengerKante.RestKapazitaet < muee)
@@ -96,7 +94,7 @@ namespace MMI.Algos
 
             Knoten fokusKnoten = startKnoten;
 
-            //Mache solange bis Warteschlange größer als 0 ist
+            //Mache solange Warteschlange größer als 0 ist
             while (queue.Count > 0 && fokusKnoten.Wert != endKnoten.Wert)
             {
                 fokusKnoten = queue.Dequeue();
