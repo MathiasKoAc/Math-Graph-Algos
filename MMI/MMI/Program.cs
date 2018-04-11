@@ -37,11 +37,20 @@ namespace MMI
 
             //doAlleTouren();
 
-            doBellManFord();
+            //doBellManFord();
 
             //doDijkstra();
 
             //doMaxFluss();
+
+            doKostenMinFluss();
+        }
+
+        static void doKostenMinFluss()
+        {
+            bool gerichtet = true;
+
+            Graph g = readFile(new ImportKantenListGewBalance(), @"files/Kostenminimal1.txt", gerichtet);
         }
 
         static void doMaxFluss()
@@ -49,9 +58,9 @@ namespace MMI
             bool gerichtet = true;
             bool debug = false;
 
-            Graph g = readFile(new ImportKantenListGew(), @"files/Fluss.txt", gerichtet);
+            //Graph g = readFile(new ImportKantenListGew(), @"files/Fluss.txt", gerichtet);
             //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
-            //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_200.txt", gerichtet);
+            Graph g = readFile(new ImportKantenListGew(), @"files/G_1_200.txt", gerichtet);
             double maxFlussWert =  new EdmundsKarp().calcMaxFluss(g, g.Knoten[0], g.Knoten[7], debug);
             writeMessage("Max-Fluss-Wert: " + maxFlussWert, true);
         }
@@ -75,7 +84,7 @@ namespace MMI
             Graph g = readFile(new ImportKantenListGew(), @"files/Wege3.txt", gerichtet);
 
             BellmanFord BellFord = new BellmanFord();
-            BellFord.sortestWay(ref g, g.Knoten[2]);
+            BellFord.sortestWay(ref g, g.Knoten[2], out Knoten CheckNegNoten);
             writeMessage("Kürzester Weg: " + g.Knoten[0].Distance, true);
         }
 

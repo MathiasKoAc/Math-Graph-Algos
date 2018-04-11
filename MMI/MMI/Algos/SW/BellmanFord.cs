@@ -6,7 +6,7 @@ namespace MMI.Algos
 {
     class BellmanFord
     {
-        public bool sortestWay(ref Graph gra, Knoten Startknoten)
+        public bool sortestWay(ref Graph gra, Knoten Startknoten, out Knoten CheckNegKnoten)
         {
             List<Knoten> sortList = new List<Knoten>();
             initialisiere(ref gra, ref Startknoten, ref sortList);
@@ -24,16 +24,18 @@ namespace MMI.Algos
                 }
             }
 
-            return checkUpNegativerZyklus(ref gra);
+            return checkUpNegativerZyklus(ref gra,out CheckNegKnoten);
         }
 
-        private bool checkUpNegativerZyklus(ref Graph gra)
+        private bool checkUpNegativerZyklus(ref Graph gra, out Knoten CheckNegKnoten)
         {
+            CheckNegKnoten = null;
             foreach (Kante kant in gra.Kanten)
             {
                 if (kant.FromKnoten.Distance + kant.Gewicht < kant.ToKnoten.Distance)
                 {
                     Console.WriteLine("Negativer Zyklus");
+                    CheckNegKnoten = kant.ToKnoten;
                     return false;
                 }
             }

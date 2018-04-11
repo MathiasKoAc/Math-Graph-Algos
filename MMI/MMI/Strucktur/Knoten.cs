@@ -15,6 +15,7 @@ namespace MMI
         private double distance;
         private Knoten vorgaenger;
         private Kante vorgaengerKante;
+        private double balance;
 
         public Knoten()
         {
@@ -74,6 +75,19 @@ namespace MMI
             set
             {
                 this.distance = value;
+            }
+        }
+
+        public double Balance
+        {
+            get
+            {
+                return this.balance;
+            }
+
+            set
+            {
+                this.balance = value;
             }
         }
 

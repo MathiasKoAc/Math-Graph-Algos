@@ -9,6 +9,7 @@ namespace MMI
     public class Kante : IComparable<Kante>
     {
         private double gewicht; //oder auch kapazitaet
+        private double kosten;
         private Knoten toKnoten;
         private Knoten fromKnoten;
         private int tag;
@@ -112,6 +113,18 @@ namespace MMI
             set
             {
                 gewicht = value;
+            }
+        }
+
+        public double Kosten
+        {
+            get
+            {
+                return kosten;
+            }
+            set
+            {
+                kosten = value;
             }
         }
 
