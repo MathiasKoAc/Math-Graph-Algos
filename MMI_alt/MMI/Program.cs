@@ -11,43 +11,9 @@ namespace MMI
             bool gerichtet = false;
             writeMessage("Hallo Graph!", true);
 
-            //Graph g = readFile(new ImportKantenListGew(), @"files/MK_10_5.txt", gerichtet);
             Graph g = readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
-            //Graph g = readFile(new ImportKantenListGew(), @"files/G_1_20.txt", gerichtet);
-            //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_20.txt", gerichtet);
-            //Graph g = readFile(new ImportKantenListGew(), @"files/G_10_200.txt", gerichtet);
-            //Graph g = readFile(new ImportKantenListGew(), @"files/G_100_200.txt", true);
 
-            
-
-            Console.WriteLine("BackTrack all: " + new BackTrackAll().allRoundTripps(g, g.Knoten[0], out List<List<Kante>> doAlleTouren, out List<Kante> bestTouren));
-
-            //Kruskal
-            //double count = g.countMST(new Kruskal());
-
-            //Prim
-            //double count = new Prim().CountMST(g, g.Konten[0]);
-
-            //PrimFaster
-            //double count = new PrimFast().CountMST(g, g.Konten[0]);
-
-            //NearestN
-            //double count = g.countTSPTripp(new NearestNeigbor(), true);
-
-            //DoubleTree
-            //double count = g.countTSPTripp(new DoubleTree(), false);
-
-            //writeMessage("Count TSP: " + count, true);
-
-            //doAlleTouren();
-
-            //doBellManFord();
-
-            //doDijkstra();
-
-            //doMaxFluss();
-
-            //doKostenMinFluss();
+            writeMessage("BackTrack all: " + new CountZhkTief().CountZhk(g), true);
         }
 
         static void doKostenMinFluss()
