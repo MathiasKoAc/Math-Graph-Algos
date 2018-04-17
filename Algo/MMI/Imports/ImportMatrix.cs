@@ -38,11 +38,14 @@ namespace MMI
                     int gewicht = Int32.Parse(lineSplit[j]);
                     if(gewicht > 0)
                     {
-                        if (!knoten.TryGetValue(j + 1, out knLink))
+                        if (knoten[j+1] == null)
                         {
-                            //Knoten noch nicht in der Liste
-                            knLink = new Knoten(j + 1);
-                            knoten.Add(j + 1, knLink);
+                            knLink = new Knoten(j+1);
+                            knoten[j+1] = kn;
+                        }
+                        else
+                        {
+                            knLink = knoten[i];
                         }
 
                         Kante kant = new Kante(kn, knLink, gewicht);
