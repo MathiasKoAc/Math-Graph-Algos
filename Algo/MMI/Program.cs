@@ -11,9 +11,10 @@ namespace MMI
             bool gerichtet = false;
             writeMessage("Hallo Graph!", true);
 
-            Graph g = readFile(new ImportKantenList(), @"files/G_1_2.txt", gerichtet);
+            Graph g = readFile(new ImportKantenList(), @"files/Graph4.txt", gerichtet);
 
-            writeMessage("BackTrack all: " + new CountZhkTief().CountZhk(g), true);
+            writeMessage("ZHK Tief: " + new CountZhkTief().CountZhk(g), true);
+            //writeMessage("ZHK Breit: " + new CountZhkBreit().CountZhk(g), true);
         }
         
         static Graph readFile(IParseGraph parseG, string path, bool gerichtet)

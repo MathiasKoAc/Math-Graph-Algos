@@ -43,13 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Imports\ImportKantenListGewBalance.cs" />
     <Compile Include="Strucktur\FastLink.cs" />
     <Compile Include="Imports\AbsImportKantenList.cs" />
     <Compile Include="Algos\ZhK\CountZhkBreit.cs" />
     <Compile Include="Algos\ZhK\CountZhkTief.cs" />
     <Compile Include="Graph.cs" />
-    <Compile Include="Imports\ImportKantenListGew.cs" />
     <Compile Include="Imports\ImportKantenList.cs" />
     <Compile Include="Imports\ImportMatrix.cs" />
     <Compile Include="Algos\ZhK\ICountZusammenhangskomp.cs" />
