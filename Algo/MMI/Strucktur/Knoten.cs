@@ -12,17 +12,12 @@ namespace MMI
         private List<Kante> kanten;
         private List<Kante> residualKanten;
         private int tag;
-        private double distance;
-        private Knoten vorgaenger;
-        private Kante vorgaengerKante;
-        private double balance;
 
         public Knoten()
         {
             this.tag = -1;
             this.kanten = new List<Kante>();
             this.residualKanten = new List<Kante>();
-            this.distance = Double.MaxValue;
         }
 
         public Knoten(int wert)
@@ -31,7 +26,6 @@ namespace MMI
             this.kanten = new List<Kante>();
             this.residualKanten = new List<Kante>();
             this.wert = wert;
-            this.distance = Double.MaxValue;
         }
 
         public void AddKante(Kante k)
@@ -62,58 +56,6 @@ namespace MMI
             set
             {
                 tag = value;
-            }
-        }
-
-        public double Distance
-        {
-            get
-            {
-                return this.distance;
-            }
-
-            set
-            {
-                this.distance = value;
-            }
-        }
-
-        public double Balance
-        {
-            get
-            {
-                return this.balance;
-            }
-
-            set
-            {
-                this.balance = value;
-            }
-        }
-
-        public Knoten Vorgaenger
-        {
-            get
-            {
-                return this.vorgaenger;
-            }
-
-            set
-            {
-                this.vorgaenger = value;
-            }
-        }
-
-        public Kante VorgaengerKante
-        {
-            get
-            {
-                return this.vorgaengerKante;
-            }
-
-            set
-            {
-                this.vorgaengerKante = value;
             }
         }
 

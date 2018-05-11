@@ -10,6 +10,9 @@ namespace MMI.Algos
     {
         public int CountZhk(Graph Gra)
         {
+            Gra.resetKantenTag();
+            Gra.resetKnotenTag();
+
             DateTime dTime = DateTime.Now;
             long t1 = dTime.Millisecond;
             int tagLevel = 0; //entsprich der anz der ZHK
@@ -22,10 +25,6 @@ namespace MMI.Algos
                     {
                         tagLevel++;
                         //Console.WriteLine("Breit Neuer Khz");
-                    }
-                    else
-                    {
-                        //Console.WriteLine("Breit Alter Khz");
                     }
                 }
             }

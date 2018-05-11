@@ -14,7 +14,7 @@ namespace MMI
             Graph g = readFile(new ImportKantenList(), @"files/Graph4.txt", gerichtet);
 
             writeMessage("ZHK Tief: " + new CountZhkTief().CountZhk(g), true);
-            //writeMessage("ZHK Breit: " + new CountZhkBreit().CountZhk(g), true);
+            writeMessage("ZHK Breit: " + new CountZhkBreit().CountZhk(g), true);
         }
         
         static Graph readFile(IParseGraph parseG, string path, bool gerichtet)

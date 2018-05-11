@@ -15,13 +15,16 @@ namespace MMI.Algos
 
         public int CountZhk(Graph Gra, Knoten StartKn)
         {
+            Gra.resetKantenTag();
+            Gra.resetKnotenTag();
+
             int tagLevel = 0; //entsprich der anz der ZHK
             StartKn.Tag = tagLevel;
-            foreach(Knoten kVP in Gra.Knoten) {
-                if (kVP.Tag == -1)
+            foreach(Knoten knoten in Gra.Knoten) {
+                if (knoten.Tag == -1)
                 {
                     //neuer Knoten in der Liste -> potentieller neuer ZHK
-                    if (deep(kVP, tagLevel))
+                    if (deep(knoten, tagLevel))
                     {
                         //deep == true also neues ZHK
                         tagLevel++;
@@ -42,13 +45,26 @@ namespace MMI.Algos
                 {
                     //Tag -1 also neuer Knoten
                     neuerZHK &= deep(kant.ToKnoten, tagLv);
-                }else if(toKn.Tag < tagLv)
+                }else if(toKn.Tag < tagLv)  //checke ob überflüssig
                 {
                     //Tag > -1 und Tag < tagLv also Knoten aus altem ZHK
                     neuerZHK = false;
                 }                
             }
             return neuerZHK;
+        }
+
+        private void resetGraph(Graph Gra)
+        {
+            foreach (Kante kant in Gra.Kanten)
+            {
+                kant.Tag = -1;
+            }
+
+            foreach (Knoten kont in Gra.Knoten)
+            {
+                kont.Tag = -1;
+            }
         }
     }
 }

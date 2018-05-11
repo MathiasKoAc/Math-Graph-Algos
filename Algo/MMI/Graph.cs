@@ -68,11 +68,19 @@ namespace MMI
         /* -- Methods -- */
         /* ------------- */
 
-        public void resetKnotenTag()
+        public void resetKnotenTag(int withTag = -1)
         {
             foreach(Knoten k in this.knoten)
             {
-                k.Tag = -1;
+                k.Tag = withTag;
+            }
+        }
+
+        public void resetKantenTag(int withTag = -1)
+        {
+            foreach (Kante k in this.kanten)
+            {
+                k.Tag = withTag;
             }
         }
 
@@ -80,28 +88,5 @@ namespace MMI
         {
             return cZhk.CountZhk(this);
         }
-
-        /*
-        public double countMST(ICountMST obj)
-        {
-            List<Kante> mKanten;
-            return obj.CountMST(this, out mKanten);
-        }
-
-        public double countTSPTripp(ICountTSP cTsp, bool show)
-        {
-            List<Knoten> Knotens;
-            double count = cTsp.roundTripp(this, this.Knoten[0], out Knotens);
-            if(show)
-            {
-                Console.WriteLine("\n----");
-                foreach (Knoten k in Knotens)
-                {
-                    Console.WriteLine("#" + k.Wert);
-                }
-            }            
-            return count;
-        }
-        */
     }
 }
