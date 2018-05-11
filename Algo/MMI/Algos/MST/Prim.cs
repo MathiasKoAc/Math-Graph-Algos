@@ -16,60 +16,81 @@ namespace MMI.Algos
 
         public double CountMST(Graph Gra, out List<Kante> ZielKanten, Knoten startKnoten)
         {
-            int knotenMaxAnz = Gra.Knoten.Count;
-            int knotenCount = 0;
+            Gra.resetKantenTag();
+            Gra.resetKnotenTag();
 
+            int goalKnotenCount = Gra.Knoten.Count;
+            int knotenCounter = 1;
+
+            List<Kante> kantenList = new List<Kante>();
             ZielKanten = new List<Kante>();
-            List<Kante> umgebungsKanten = new List<Kante>();
+            startKnoten.Tag = 1;
+            addKantenVonKnoten(startKnoten, ref kantenList);
+            
 
-            int maxTag = 0;
-            double mstSize = 0;
-            double tmpMstSize = 0;
-            Kante focusKante;
+            double mstWert = 0;
 
-            //starten...
-            addKantenVonKnoten(startKnoten, ref umgebungsKanten);
-
-            do
+            while(knotenCounter < goalKnotenCount)
             {
-                focusKante = pullKante(ref umgebungsKanten);
-                if (focusKante != null)
+                var fokusKante = pullKante(ref kantenList, out Knoten neuerKnoten);
+                ZielKanten.Add(fokusKante);
+                mstWert += fokusKante.Gewicht;
+                if(neuerKnoten == null)
                 {
-
-                    tmpMstSize = addKante(focusKante, ref ZielKanten, ref maxTag);
-                    if (tmpMstSize > 0f)
-                    {
-                        knotenCount++;
-                        mstSize += tmpMstSize;
-                        addKantenVonKnoten(focusKante.ToKnoten, ref umgebungsKanten);
-                        addKantenVonKnoten(focusKante.FromKnoten, ref umgebungsKanten);
-                    }
+                    break;
                 }
-
-            } while (knotenCount < knotenMaxAnz && focusKante != null);
-
-            return mstSize;
+                addKantenVonKnoten(neuerKnoten, ref kantenList);
+                knotenCounter++;
+            }
+            return mstWert;
         }
 
-        private Kante pullKante(ref List<Kante> sortSet)
+        private Kante pullKante(ref List<Kante> sortSet, out Knoten neuerKnoten)
         {
-            if(sortSet.Count > 0)
+            Kante focusKante = null;
+            neuerKnoten = null;
+
+            foreach(Kante kant in sortSet)
             {
-                Kante focusKante = sortSet.Min();
-                sortSet.Remove(focusKante);
-                return focusKante;
+                if(focusKante == null)
+                {
+                    focusKante = kant;
+                    if (kant.FromKnoten.Tag > -1 && kant.ToKnoten.Tag == -1)
+                    {
+                        neuerKnoten = kant.ToKnoten;
+                    }
+                    else if (kant.ToKnoten.Tag > -1 && kant.FromKnoten.Tag == -1)
+                    {
+                        neuerKnoten = kant.FromKnoten;
+                    }
+                }
+                else if(kant.CompareTo(focusKante) < 0)
+                {
+                    if (kant.FromKnoten.Tag > -1 && kant.ToKnoten.Tag == -1)
+                    {
+                        focusKante = kant;
+                        neuerKnoten = kant.ToKnoten;
+                    }
+                    else if(kant.ToKnoten.Tag > -1 && kant.FromKnoten.Tag == -1)
+                    {
+                        focusKante = kant;
+                        neuerKnoten = kant.FromKnoten;
+                    } 
+                }
             }
-            return null;
+            sortSet.Remove(focusKante);
+            return focusKante;
         }
 
         private void addKantenVonKnoten(Knoten knot, ref List<Kante> sortSet)
         {
+            knot.Tag = 1;
             foreach (Kante kant in knot.Kanten)
             {
-                if(kant.ToKnoten.Tag == -1 || kant.FromKnoten.Tag == -1)
+                if (kant.ToKnoten.Tag == -1 || kant.FromKnoten.Tag == -1)
                 {
                     sortSet.Add(kant);
-                }                
+                }
             }
         }
     }

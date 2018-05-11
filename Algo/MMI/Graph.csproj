@@ -43,6 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algos\MST\AbsMST.cs" />
+    <Compile Include="Algos\MST\ICountMST.cs" />
+    <Compile Include="Algos\MST\Kruskal.cs" />
+    <Compile Include="Algos\MST\Prim.cs" />
+    <Compile Include="GraphOut.cs" />
+    <Compile Include="Imports\ImportKantenListGew.cs" />
+    <Compile Include="Reader.cs" />
     <Compile Include="Strucktur\FastLink.cs" />
     <Compile Include="Imports\AbsImportKantenList.cs" />
     <Compile Include="Algos\ZhK\CountZhkBreit.cs" />

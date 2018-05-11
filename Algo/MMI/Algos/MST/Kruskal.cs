@@ -10,6 +10,10 @@ namespace MMI.Algos
     {
         public override double CountMST(Graph Gra, out List<Kante> Kanten)
         {
+            Gra.Kanten.Sort();
+            Gra.resetKantenTag();
+            Gra.resetKnotenTag();
+
             int maxTag = 0;
             Kanten = new List<Kante>();
             double mstSize = 0;

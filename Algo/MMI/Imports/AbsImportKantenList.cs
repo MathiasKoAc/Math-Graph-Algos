@@ -7,7 +7,7 @@ namespace MMI
     public abstract class AbsImportKantenList : IParseGraph
     {
 
-        protected List<Knoten> createKnotenDict(int count)
+        protected List<Knoten> createKnotenList(int count)
         {
             List<Knoten> knoten = new List<Knoten>();
 

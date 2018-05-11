@@ -9,29 +9,9 @@ namespace MMI
     public class Kante : IComparable<Kante>
     {
         private double gewicht; //oder auch kapazitaet
-        private double kosten;
         private Knoten toKnoten;
         private Knoten fromKnoten;
         private int tag;
-        private double fluss;
-        private bool isResidualKante;
-        private Kante resiKante;
-
-        public Kante(Knoten fromK, Knoten toK, double kapaziteat, double flusss, bool residual, Kante resiKant)
-        {
-            fromKnoten = fromK;
-            toKnoten = toK;
-            this.gewicht = kapaziteat;
-            tag = -1;
-
-            this.fluss = flusss;
-            isResidualKante = residual;
-
-            //Doppel Referenz in und rückrichtung
-            //Die ResiKante der ResiKante ist die OriginalKante
-            resiKante = resiKant;
-            resiKante.ResiKante = this;
-        }
 
         public Kante(Knoten fromK, Knoten toK, double gewicht)
         {
@@ -84,26 +64,6 @@ namespace MMI
             }
         }
 
-        public bool IsResidualKante
-        {
-            get
-            {
-                return isResidualKante;
-            }
-        }
-
-        public double Fluss
-        {
-            get
-            {
-                return fluss;
-            }
-            set
-            {
-                fluss = value;
-            }
-        }
-
         public double Kapazitaet
         {
             get
@@ -113,39 +73,6 @@ namespace MMI
             set
             {
                 gewicht = value;
-            }
-        }
-
-        public double Kosten
-        {
-            get
-            {
-                return kosten;
-            }
-            set
-            {
-                kosten = value;
-            }
-        }
-
-        public Kante ResiKante
-        {
-            get
-            {
-                return resiKante;
-            }
-            set
-            {
-                resiKante = value;
-            }
-        }
-
-        public double RestKapazitaet
-        {
-            get
-            {
-                //Kapazitaet - Fluss
-                return gewicht - fluss;
             }
         }
 

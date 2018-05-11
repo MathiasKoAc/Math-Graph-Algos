@@ -83,10 +83,5 @@ namespace MMI
                 k.Tag = withTag;
             }
         }
-
-        public int countZhk(ICountZusammenhangskomp cZhk)
-        {
-            return cZhk.CountZhk(this);
-        }
     }
 }
