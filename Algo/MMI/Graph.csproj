@@ -47,6 +47,7 @@
     <Compile Include="Algos\MST\ICountMST.cs" />
     <Compile Include="Algos\MST\Kruskal.cs" />
     <Compile Include="Algos\MST\Prim.cs" />
+    <Compile Include="Algos\MST\Prim2.cs" />
     <Compile Include="GraphOut.cs" />
     <Compile Include="Imports\ImportKantenListGew.cs" />
     <Compile Include="Reader.cs" />

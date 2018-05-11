@@ -25,6 +25,7 @@ namespace MMI
             Graph g = Reader.readFile(new ImportKantenListGew(), @"files/G_1_20.txt", ungerichtet);
             GraphOut.writeMessage("MST Kruskal: " + new Kruskal().CountMST(g, out kruskalKanten), needEnter);
             GraphOut.writeMessage("MST Prim: " + new Prim().CountMST(g, out kruskalKanten, g.Knoten[0]), needEnter);
+            GraphOut.writeMessage("MST Prim2: " + new Prim2().CountMST(g, out kruskalKanten, g.Knoten[0]), needEnter);
         }
     }
 }
