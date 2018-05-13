@@ -7,7 +7,6 @@ namespace MMI.Algos
 {
     class DoubleTree2 : ICountTSP
     {
-        List<Kante> treeRun;
 
         public double roundTripp(Graph g, Knoten startKnoten,  out List<Knoten> tour)
         {
@@ -20,19 +19,22 @@ namespace MMI.Algos
             g.resetKantenTag();
 
             Graph doppelTreeGraph = Graph.createInstance(doppelList);
-            //GraphOut.writeMessage("Knoten:");
-            //GraphOut.writeMessage(doppelTreeGraph.Knoten);
-            //GraphOut.writeMessage("Kanten:");
-            //GraphOut.writeMessage(doppelTreeGraph.Kanten);
             List<Knoten> knotenReihenFolge = new Tiefensuche().durchlaufen(doppelTreeGraph.Knoten[0]);
             GraphOut.writeMessage("Knoten Reihenfolge:");
             GraphOut.writeMessage(knotenReihenFolge);
             gewicht = createTourMitAbkuertzung(g, knotenReihenFolge, out List<Kante> kantenList);
+
             GraphOut.writeMessage("Kanten Reihenfolge:");
             GraphOut.writeMessage(kantenList);
             Console.WriteLine("Naiv-DoppelTree-Gewicht: " + gewicht);
-            tour = knotenReihenFolge;
 
+            /*
+            List<Kante> dreiecksList = dreieckOptimierung(g, kantenList);
+            Console.WriteLine("Dreieck Reihenfolge");
+            gewicht = tourAusgebenRechen(dreiecksList);
+            */
+
+            tour = knotenReihenFolge;
             return gewicht;
         }
 
@@ -70,59 +72,6 @@ namespace MMI.Algos
                 }                
             }
             return gewicht;
-        }
-
-        private List<Kante> dreieckOptimierung(Graph g, List<Kante> kanten)
-        {
-            List<Knoten> Knotens = new List<Knoten>();
-            List<Kante> Kantens = new List<Kante>();
-
-            Knotens.Add(kanten[0].FromKnoten);
-            bool added = false;
-            int startI;
-            for (int i = 0; i < kanten.Count; i++)
-            {
-                added = false;
-                startI = i;
-
-                var toK = kanten[i].ToKnoten;
-                if (Knotens.Contains(kanten[i].ToKnoten))
-                {
-                    //umweg
-                    double umweg = 0;
-                    //gibt nachste Kante wo toKnoten ein neuer ist
-                    for(; i < kanten.Count && !added; )
-                    {
-                        umweg += kanten[i].Gewicht;
-                        if(!Knotens.Contains(kanten[i].ToKnoten))
-                        {
-                            Kante schleichweg = g.findKante(kanten[startI].FromKnoten, kanten[i].ToKnoten);
-                            if(schleichweg != null && schleichweg.Gewicht < umweg)
-                            {
-                                Knotens.Add(kanten[startI].ToKnoten);
-                                Kantens.Add(schleichweg);
-                                added = true;
-                            }
-                        }
-                        
-                        if(!added)
-                        {
-                            i++;
-                        }
-                    }
-                }
-
-                //Normal weg
-                if(!added && i < kanten.Count)
-                {
-                    Knotens.Add(kanten[startI].ToKnoten);
-                    Kantens.Add(kanten[startI]);
-                }
-            }
-
-            //Rückweg
-            Kantens.Add(g.findKante(Knotens.Last(), Knotens.First()));
-            return Kantens;
         }
 
         private List<Kante> doppleKantenList(List<Kante> kanten)

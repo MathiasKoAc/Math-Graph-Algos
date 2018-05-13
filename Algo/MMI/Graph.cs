@@ -55,6 +55,12 @@ namespace MMI
                 neueKantenList.Add(neueKante);
             }
 
+            //sortieren fuer das bevorzugen des kleinen Weges
+            foreach(Knoten k in knotenList)
+            {
+                k.Kanten.Sort();
+            }
+
             return new Graph(neueKantenList, knotenList);
         }
 
