@@ -49,8 +49,10 @@
     <Compile Include="Algos\MST\Prim.cs" />
     <Compile Include="Algos\MST\Prim2.cs" />
     <Compile Include="Algos\Traversieren\Tiefensuche.cs" />
+    <Compile Include="Algos\TSP\DoubleTree.cs" />
     <Compile Include="Algos\TSP\DoubleTree2.cs" />
     <Compile Include="Algos\TSP\ICountTSP.cs" />
+    <Compile Include="Algos\TSP\NearestNeigbor.cs" />
     <Compile Include="Algos\TSP\Struct\Weg.cs" />
     <Compile Include="GraphOut.cs" />
     <Compile Include="Imports\ImportKantenListGew.cs" />
