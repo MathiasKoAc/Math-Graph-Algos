@@ -28,7 +28,18 @@ namespace MMI
             {
                 writeMessage("Kante==null", needEnter);
             }
-            
+        }
+
+        public static void writeMessage(Knoten k, bool needEnter = false)
+        {
+            if (k != null)
+            {
+                writeMessage(k.ToString(), needEnter);
+            }
+            else
+            {
+                writeMessage("Knoten==null", needEnter);
+            }
         }
 
         public static void writeMessage(List<Kante> kanten, bool needEnter = false)
@@ -43,6 +54,16 @@ namespace MMI
                 }
             }
             writeMessage("--> " + gewicht, needEnter);
+        }
+
+        public static void writeMessage(List<Knoten> knoten, bool needEnter = false)
+        {
+            double gewicht = 0d;
+            foreach (Knoten knot in knoten)
+            {
+                writeMessage(knot, needEnter);
+            }
+            writeMessage("--");
         }
     }
 }

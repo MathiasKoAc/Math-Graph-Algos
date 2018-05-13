@@ -61,5 +61,11 @@ namespace MMI
 
         public ref List<Kante> ResidualKanten => ref residualKanten;
         public ref List<Kante> Kanten => ref kanten;
+
+
+        public override string ToString()
+        {
+            return "K: " + this.Wert;
+        }
     }
 }

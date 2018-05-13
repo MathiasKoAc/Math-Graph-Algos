@@ -53,18 +53,5 @@ namespace MMI.Algos
             }
             return neuerZHK;
         }
-
-        private void resetGraph(Graph Gra)
-        {
-            foreach (Kante kant in Gra.Kanten)
-            {
-                kant.Tag = -1;
-            }
-
-            foreach (Knoten kont in Gra.Knoten)
-            {
-                kont.Tag = -1;
-            }
-        }
     }
 }

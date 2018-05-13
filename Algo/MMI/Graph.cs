@@ -12,6 +12,52 @@ namespace MMI
         private List<Kante> kanten;
         private List<Knoten> knoten;     //Knoten mit Wert 1 an Stelle 1 usw
 
+        public static Graph createInstance(List<Kante> KantenList)
+        {
+            List<Knoten> knotenList = new List<Knoten>();
+            List<Kante> neueKantenList = new List<Kante>();
+
+            int maxKnoten = 0;
+            foreach (Kante kant in KantenList)
+            {
+                if(kant.ToKnoten.Wert > maxKnoten)
+                {
+                    maxKnoten = kant.ToKnoten.Wert;
+                }
+
+                if (kant.FromKnoten.Wert > maxKnoten)
+                {
+                    maxKnoten = kant.FromKnoten.Wert;
+                }
+            }
+            
+            for(int i = 0; i <= maxKnoten; i++)
+            {
+                knotenList.Add(new Knoten(i));
+            }
+
+            foreach(Kante kant in KantenList)
+            {
+                if(knotenList[kant.ToKnoten.Wert] == null)
+                {
+                    Knoten k = new Knoten(kant.ToKnoten.Wert);
+                    knotenList.Add(k);
+                }
+                if (knotenList[kant.FromKnoten.Wert] == null)
+                {
+                    Knoten k = new Knoten(kant.FromKnoten.Wert);
+                    knotenList.Add(k);
+                }
+
+                Kante neueKante = new Kante(knotenList[kant.FromKnoten.Wert], knotenList[kant.FromKnoten.Wert], kant.Gewicht);
+                knotenList[kant.FromKnoten.Wert].Kanten.Add(neueKante);
+                knotenList[kant.ToKnoten.Wert].Kanten.Add(neueKante);
+                neueKantenList.Add(neueKante);
+            }
+
+            return new Graph(neueKantenList, knotenList);
+        }
+
         public Graph (List<Kante> Kanten, List<Knoten> Knoten)
         {
             kanten = Kanten;
@@ -58,6 +104,21 @@ namespace MMI
                         findK = kant;
                         break;
                     }
+                }
+            }
+
+            return findK;
+        }
+
+        public Kante findKante(int vonK, int zuK)
+        {
+            Kante findK = null;
+            foreach (Kante kant in kanten)
+            {
+                if (kant.ToKnoten.Wert == zuK && kant.FromKnoten.Wert == vonK)
+                {
+                    findK = kant;
+                    break;
                 }
             }
 
