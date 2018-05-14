@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    class Prim2 : AbsMST
+    class Prim2 : ICountMST
     {
 
-        public override double CountMST(Graph Gra, out List<Kante> Kanten)
+        public double CountMST(Graph Gra, out List<Kante> Kanten)
         {
             return CountMST(Gra, out Kanten, Gra.Knoten[0]);
         }
