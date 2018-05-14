@@ -33,7 +33,7 @@ namespace MMI.Algos
                 }
             }
 
-            GraphOut.writeMessage("counterKanten: " + counterKanten + " " + goalCountKanten);
+            //GraphOut.writeMessage("counterKanten: " + counterKanten + " " + goalCountKanten);
             return mstSize;
         }
 

@@ -32,12 +32,12 @@ namespace MMI.Algos
             while(knotenCounter < goalKnotenCount)
             {
                 var fokusKante = pullKante(ref kantenList, out Knoten neuerKnoten);
+                if (fokusKante == null)
+                {
+                    throw new Exception("Graph nicht zusammen hängend.");
+                }
                 ZielKanten.Add(fokusKante);
                 mstWert += fokusKante.Gewicht;
-                if(neuerKnoten == null)
-                {
-                    break;
-                }
                 addKantenVonKnoten(neuerKnoten, ref kantenList);
                 knotenCounter++;
             }
@@ -82,6 +82,7 @@ namespace MMI.Algos
                         addedSuccessful = sortSet.Add(kant);
                         if(!addedSuccessful)
                         {
+                            //TODO Scalierbar machen
                             kant.Offset += (0.0000001);
                         }
                     }                    

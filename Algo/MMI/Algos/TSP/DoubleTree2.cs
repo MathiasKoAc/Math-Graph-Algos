@@ -20,6 +20,7 @@ namespace MMI.Algos
 
             Graph doppelTreeGraph = Graph.createInstance(doppelList);
             List<Knoten> knotenReihenFolge = new Tiefensuche().durchlaufen(doppelTreeGraph.Knoten[0]);
+            knotenReihenFolge.Add(knotenReihenFolge[0]);
             GraphOut.writeMessage("Knoten Reihenfolge:");
             GraphOut.writeMessage(knotenReihenFolge);
             gewicht = createTourMitAbkuertzung(g, knotenReihenFolge, out List<Kante> kantenList);
@@ -51,11 +52,6 @@ namespace MMI.Algos
                 startKnoten = knotenReihenfolge[i];
                 wert += kantenList.Last<Kante>().Gewicht;
             }
-
-            //Kreis schließen
-            Kante letzteKante = g.findKante(startKnoten.Wert, knotenReihenfolge[0].Wert);
-            kantenList.Add(letzteKante);
-            wert += letzteKante.Gewicht;
 
             return wert;
         }

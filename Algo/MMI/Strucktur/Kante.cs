@@ -89,14 +89,16 @@ namespace MMI
                 return 1;
             }*/
             else
-            {    
+            {  
+                //TODO kleiner gleich?
                 return (gewicht + Offset).CompareTo((comparePart.Gewicht + comparePart.Offset));
             }
         }
 
         public override string ToString()
         {
-            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht + " off:"+Offset;
+         
+   return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht + " off:"+Offset;
         }
     }
 }

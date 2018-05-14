@@ -38,16 +38,8 @@ namespace MMI.Algos
             tour.Add(startKnoten);
             Kante lastStartKant = g.findKante(lastKnoten, startKnoten);
 
-            //Dreiecksungleichung: den Rückweg oder die direkte Kante
-            if(lastStartKant != null && lastStartKant.Gewicht < wert)
-            {
-                wert += lastStartKant.Gewicht;
-                Console.WriteLine("Z: " + lastStartKant.ToString());
-            }
-            else
-            {
-                wert =+ wert;
-            }
+            wert += lastStartKant.Gewicht;
+            Console.WriteLine("Z: " + lastStartKant.ToString());
 
             return wert;
         }
@@ -55,11 +47,13 @@ namespace MMI.Algos
         private Kante findNextKante(Knoten startKnoten)
         {
             Kante bestKante = null;
+            double bestGewicht = Double.MaxValue;
             foreach (Kante kant in startKnoten.Kanten)
             {
-                if (kant.ToKnoten.Tag == -1 && (bestKante == null || bestKante.Gewicht > kant.Gewicht))
+                if (kant.ToKnoten.Tag == -1 && bestGewicht > kant.Gewicht)
                 {
                     bestKante = kant;
+                    bestGewicht = kant.Gewicht;
                 }
             }
             return bestKante;

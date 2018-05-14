@@ -34,7 +34,7 @@ namespace MMI.Algos
                 var fokusKante = pullKante(ref kantenList, out Knoten neuerKnoten);
                 if(fokusKante == null)
                 {
-                    throw new Exception("Graph nicht zusammen hängend.");
+                    throw new Exception("Graph nicht zusammenhängend.");
                 }
                 ZielKanten.Add(fokusKante);
                 mstWert += fokusKante.Gewicht;
