@@ -23,10 +23,10 @@ namespace MMI
             //--- MST ---//
             List<Kante> kruskalKanten;
             Graph g = Reader.readFile(new ImportKantenListGew(), @"files/G_100_200.txt", ungerichtet);
-            //GraphOut.writeMessage("MST Kruskal: " + new Kruskal().CountMST(g, out kruskalKanten), needEnter);
-            //GraphOut.writeMessage("MST Prim: " + new Prim().CountMST(g, out kruskalKanten, g.Knoten[0]), needEnter);
             GraphOut.writeMessage("MST Prim2: " + new Prim2().CountMST(g, out kruskalKanten, g.Knoten[0]), needEnter);
-            
+            GraphOut.writeMessage("MST Kruskal: " + new Kruskal().CountMST(g, out kruskalKanten), needEnter);
+            //GraphOut.writeMessage("MST Prim: " + new Prim().CountMST(g, out kruskalKanten, g.Knoten[0]), needEnter);
+
 
             //--- TSP ---//
             //List<Knoten> knotenList;
