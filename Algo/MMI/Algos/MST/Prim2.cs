@@ -16,7 +16,6 @@ namespace MMI.Algos
 
         public double CountMST(Graph Gra, out List<Kante> ZielKanten, Knoten startKnoten)
         {
-            Gra.resetKantenTag();
             Gra.resetKnotenTag();
 
             int goalKnotenCount = Gra.Knoten.Count;
@@ -48,16 +47,23 @@ namespace MMI.Algos
         private Kante pullKante(ref SortedSet<Kante> sortSet, out Knoten neuerKnoten)
         {
             neuerKnoten = null;
-            Kante focusKante = sortSet.Min;
-            sortSet.Remove(focusKante);
+            Kante focusKante = null;
 
-            if (focusKante.FromKnoten.Tag > -1 && focusKante.ToKnoten.Tag == -1)
+            while(focusKante == null && sortSet.Count() > 0)
             {
-                neuerKnoten = focusKante.ToKnoten;
-            }
-            else if (focusKante.ToKnoten.Tag > -1 && focusKante.FromKnoten.Tag == -1)
-            {
-                neuerKnoten = focusKante.FromKnoten;
+                Kante tmpFocus = sortSet.Min;
+                sortSet.Remove(tmpFocus);
+
+                if (tmpFocus.FromKnoten.Tag > -1 && tmpFocus.ToKnoten.Tag == -1)
+                {
+                    neuerKnoten = tmpFocus.ToKnoten;
+                    focusKante = tmpFocus;
+                }
+                else if (tmpFocus.ToKnoten.Tag > -1 && tmpFocus.FromKnoten.Tag == -1)
+                {
+                    neuerKnoten = focusKante.FromKnoten;
+                    focusKante = tmpFocus;
+                }
             }
 
             return focusKante;
@@ -70,7 +76,15 @@ namespace MMI.Algos
             {
                 if (kant.ToKnoten.Tag == -1 || kant.FromKnoten.Tag == -1)
                 {
-                    sortSet.Add(kant);
+                    bool addedSuccessful = false;
+                    while(!addedSuccessful)
+                    {
+                        addedSuccessful = sortSet.Add(kant);
+                        if(!addedSuccessful)
+                        {
+                            kant.Offset += (0.0000001);
+                        }
+                    }                    
                 }
             }
         }

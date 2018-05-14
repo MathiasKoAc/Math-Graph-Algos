@@ -9,6 +9,7 @@ namespace MMI
     public class Kante : IComparable<Kante>
     {
         private double gewicht; //oder auch kapazitaet
+        public double Offset = 0d;
         private Knoten toKnoten;
         private Knoten fromKnoten;
         private int tag;
@@ -89,13 +90,13 @@ namespace MMI
             }*/
             else
             {    
-                return gewicht.CompareTo(comparePart.Gewicht);
+                return (gewicht + Offset).CompareTo((comparePart.Gewicht + comparePart.Offset));
             }
         }
 
         public override string ToString()
         {
-            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht;
+            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht + " off:"+Offset;
         }
     }
 }

@@ -58,7 +58,6 @@ namespace MMI
 
         public static void writeMessage(List<Knoten> knoten, bool needEnter = false)
         {
-            double gewicht = 0d;
             foreach (Knoten knot in knoten)
             {
                 writeMessage(knot, needEnter);

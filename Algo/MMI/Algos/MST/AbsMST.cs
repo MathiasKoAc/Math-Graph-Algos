@@ -63,6 +63,8 @@ namespace MMI.Algos
         /// <param name="toTag">Tag auf den geandert werden soll</param>
         protected void changeKanteTag(ref List<Kante> Kanten, int fromTag, int toTag)
         {
+            //TODO hier nicht über die Kantenliste sondern über die Knoten von G.
+
             foreach (Kante kant in Kanten)
             {
                 if (kant.FromKnoten.Tag == fromTag)

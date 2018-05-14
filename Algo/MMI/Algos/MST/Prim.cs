@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    class Prim : AbsMST
+    class Prim : ICountMST 
     {
 
-        public override double CountMST(Graph Gra, out List<Kante> Kanten)
+        public double CountMST(Graph Gra, out List<Kante> Kanten)
         {
             return CountMST(Gra, out Kanten, Gra.Knoten[0]);
         }
 
         public double CountMST(Graph Gra, out List<Kante> ZielKanten, Knoten startKnoten)
         {
-            Gra.resetKantenTag();
             Gra.resetKnotenTag();
 
             int goalKnotenCount = Gra.Knoten.Count;
@@ -33,12 +32,12 @@ namespace MMI.Algos
             while(knotenCounter < goalKnotenCount)
             {
                 var fokusKante = pullKante(ref kantenList, out Knoten neuerKnoten);
+                if(fokusKante == null)
+                {
+                    throw new Exception("Graph nicht zusammen hängend.");
+                }
                 ZielKanten.Add(fokusKante);
                 mstWert += fokusKante.Gewicht;
-                if(neuerKnoten == null)
-                {
-                    break;
-                }
                 addKantenVonKnoten(neuerKnoten, ref kantenList);
                 knotenCounter++;
             }
@@ -54,14 +53,15 @@ namespace MMI.Algos
             {
                 if(focusKante == null)
                 {
-                    focusKante = kant;
                     if (kant.FromKnoten.Tag > -1 && kant.ToKnoten.Tag == -1)
                     {
                         neuerKnoten = kant.ToKnoten;
+                        focusKante = kant;
                     }
                     else if (kant.ToKnoten.Tag > -1 && kant.FromKnoten.Tag == -1)
                     {
                         neuerKnoten = kant.FromKnoten;
+                        focusKante = kant;
                     }
                 }
                 else if(kant.CompareTo(focusKante) < 0)
@@ -78,13 +78,19 @@ namespace MMI.Algos
                     } 
                 }
             }
-            sortSet.Remove(focusKante);
+
+            if(focusKante != null)
+            {
+                sortSet.Remove(focusKante);
+            }
+            
             return focusKante;
         }
 
         private void addKantenVonKnoten(Knoten knot, ref List<Kante> sortSet)
         {
             knot.Tag = 1;
+
             foreach (Kante kant in knot.Kanten)
             {
                 if (kant.ToKnoten.Tag == -1 || kant.FromKnoten.Tag == -1)
@@ -92,6 +98,7 @@ namespace MMI.Algos
                     sortSet.Add(kant);
                 }
             }
+
         }
     }
 }
