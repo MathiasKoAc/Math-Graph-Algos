@@ -16,12 +16,24 @@ namespace MMI.Algos
 
             int maxTag = 0;
             Kanten = new List<Kante>();
-            double mstSize = 0;
 
-            foreach(Kante k in Gra.Kanten)
+            double mstSize = 0;
+            double add = 0;
+
+            int goalCountKanten = Gra.Knoten.Count-1;
+            int counterKanten = 0;
+
+            for(int i = 0; i < Gra.Kanten.Count && counterKanten < goalCountKanten; i++)
             {
-                mstSize += addKante(k, ref Kanten, ref Gra, ref maxTag);
+                add = addKante(Gra.Kanten[i], ref Kanten, ref Gra, ref maxTag);
+                if(add > 0.0d)
+                {
+                    mstSize += add;
+                    counterKanten++;
+                }
             }
+
+            GraphOut.writeMessage("counterKanten: " + counterKanten + " " + goalCountKanten);
             return mstSize;
         }
 
