@@ -48,6 +48,7 @@
     <Compile Include="Algos\MST\Prim.cs" />
     <Compile Include="Algos\MST\Prim2.cs" />
     <Compile Include="Algos\Traversieren\Tiefensuche.cs" />
+    <Compile Include="Algos\TSP\BackTrackAll2.cs" />
     <Compile Include="Algos\TSP\DoubleTree.cs" />
     <Compile Include="Algos\TSP\DoubleTree2.cs" />
     <Compile Include="Algos\TSP\ICountTSP.cs" />

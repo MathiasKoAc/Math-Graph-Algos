@@ -98,6 +98,22 @@ namespace MMI
             }
         }
 
+        public double findSmallesKantenGewicht(out Kante kante)
+        {
+            double smalles = Double.MaxValue;
+            kante = Kanten[0];
+
+            foreach(Kante kn in Kanten)
+            {
+                if(kn.Gewicht < smalles)
+                {
+                    smalles = kn.Gewicht;
+                    kante = kn;
+                }
+            }
+            return smalles;
+        }
+
         public Kante findKante(Knoten vonK, Knoten zuK)
         {
             Kante findK = null;

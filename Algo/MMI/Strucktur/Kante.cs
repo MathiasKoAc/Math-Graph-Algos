@@ -98,7 +98,7 @@ namespace MMI
         public override string ToString()
         {
          
-   return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht + " off:"+Offset;
+            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht + " off:"+Offset;
         }
     }
 }
