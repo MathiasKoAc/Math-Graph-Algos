@@ -35,7 +35,7 @@ namespace MMI
             GraphOut.writeMessage("TSP DT2-Kruskal: " + new DoubleTree2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             //GraphOut.writeMessage("--NearestNeigbor--", needEnter);
             //GraphOut.writeMessage("TSP NearestNeigbor: " + new NearestNeigbor().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
-            GraphOut.writeMessage("TSP BackTrackAll: " + new BackTrackAll2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
+            GraphOut.writeMessage("TSP BackTrackAll2: " + new BackTrackAll2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             GraphOut.writeMessage(knotenList);
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);

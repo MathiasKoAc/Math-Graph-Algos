@@ -67,7 +67,7 @@ namespace MMI.Algos
                 foreach (Kante kant in startKn.Kanten)
                 {
                     toKn = kant.ToKnoten;
-                    if (!knoten.Contains(toKn) && (!branchAndBound || bestGesamtGewicht > (gesamtGewicht + kant.Gewicht + ((knoten.Count-countKnoten-1)*smallesKantenGewicht))))
+                    if (!knoten.Contains(toKn) && (!branchAndBound || bestGesamtGewicht > (gesamtGewicht + kant.Gewicht + (countKnoten - knoten.Count -1) *smallesKantenGewicht)))
                     {
                         //neuer Knoten und ist potentiell kuertzer als BesteLoesung bis hier
                         deep(kant, new List<Kante>(kanten), new HashSet<Knoten>(knoten), gesamtGewicht, branchAndBound);
