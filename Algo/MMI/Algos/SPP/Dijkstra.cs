@@ -16,11 +16,11 @@ namespace MMI.Algos
             DijKnoten fokusDij = dijKnotenMap[ZielKnoten.Wert];
             double ret = fokusDij.Distanze;
             weg.Add(fokusDij.HauptKnoten);
-            while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
+            /*while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
             {
                 fokusDij = dijKnotenMap[fokusDij.VorgangerKnoten.Wert];
                 weg.Add(fokusDij.HauptKnoten);
-            }
+            }*/
             return ret;
         }
 
@@ -37,14 +37,18 @@ namespace MMI.Algos
                 foreach (Kante kant in dij.HauptKnoten.Kanten)
                 {
                     nachfolger = dijKnotenList[kant.ToKnoten.Wert];
-                    dist = dij.Distanze + kant.Gewicht;
-                    if (dist < nachfolger.Distanze)
+                    if (dij.HauptKnoten.Tag != 1)
                     {
-                        nachfolger.VorgangerKnoten = dij.HauptKnoten;
-                        nachfolger.Distanze = dist;
+                        dist = dij.Distanze + kant.Gewicht;
+                        if (dist < nachfolger.Distanze)
+                        {
+                            nachfolger.VorgangerKnoten = dij.HauptKnoten;
+                            nachfolger.Distanze = dist;
+                        }
                     }
                 }
                 sortedKnoten.Remove(dij);
+                dij.HauptKnoten.Tag = 1;
             }
         }
 

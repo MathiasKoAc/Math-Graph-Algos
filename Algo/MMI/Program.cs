@@ -30,7 +30,7 @@ namespace MMI
 
             //--- TSP ---//
             //List<Knoten> knotenList;
-            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/Wege2.txt", ungerichtet);
+            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/Wege2.txt", gerichtet);
             //GraphOut.writeMessage("TSP DT-Kruskal: " + new DoubleTree().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             //GraphOut.writeMessage("TSP DT2-Kruskal: " + new DoubleTree2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             //GraphOut.writeMessage("--NearestNeigbor--", needEnter);
