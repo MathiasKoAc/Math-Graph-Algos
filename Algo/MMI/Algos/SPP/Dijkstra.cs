@@ -16,11 +16,12 @@ namespace MMI.Algos
             DijKnoten fokusDij = dijKnotenMap[ZielKnoten.Wert];
             double ret = fokusDij.Distanze;
             weg.Add(fokusDij.HauptKnoten);
-            /*while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
+            while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
             {
                 fokusDij = dijKnotenMap[fokusDij.VorgangerKnoten.Wert];
                 weg.Add(fokusDij.HauptKnoten);
-            }*/
+
+            }
             return ret;
         }
 
