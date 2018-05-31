@@ -6,52 +6,61 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    class Dijkstra
+    class MoorBellmanFord
     {
         public double ShortestWay(Graph g, Knoten StartKnoten, Knoten ZielKnoten, out List<Knoten> weg)
         {
-            ShortestWayTree(g, StartKnoten, out List<DijKnoten> dijKnotenMap);
+            bool zykelfrei = ShortestWayTree(g, StartKnoten, out List<DijKnoten> dijKnotenMap);
             weg = new List<Knoten>();
-            
-            DijKnoten fokusDij = dijKnotenMap[ZielKnoten.Wert];
-            double ret = fokusDij.Distanze;
-            weg.Add(fokusDij.HauptKnoten);
-            while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
-            {
-                fokusDij = dijKnotenMap[fokusDij.VorgangerKnoten.Wert];
-                weg.Add(fokusDij.HauptKnoten);
 
+            if (zykelfrei)
+            {
+                DijKnoten fokusDij = dijKnotenMap[ZielKnoten.Wert];
+                double ret = fokusDij.Distanze;
+                weg.Add(fokusDij.HauptKnoten);
+                while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
+                {
+                    fokusDij = dijKnotenMap[fokusDij.VorgangerKnoten.Wert];
+                    weg.Add(fokusDij.HauptKnoten);
+
+                }
+                weg.Reverse();
+                return ret;
             }
-            weg.Reverse();
-            return ret;
+            else
+            {
+                throw new NegativCycleExeption("Negativen Cycle found");
+                //return double.MinValue;
+            }
+            
         }
 
-        public void ShortestWayTree(Graph g, Knoten StartKnoten, out List<DijKnoten> dijKnotenList)
+        //return false bei negativem Zykel
+        public bool ShortestWayTree(Graph g, Knoten StartKnoten, out List<DijKnoten> dijKnotenList)
         {
             HashSet<DijKnoten> sortedKnoten = createKnotenSet(g, ref StartKnoten, out dijKnotenList);
 
-            DijKnoten dij = null;
-            DijKnoten nachfolger = null;
-            double dist = Double.PositiveInfinity;
-
-            while ((dij = sortedKnoten.Min<DijKnoten>()) != null && dij.Distanze < Double.MaxValue)
+            int n = g.Knoten.Count;
+            for(int i = 0; i < n-1; i++)
             {
-                foreach (Kante kant in dij.HauptKnoten.Kanten)
+                foreach(Kante kant in g.Kanten)
                 {
-                    nachfolger = dijKnotenList[kant.ToKnoten.Wert];
-                    if (dij.HauptKnoten.Tag != 1)
+                    if(dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Gewicht < dijKnotenList[kant.ToKnoten.Wert].Distanze)
                     {
-                        dist = dij.Distanze + kant.Gewicht;
-                        if (dist < nachfolger.Distanze)
-                        {
-                            nachfolger.VorgangerKnoten = dij.HauptKnoten;
-                            nachfolger.Distanze = dist;
-                        }
+                        dijKnotenList[kant.ToKnoten.Wert].Distanze = dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Gewicht;
+                        dijKnotenList[kant.ToKnoten.Wert].VorgangerKnoten = kant.FromKnoten;
                     }
                 }
-                sortedKnoten.Remove(dij);
-                dij.HauptKnoten.Tag = 1;
             }
+
+            foreach (Kante kant in g.Kanten)
+            {
+                if (dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Gewicht < dijKnotenList[kant.ToKnoten.Wert].Distanze)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private HashSet<DijKnoten> createKnotenSet(Graph g, ref Knoten StartKnoten, out List<DijKnoten> dijKnotenList)

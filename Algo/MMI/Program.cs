@@ -30,15 +30,29 @@ namespace MMI
 
             //--- TSP ---//
             //List<Knoten> knotenList;
-            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/Wege2.txt", gerichtet);
+            //Graph g = Reader.readFile(new ImportKantenListGew(), @"files/K12.txt", gerichtet);
             //GraphOut.writeMessage("TSP DT-Kruskal: " + new DoubleTree().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             //GraphOut.writeMessage("TSP DT2-Kruskal: " + new DoubleTree2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             //GraphOut.writeMessage("--NearestNeigbor--", needEnter);
             //GraphOut.writeMessage("TSP NearestNeigbor: " + new NearestNeigbor().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
             //GraphOut.writeMessage("TSP BackTrackAll2: " + new BackTrackAll2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
 
-            GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[2], g.Knoten[0], out List<Knoten> knotenList), needEnter);
-            GraphOut.writeMessage(knotenList);
+            //--- SPP ---//
+            List<Knoten> knotenList;
+            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/Wege3.txt", gerichtet);
+            //GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
+            //GraphOut.writeMessage(knotenList);
+
+            try
+            {
+                GraphOut.writeMessage("SPP MoorBellmanFord: " + new MoorBellmanFord().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
+                GraphOut.writeMessage(knotenList);
+            } catch (NegativCycleExeption)
+            {
+                GraphOut.writeMessage("SPP MoorBellmanFord: Nagativer Cycle gefunden", needEnter);
+            }
+
+
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);
         }
