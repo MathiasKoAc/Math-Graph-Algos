@@ -35,7 +35,7 @@ namespace MMI.Algos
             this.countKnoten = g.getAnzKnoten();
             this.bestKantenList = null;
             this.kantenListListe = new List<List<Kante>>();
-            this.bestGesamtGewicht = Double.MaxValue;
+            this.bestGesamtGewicht = Double.PositiveInfinity;
             this._startKnoten = startKnoten;
 
             HashSet<Knoten> knotenCheck = new HashSet<Knoten>();
