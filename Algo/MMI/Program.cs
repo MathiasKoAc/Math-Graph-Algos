@@ -39,10 +39,11 @@ namespace MMI
 
             //--- SPP ---//
             List<Knoten> knotenList;
-            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/Wege3.txt", gerichtet);
-            //GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
-            //GraphOut.writeMessage(knotenList);
+            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
+            GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
+            GraphOut.writeMessage(knotenList);
 
+            /*
             try
             {
                 GraphOut.writeMessage("SPP MoorBellmanFord: " + new MoorBellmanFord().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
@@ -51,7 +52,7 @@ namespace MMI
             {
                 GraphOut.writeMessage("SPP MoorBellmanFord: Nagativer Cycle gefunden", needEnter);
             }
-
+            */
 
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);

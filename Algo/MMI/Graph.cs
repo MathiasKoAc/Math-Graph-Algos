@@ -9,8 +9,11 @@ namespace MMI
 {
     public class Graph
     {
-        private List<Kante> kanten;
         private List<Knoten> knoten;     //Knoten mit Wert 1 an Stelle 1 usw
+        public ref List<Knoten> Knoten => ref knoten;
+        public List<Kante> Kanten { get; set; }
+
+        private List<Kante> residualKanten;
 
         public static Graph createInstance(List<Kante> KantenList)
         {
@@ -66,7 +69,7 @@ namespace MMI
 
         public Graph (List<Kante> Kanten, List<Knoten> Knoten)
         {
-            kanten = Kanten;
+            this.Kanten = Kanten;
             knoten = Knoten;
         }
 
@@ -81,22 +84,28 @@ namespace MMI
 
         public int getAnzKanten()
         {
-            return kanten.Count;
+            return Kanten.Count;
         }
 
-        public ref List<Knoten> Knoten => ref knoten;
-
-        public List<Kante> Kanten
+        public List<Kante> ResidualKanten
         {
             get
             {
-                return kanten;
-            }
-            set
-            {
-                kanten = value;
+                if(this.residualKanten == null)
+                {
+                    this.residualKanten = new List<Kante>();
+                    foreach(Kante k in Kanten)
+                    {
+                        residualKanten.Add(k.ResidualKante);
+                    }
+                }
+                return Kanten;
             }
         }
+
+        /* ------------- */
+        /* -- Methods -- */
+        /* ------------- */
 
         public double findSmallesKantenGewicht(out Kante kante)
         {
@@ -119,7 +128,7 @@ namespace MMI
             Kante findK = null;
             if(vonK != null && zuK != null)
             {
-                foreach (Kante kant in kanten)
+                foreach (Kante kant in Kanten)
                 {
                     if (kant.ToKnoten == zuK && kant.FromKnoten == vonK)
                     {
@@ -135,7 +144,7 @@ namespace MMI
         public Kante findKante(int vonK, int zuK)
         {
             Kante findK = null;
-            foreach (Kante kant in kanten)
+            foreach (Kante kant in Kanten)
             {
                 if (kant.ToKnoten.Wert == zuK && kant.FromKnoten.Wert == vonK)
                 {
@@ -147,10 +156,6 @@ namespace MMI
             return findK;
         }
 
-        /* ------------- */
-        /* -- Methods -- */
-        /* ------------- */
-
         public void resetKnotenTag(int withTag = -1)
         {
             foreach(Knoten k in this.knoten)
@@ -161,7 +166,7 @@ namespace MMI
 
         public void resetKantenTag(int withTag = -1)
         {
-            foreach (Kante k in this.kanten)
+            foreach (Kante k in this.Kanten)
             {
                 k.Tag = withTag;
             }

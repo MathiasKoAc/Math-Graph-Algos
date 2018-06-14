@@ -13,6 +13,9 @@ namespace MMI
         private Knoten toKnoten;
         private Knoten fromKnoten;
         private int tag;
+        private double fluss = 0d;
+        private readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
+        private Kante residualKante;
 
         public Kante(Knoten fromK, Knoten toK, double gewicht)
         {
@@ -27,6 +30,23 @@ namespace MMI
             fromKnoten = fromK;
             toKnoten = toK;
             tag = -1;
+        }
+
+        public Kante(Knoten fromK, Knoten toK, double gewicht, KantenTyp typ)
+        {
+            fromKnoten = fromK;
+            toKnoten = toK;
+            this.gewicht = gewicht;
+            tag = -1;
+            KantenTyp = typ;
+        }
+
+        public Kante(Knoten fromK, Knoten toK, KantenTyp typ)
+        {
+            fromKnoten = fromK;
+            toKnoten = toK;
+            tag = -1;
+            KantenTyp = typ;
         }
 
         public Knoten ToKnoten
@@ -73,7 +93,48 @@ namespace MMI
             }
             set
             {
+                if (this.KantenTyp == KantenTyp.StandartKante)
+                {
+                    throw new StruckturException("Fehler! Versucht die Kapazität zu ändern. Kapazitäten von StandardKanten sind fest!");
+                }
                 gewicht = value;
+            }
+        }
+
+        public double Fluss
+        {
+            get
+            {
+                return fluss;
+            }
+            set
+            {
+                if(this.KantenTyp == KantenTyp.ResidualKante)
+                {
+                    throw new StruckturException("Fehler! Versuch den Fluss eine ResidualKante zu ändern. Der Fluss einer ResidualKante ist immer 0!");
+                }
+                fluss = value;
+            }
+        }
+
+        public double RestKapazitaet
+        {
+            get
+            {
+                return Kapazitaet - fluss;
+            }
+        }
+
+        public Kante ResidualKante
+        {
+            get
+            {
+                if(this.residualKante == null)
+                {
+                    // ResidualKante zeigt in die gegengesetzte Richtung und hat die Kapazität des Flusses der Originalkante
+                    residualKante = new Kante(this.toKnoten, this.FromKnoten, this.fluss, KantenTyp.ResidualKante);
+                }
+                return this.residualKante;
             }
         }
 
