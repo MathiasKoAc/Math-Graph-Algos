@@ -38,10 +38,10 @@ namespace MMI
             //GraphOut.writeMessage("TSP BackTrackAll2: " + new BackTrackAll2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
 
             //--- SPP ---//
-            List<Knoten> knotenList;
-            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
-            GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
-            GraphOut.writeMessage(knotenList);
+            //List<Knoten> knotenList;
+            //Graph g = Reader.readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
+            //GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
+            //GraphOut.writeMessage(knotenList);
 
             /*
             try
@@ -53,6 +53,10 @@ namespace MMI
                 GraphOut.writeMessage("SPP MoorBellmanFord: Nagativer Cycle gefunden", needEnter);
             }
             */
+
+            //--- MFP ---//
+            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/fluss2.txt", gerichtet);
+            GraphOut.writeMessage("MFP EdmondsKarp: " + new EdmondsKarp().calcMFP(g, g.Knoten[0],g.Knoten[7]), needEnter);
 
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);

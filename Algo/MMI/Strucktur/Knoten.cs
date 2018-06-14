@@ -10,32 +10,24 @@ namespace MMI
     {
         private int wert;       //entspricht dem Namen
         private List<Kante> kanten;
-        private List<Kante> residualKanten;
         private int tag;
 
         public Knoten()
         {
             this.tag = -1;
             this.kanten = new List<Kante>();
-            this.residualKanten = new List<Kante>();
         }
 
         public Knoten(int wert)
         {
             this.tag = -1;
             this.kanten = new List<Kante>();
-            this.residualKanten = new List<Kante>();
             this.wert = wert;
         }
 
         public void AddKante(Kante k)
         {
             kanten.Add(k);
-        }
-
-        public void AddResidualKante(Kante k)
-        {
-            residualKanten.Add(k);
         }
 
         public int Wert
@@ -59,9 +51,19 @@ namespace MMI
             }
         }
 
-        public ref List<Kante> ResidualKanten => ref residualKanten;
         public ref List<Kante> Kanten => ref kanten;
 
+        public Kante getToKante(Knoten toKnoten)
+        {
+            foreach(Kante kn in kanten)
+            {
+                if(kn.ToKnoten.wert == toKnoten.wert)
+                {
+                    return kn;
+                }
+            }
+            return null;
+        }
 
         public override string ToString()
         {

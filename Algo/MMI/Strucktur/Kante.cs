@@ -111,7 +111,15 @@ namespace MMI
             {
                 if(this.KantenTyp == KantenTyp.ResidualKante)
                 {
-                    throw new StruckturException("Fehler! Versuch den Fluss eine ResidualKante zu ändern. Der Fluss einer ResidualKante ist immer 0!");
+                    //gewicht = Kapazitaet
+                    this.gewicht -= value;
+
+                    //resiKante von resiKante ist StandartKante
+                    this.residualKante.Fluss -= value;
+                } else
+                {
+                    this.fluss += value;
+                    this.residualKante.Kapazitaet += value;
                 }
                 fluss = value;
             }
@@ -125,19 +133,23 @@ namespace MMI
             }
         }
 
-        public Kante ResidualKante
+        public Kante getResidualKante()
         {
-            get
+            if(this.residualKante == null)
             {
-                if(this.residualKante == null)
-                {
-                    // ResidualKante zeigt in die gegengesetzte Richtung und hat die Kapazität des Flusses der Originalkante
-                    residualKante = new Kante(this.toKnoten, this.FromKnoten, this.fluss, KantenTyp.ResidualKante);
-                    toKnoten.AddKante(residualKante);
-                }
-                return this.residualKante;
+                // ResidualKante zeigt in die gegengesetzte Richtung und hat die Kapazität des Flusses der Originalkante
+                this.residualKante = new Kante(this.toKnoten, this.FromKnoten, this.fluss, KantenTyp.ResidualKante);
+                this.residualKante.setResidualKante(this);
+                toKnoten.AddKante(residualKante);
             }
+            return this.residualKante;
         }
+
+        public void setResidualKante(Kante kant)
+        {
+            this.residualKante = kant;
+        }
+
 
         public int CompareTo(Kante comparePart)
         {

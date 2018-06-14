@@ -11,7 +11,9 @@ namespace MMI
     {
         private List<Knoten> knoten;     //Knoten mit Wert 1 an Stelle 1 usw
         public ref List<Knoten> Knoten => ref knoten;
-        public List<Kante> Kanten { get; set; }
+
+        public List<Kante> kanten;
+        public ref List<Kante> Kanten => ref kanten;
 
         private List<Kante> residualKanten;
 
@@ -87,19 +89,15 @@ namespace MMI
             return Kanten.Count;
         }
 
-        public List<Kante> ResidualKanten
+        public void createResidualKanten()
         {
-            get
+            if(this.residualKanten == null)
             {
-                if(this.residualKanten == null)
+                this.residualKanten = new List<Kante>();
+                foreach(Kante k in Kanten)
                 {
-                    this.residualKanten = new List<Kante>();
-                    foreach(Kante k in Kanten)
-                    {
-                        residualKanten.Add(k.ResidualKante);
-                    }
+                    residualKanten.Add(k.getResidualKante());
                 }
-                return Kanten;
             }
         }
 
