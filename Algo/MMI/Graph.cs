@@ -171,5 +171,13 @@ namespace MMI
                 k.Tag = withTag;
             }
         }
+
+        public void resetFluss(double fluss = 0)
+        {
+            foreach (Kante k in this.Kanten)
+            {
+                k.Fluss = fluss;
+            }
+        }
     }
 }

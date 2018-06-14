@@ -133,6 +133,7 @@ namespace MMI
                 {
                     // ResidualKante zeigt in die gegengesetzte Richtung und hat die Kapazität des Flusses der Originalkante
                     residualKante = new Kante(this.toKnoten, this.FromKnoten, this.fluss, KantenTyp.ResidualKante);
+                    toKnoten.AddKante(residualKante);
                 }
                 return this.residualKante;
             }
