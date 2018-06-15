@@ -56,6 +56,7 @@ namespace MMI.Algos
             return wegFluss;
         }
 
+        //bestimme minimum nicht mitten rein schlecht lesbar
         private void addKanteToWeg(Kante kant, ref double vglWegFluss,ref List<Kante> weg)
         {
             double rest = kant.RestKapazitaet;

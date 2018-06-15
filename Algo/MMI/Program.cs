@@ -55,7 +55,7 @@ namespace MMI
             */
 
             //--- MFP ---//
-            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/G_1_2.txt", gerichtet);
+            Graph g = Reader.readFile(new ImportKantenListGew(), @"files/fluss2.txt", gerichtet);
             GraphOut.writeMessage("MFP EdmondsKarp: " + new EdmondsKarp().calcMFP(g, g.Knoten[0],g.Knoten[7]), needEnter);
 
 
