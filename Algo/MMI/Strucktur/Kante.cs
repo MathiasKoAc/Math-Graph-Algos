@@ -17,6 +17,13 @@ namespace MMI
         private readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
         private Kante residualKante;
 
+        private double kosten;
+
+        public Kante()
+        {
+            tag = -1;
+        }
+
         public Kante(Knoten fromK, Knoten toK, double gewicht)
         {
             fromKnoten = fromK;
@@ -47,6 +54,16 @@ namespace MMI
             toKnoten = toK;
             tag = -1;
             KantenTyp = typ;
+        }
+
+        public Kante(Knoten fromK, Knoten toK, double kosten, double kapazitaet)
+        {
+
+            fromKnoten = fromK;
+            toKnoten = toK;
+            this.gewicht = kapazitaet;
+            this.kosten = kosten;
+            tag = -1;
         }
 
         public Knoten ToKnoten
@@ -100,6 +117,8 @@ namespace MMI
                 gewicht = value;
             }
         }
+
+        public double Kosten { get => kosten; set => kosten = value; }
 
         public double Fluss
         {

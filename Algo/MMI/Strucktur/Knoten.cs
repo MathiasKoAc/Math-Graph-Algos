@@ -11,6 +11,7 @@ namespace MMI
         private int wert;       //entspricht dem Namen
         private List<Kante> kanten;
         private int tag;
+        private double balance;
 
         public Knoten()
         {
@@ -23,6 +24,14 @@ namespace MMI
             this.tag = -1;
             this.kanten = new List<Kante>();
             this.wert = wert;
+        }
+
+        public Knoten(int wert, double balance)
+        {
+            this.tag = -1;
+            this.kanten = new List<Kante>();
+            this.wert = wert;
+            this.balance = balance;
         }
 
         public void AddKante(Kante k)
