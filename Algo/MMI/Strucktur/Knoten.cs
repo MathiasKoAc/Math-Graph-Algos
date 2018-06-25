@@ -78,5 +78,15 @@ namespace MMI
         {
             return "K: " + this.Wert;
         }
+
+        public double calcAusfluss()
+        {
+            double ausFluss = 0d;
+            foreach(Kante kant in Kanten)
+            {
+                ausFluss += kant.Fluss;
+            }
+            return ausFluss;
+        }
     }
 }

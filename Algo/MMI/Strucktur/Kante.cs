@@ -16,8 +16,9 @@ namespace MMI
         private double fluss = 0d;
         private readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
         private Kante residualKante;
-
         private double kosten;
+
+        public double Attribut;
 
         public Kante()
         {
@@ -167,6 +168,11 @@ namespace MMI
         public void setResidualKante(Kante kant)
         {
             this.residualKante = kant;
+        }
+
+        public void setMaxFluss()
+        {
+            this.fluss = this.Kapazitaet;
         }
 
 
