@@ -41,7 +41,7 @@ namespace MMI.Algos
                     nachfolger = dijKnotenList[kant.ToKnoten.Wert];
                     if (dij.HauptKnoten.Tag != 1)
                     {
-                        dist = dij.Distanze + kant.Gewicht;
+                        dist = dij.Distanze + kant.Kosten;
                         if (dist < nachfolger.Distanze)
                         {
                             nachfolger.VorgangerKnoten = dij.HauptKnoten;

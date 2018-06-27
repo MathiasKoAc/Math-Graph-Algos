@@ -133,13 +133,18 @@ namespace MMI
                 {
                     //gewicht = Kapazitaet
                     this.gewicht -= value;
-
-                    //resiKante von resiKante ist StandartKante
-                    this.residualKante.Fluss -= value;
+                    if(residualKante != null)
+                    {
+                        //resiKante von resiKante ist StandartKante
+                        this.residualKante.Fluss -= value;
+                    }
                 } else
                 {
                     this.fluss += value;
-                    this.residualKante.Kapazitaet += value;
+                    if (residualKante != null)
+                    {
+                        this.residualKante.Kapazitaet += value;
+                    }
                 }
                 fluss = value;
             }

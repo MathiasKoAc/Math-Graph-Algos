@@ -18,11 +18,17 @@ namespace MMI.Algos
                 DijKnoten fokusDij = dijKnotenMap[ZielKnoten.Wert];
                 double ret = fokusDij.Distanze;
                 weg.Add(fokusDij.HauptKnoten);
-                while (fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
+                while (fokusDij.VorgangerKnoten != null && fokusDij.HauptKnoten.Wert != fokusDij.VorgangerKnoten.Wert)
                 {
                     fokusDij = dijKnotenMap[fokusDij.VorgangerKnoten.Wert];
                     weg.Add(fokusDij.HauptKnoten);
-
+                }
+                
+                if(fokusDij.VorgangerKnoten == null)
+                {
+                    //kein Wege gefunden
+                    weg = null;
+                    return double.PositiveInfinity;
                 }
                 weg.Reverse();
                 return ret;
@@ -45,9 +51,9 @@ namespace MMI.Algos
             {
                 foreach(Kante kant in g.Kanten)
                 {
-                    if(dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Gewicht < dijKnotenList[kant.ToKnoten.Wert].Distanze)
+                    if(dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Kosten < dijKnotenList[kant.ToKnoten.Wert].Distanze)
                     {
-                        dijKnotenList[kant.ToKnoten.Wert].Distanze = dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Gewicht;
+                        dijKnotenList[kant.ToKnoten.Wert].Distanze = dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Kosten;
                         dijKnotenList[kant.ToKnoten.Wert].VorgangerKnoten = kant.FromKnoten;
                     }
                 }
@@ -55,7 +61,7 @@ namespace MMI.Algos
 
             foreach (Kante kant in g.Kanten)
             {
-                if (dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Gewicht < dijKnotenList[kant.ToKnoten.Wert].Distanze)
+                if (dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Kosten < dijKnotenList[kant.ToKnoten.Wert].Distanze)
                 {
                     return false;
                 }

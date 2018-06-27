@@ -62,6 +62,8 @@ namespace MMI
 
         public ref List<Kante> Kanten => ref kanten;
 
+        public double Balance { get => balance; set => balance = value; }
+
         public Kante getToKante(Knoten toKnoten)
         {
             foreach(Kante kn in kanten)
@@ -86,6 +88,7 @@ namespace MMI
             {
                 ausFluss += kant.Fluss;
             }
+            GraphOut.writeMessage("ausFluss: " + ausFluss + " von Konten: " + wert);
             return ausFluss;
         }
     }
