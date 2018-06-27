@@ -14,7 +14,7 @@ namespace MMI.Algos
         {
             resetPsydoBalance(g.getAnzKnoten());
             setzteStartFluss(ref g.Kanten);
-            double[] d = calcPsydoBalacnce(g);
+            this.psydoBalance = calcPsydoBalacnce(g);
             findQuellenSenken(g, out List<Knoten> quellen, out List<Knoten> senken);
             bool hatWeg = true;
             while (hatWeg && quellen.Count > 0 && senken.Count > 0)
@@ -28,7 +28,7 @@ namespace MMI.Algos
                     findQuellenSenken(g, out quellen, out senken);
                 }
             }
-            
+            this.psydoBalance = calcPsydoBalacnce(g);
             return 0d;
         }
 
@@ -103,7 +103,6 @@ namespace MMI.Algos
             {
                 if(k.Kosten < 0)
                 {
-                    GraphOut.writeMessage(k + "SETZE MAX FLUSS");
                     k.setMaxFluss();
                 }
             }
@@ -135,24 +134,11 @@ namespace MMI.Algos
             for(int i = 0; i < g.Knoten.Count; i++)
             {
                 d[g.Knoten[i].Wert] = g.Knoten[i].calcAusfluss();
-                GraphOut.writeMessage("" + g.Knoten[i].Wert + " # " + d[g.Knoten[i].Wert]);
-            }
-
-            for (int i = 0; i < d.Count(); i++)
-            {
-                GraphOut.writeMessage("D: " + d[i]);
             }
 
             for (int i = 0; i < g.Kanten.Count; i++)
             {
-                GraphOut.writeMessage("Einfluss: " + g.Kanten[i].Fluss +" # "+ g.Kanten[i]);
-                GraphOut.writeMessage(g.Kanten[i].ToKnoten.Wert + "-" + g.Kanten[i].Fluss );
                 d[g.Kanten[i].ToKnoten.Wert] -= g.Kanten[i].Fluss;
-            }
-            
-            for(int i = 0; i < d.Count(); i++)
-            {
-                GraphOut.writeMessage("D: " + d[i]);
             }
             return d;
         }
