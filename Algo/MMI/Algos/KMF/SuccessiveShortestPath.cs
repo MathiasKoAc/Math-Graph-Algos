@@ -24,7 +24,7 @@ namespace MMI.Algos
                 if (hatWeg)
                 {
                     flussErhoehen(ref g, weg);
-                    calcPsydoBalacnce(g);
+                    this.psydoBalance = calcPsydoBalacnce(g);
                     findQuellenSenken(g, out quellen, out senken);
                 }
             }
@@ -84,18 +84,26 @@ namespace MMI.Algos
 
         private void flussErhoehen(ref Graph g, List<Knoten> weg)
         {
-            double erhoehung = double.PositiveInfinity;
-            double aenderung = double.PositiveInfinity;
-            
+            Knoten quelle = g.Knoten[weg[1].Wert];
+            Knoten senke = g.Knoten[weg[weg.Count - 2].Wert];
+
+            double erhoehung = quelle.Balance - psydoBalance[quelle.Wert];
+            double aenderung = psydoBalance[senke.Wert] - senke.Balance;
+
+            if (erhoehung > aenderung)
+            {
+                erhoehung = aenderung;
+            }
+
             //erhöhung ermitteln
-            Knoten von = weg[0];
-            for(int i = 1; i < weg.Count; i++) {
+            Knoten von = g.Knoten[weg[1].Wert];
+            for (int i = 2; i < weg.Count-1; i++) {
                 aenderung = von.getToKante(weg[i]).RestKapazitaet;
                 if (erhoehung > aenderung)
                 {
                     erhoehung = aenderung;
                 }
-                von = weg[i];
+                von = g.Knoten[weg[i].Wert];
             }
 
             //erhöhung durchführen weg[0] ist superQuelle weg[last] ist superSenke
@@ -103,6 +111,7 @@ namespace MMI.Algos
             for (int i = 2; i < (weg.Count-1); i++)
             {
                 von.getToKante(g.Knoten[weg[i].Wert]).Fluss += erhoehung;
+                von = g.Knoten[weg[i].Wert];
             }
 
         }
