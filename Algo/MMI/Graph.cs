@@ -54,9 +54,8 @@ namespace MMI
                     knotenList.Add(k);
                 }
 
-                Kante neueKante = new Kante(knotenList[kant.FromKnoten.Wert], knotenList[kant.FromKnoten.Wert], kant.Gewicht);
+                Kante neueKante = new Kante(knotenList[kant.FromKnoten.Wert], knotenList[kant.ToKnoten.Wert], kant.Kosten, kant.Gewicht);
                 knotenList[kant.FromKnoten.Wert].Kanten.Add(neueKante);
-                knotenList[kant.ToKnoten.Wert].Kanten.Add(neueKante);
                 neueKantenList.Add(neueKante);
             }
 
@@ -89,21 +88,29 @@ namespace MMI
             return Kanten.Count;
         }
 
+        /* ------------- */
+        /* -- Methods -- */
+        /* ------------- */
+
+        public Graph createResidualGraph()
+        {
+            createResidualKanten();
+            var kantenForNewG = this.kanten.Where(r => r.RestKapazitaet > 0).ToList<Kante>();
+            kantenForNewG.AddRange(new List<Kante>(this.residualKanten.Where(k => k.RestKapazitaet > 0).ToList<Kante>()));
+            return Graph.createInstance(kantenForNewG);
+        }
+
         public void createResidualKanten()
         {
-            if(this.residualKanten == null)
+            if (this.residualKanten == null)
             {
                 this.residualKanten = new List<Kante>();
-                foreach(Kante k in Kanten)
+                foreach (Kante k in Kanten)
                 {
                     residualKanten.Add(k.getResidualKante());
                 }
             }
         }
-
-        /* ------------- */
-        /* -- Methods -- */
-        /* ------------- */
 
         public double findSmallesKantenGewicht(out Kante kante)
         {

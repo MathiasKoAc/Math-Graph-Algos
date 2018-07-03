@@ -16,7 +16,7 @@ namespace MMI
         private double fluss = 0d;
         private readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
         private Kante residualKante;
-        private double kosten;
+        private double kosten = 0;
 
         public double Attribut;
 
@@ -40,11 +40,12 @@ namespace MMI
             tag = -1;
         }
 
-        public Kante(Knoten fromK, Knoten toK, double gewicht, KantenTyp typ)
+        public Kante(Knoten fromK, Knoten toK, double kosten, double gewicht, KantenTyp typ)
         {
             fromKnoten = fromK;
             toKnoten = toK;
             this.gewicht = gewicht;
+            this.kosten = kosten;
             tag = -1;
             KantenTyp = typ;
         }
@@ -57,12 +58,12 @@ namespace MMI
             KantenTyp = typ;
         }
 
-        public Kante(Knoten fromK, Knoten toK, double kosten, double kapazitaet)
+        public Kante(Knoten fromK, Knoten toK, double kosten, double gew)
         {
 
             fromKnoten = fromK;
             toKnoten = toK;
-            this.gewicht = kapazitaet;
+            this.gewicht = gew;
             this.kosten = kosten;
             tag = -1;
         }
@@ -163,7 +164,7 @@ namespace MMI
             if(this.residualKante == null)
             {
                 // ResidualKante zeigt in die gegengesetzte Richtung und hat die Kapazität des Flusses der Originalkante
-                this.residualKante = new Kante(this.toKnoten, this.FromKnoten, this.fluss, KantenTyp.ResidualKante);
+                this.residualKante = new Kante(this.toKnoten, this.FromKnoten, -this.kosten, this.fluss, KantenTyp.ResidualKante);
                 this.residualKante.setResidualKante(this);
                 toKnoten.AddKante(residualKante);
             }
@@ -202,7 +203,7 @@ namespace MMI
         public override string ToString()
         {
          
-            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # " + gewicht + " off:"+Offset;
+            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # f: " + fluss + " u: " + gewicht + " c: "+kosten;
         }
     }
 }
