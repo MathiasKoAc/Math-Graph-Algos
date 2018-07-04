@@ -38,9 +38,8 @@ namespace MMI
             //GraphOut.writeMessage("TSP BackTrackAll2: " + new BackTrackAll2().roundTripp(g, g.Knoten[0], out knotenList), needEnter);
 
             //--- SPP ---//
-            /*
-            List<Knoten> knotenList;
-            Graph g = Reader.readFile(new ImportKantenListKosten(), @"files/Wege1.txt", ungerichtet);
+            /*List<Knoten> knotenList;
+            Graph g = Reader.readFile(new ImportKantenListKosten(), @"files/Wege3.txt", ungerichtet);
             //GraphOut.writeMessage("SPP Dijkstra: " + new Dijkstra().ShortestWay(g, g.Knoten[0], g.Knoten[1], out knotenList), needEnter);
             //GraphOut.writeMessage(knotenList);
 
@@ -52,8 +51,7 @@ namespace MMI
             {
                 GraphOut.writeMessage("SPP MoorBellmanFord: Nagativer Cycle gefunden", needEnter);
             }
-            */            
-
+            */
             //--- MFP ---//
             /*
             Graph g = Reader.readFile(new ImportKantenListGew(), @"files/fluss2.txt", gerichtet);
@@ -62,7 +60,7 @@ namespace MMI
 
             //--- KMF ---//
             Graph g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal1.txt", gerichtet);
-
+            
             /*try
             {
                 GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
@@ -70,7 +68,7 @@ namespace MMI
             {
                 GraphOut.writeMessage(e.Message);
             }*/
-
+            
             try
             {
                 GraphOut.writeMessage("KMF CCA: " + new CycleCancelling().calcKMF(g));
@@ -79,7 +77,7 @@ namespace MMI
             {
                 GraphOut.writeMessage(e.Message);
             }
-
+            
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);
         }

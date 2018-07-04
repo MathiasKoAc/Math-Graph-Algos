@@ -10,7 +10,7 @@ namespace MMI.Algos
     {
         public double ShortestWay(Graph g, Knoten StartKnoten, Knoten ZielKnoten, out List<Knoten> weg)
         {
-            bool zykelfrei = ShortestWayTree(g, StartKnoten, out List<DijKnoten> dijKnotenMap);
+            bool zykelfrei = ShortestWayTree(g, StartKnoten, out List<DijKnoten> dijKnotenMap, out Kante ex);
             weg = new List<Knoten>();
 
             if (zykelfrei)
@@ -42,7 +42,7 @@ namespace MMI.Algos
         }
 
         //return false bei negativem Zykel
-        public bool ShortestWayTree(Graph g, Knoten StartKnoten, out List<DijKnoten> dijKnotenList)
+        public bool ShortestWayTree(Graph g, Knoten StartKnoten, out List<DijKnoten> dijKnotenList, out Kante excetionKante)
         {
             HashSet<DijKnoten> sortedKnoten = createKnotenSet(g, ref StartKnoten, out dijKnotenList);
 
@@ -63,9 +63,11 @@ namespace MMI.Algos
             {
                 if (dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Kosten < dijKnotenList[kant.ToKnoten.Wert].Distanze)
                 {
+                    excetionKante = kant;
                     return false;
                 }
             }
+            excetionKante = null;
             return true;
         }
 

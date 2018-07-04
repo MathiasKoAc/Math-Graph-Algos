@@ -97,7 +97,17 @@ namespace MMI
             createResidualKanten();
             var kantenForNewG = this.kanten.Where(r => r.RestKapazitaet > 0).ToList<Kante>();
             kantenForNewG.AddRange(new List<Kante>(this.residualKanten.Where(k => k.RestKapazitaet > 0).ToList<Kante>()));
-            return Graph.createInstance(kantenForNewG);
+            Graph resiGraph = Graph.createInstance(kantenForNewG);
+            balancenAnpassen(ref resiGraph);
+            return resiGraph;
+        }
+
+        private void balancenAnpassen(ref Graph g)
+        {
+            for(int i = 0; i < this.getAnzKnoten(); i++)
+            {
+                g.Knoten[i].Balance = this.knoten[i].Balance;
+            }
         }
 
         public void createResidualKanten()
@@ -110,6 +120,26 @@ namespace MMI
                     residualKanten.Add(k.getResidualKante());
                 }
             }
+        }
+
+        public void setupSuperQullenSenke(out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
+        {
+            senken = new List<Knoten>();
+            quellen = new List<Knoten>();
+
+            foreach (Knoten k in this.Knoten)
+            {
+                if (k.Balance > 0)
+                {
+                    quellen.Add(k);
+                }
+                else if (k.Balance < 0)
+                {
+                    senken.Add(k);
+                }
+            }
+
+            setSuperQuelleSenke(quellen, senken, out superQuelle, out superSenke, kapaGrenze);
         }
 
         public void setSuperQuelleSenke(List<Knoten> quellen, List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
