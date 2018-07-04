@@ -29,7 +29,12 @@ namespace MMI.Algos
                 }
             }
             this.psydoBalance = calcPsydoBalacnce(g);
-            return 0d;
+
+            if(!hatWeg)
+            {
+                throw new NotBflussException("Es konnte kein B-Fluss gefunden werden.");
+            }
+            return calcFlussKosten(ref g.kanten);
         }
 
         private bool findWeg(Graph resiG, List<Knoten> quellen, List<Knoten> senken, out List<Knoten> weg)
@@ -62,6 +67,16 @@ namespace MMI.Algos
             wegDist = new MoorBellmanFord().ShortestWay(resiG, superQuelle, superSenke, out weg);
 
             return wegDist < double.PositiveInfinity;
+        }
+
+        private double calcFlussKosten(ref List<Kante> kanten)
+        {
+            double sum = 0;
+            foreach(Kante k in kanten)
+            {
+                sum += (k.Fluss * k.Kosten);
+            }
+            return sum;
         }
 
         private double getMinRestKapazitaet(List<Knoten> weg)
@@ -152,7 +167,7 @@ namespace MMI.Algos
             List<Knoten> knotenList = g.Knoten;
             for(int i = 0; i < g.Knoten.Count; i++)
             {
-                d[g.Knoten[i].Wert] = g.Knoten[i].calcAusfluss();
+                d[g.Knoten[i].Wert] = g.Knoten[i].calcAusfluss(false);
             }
 
             for (int i = 0; i < g.Kanten.Count; i++)

@@ -62,7 +62,25 @@ namespace MMI
 
             //--- KMF ---//
             Graph g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal1.txt", gerichtet);
-            GraphOut.writeMessage("MFP EdmondsKarp: " + new SuccessiveShortestPath().calcKMF(g));
+
+            /*try
+            {
+                GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
+            } catch (NotBflussException e)
+            {
+                GraphOut.writeMessage(e.Message);
+            }*/
+
+            try
+            {
+                GraphOut.writeMessage("KMF CCA: " + new CycleCancelling().calcKMF(g));
+            }
+            catch (NotBflussException e)
+            {
+                GraphOut.writeMessage(e.Message);
+            }
+
+
             GraphOut.writeMessage("--##--\nEnde ", needEnter);
         }
     }

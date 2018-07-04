@@ -14,7 +14,7 @@ namespace MMI
         private Knoten fromKnoten;
         private int tag;
         private double fluss = 0d;
-        private readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
+        public readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
         private Kante residualKante;
         private double kosten = 0;
 

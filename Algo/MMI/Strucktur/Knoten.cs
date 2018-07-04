@@ -81,14 +81,16 @@ namespace MMI
             return "K: " + this.Wert;
         }
 
-        public double calcAusfluss()
+        public double calcAusfluss(bool alle = true)
         {
             double ausFluss = 0d;
             foreach(Kante kant in Kanten)
             {
-                ausFluss += kant.Fluss;
+                if(alle || kant.KantenTyp == KantenTyp.StandartKante)
+                {
+                    ausFluss += kant.Fluss;
+                }
             }
-            GraphOut.writeMessage("ausFluss: " + ausFluss + " von Konten: " + wert);
             return ausFluss;
         }
     }

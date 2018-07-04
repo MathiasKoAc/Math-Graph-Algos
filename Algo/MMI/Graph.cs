@@ -112,6 +112,75 @@ namespace MMI
             }
         }
 
+        public void setSuperQuelleSenke(List<Knoten> quellen, List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
+        {
+            superQuelle = new Knoten(this.Knoten.Count);
+            superSenke = new Knoten(this.Knoten.Count + 1);
+
+            Kante tmpKant = null;
+            double kapaGrenzwert = double.PositiveInfinity;
+            foreach (Knoten q in quellen)
+            {
+
+                if(kapaGrenze)
+                {
+                    kapaGrenzwert = q.Balance;
+                }
+                tmpKant = new Kante(superQuelle, q, kapaGrenzwert);
+                superQuelle.AddKante(tmpKant);
+                this.Kanten.Add(tmpKant);
+            }
+            this.Knoten.Add(superQuelle);
+
+            for (int i = 0; i < senken.Count; i++)
+            {
+                if(kapaGrenze)
+                {
+                    kapaGrenzwert = senken[i].Balance;
+                }
+                tmpKant = new Kante(senken[i], superSenke, double.PositiveInfinity);
+                this.Knoten[senken[i].Wert].AddKante(tmpKant);
+                this.Kanten.Add(tmpKant);
+            }
+            this.Knoten.Add(superSenke);
+        }
+
+        public void delSuperQuelle(Knoten superQuelle)
+        {
+            //Kanten von SuperQuelle aus löschen
+            foreach (Kante q in superQuelle.Kanten)
+            {
+                this.Kanten.Remove(q);
+            }
+
+            //Super SuperQuelle aus g entfernen
+            this.Knoten.Remove(superQuelle);
+
+            residualKanten.RemoveAll(kant => kant.ToKnoten.Wert == superQuelle.Wert);
+
+            //Super Quellen-Kanten aus ResiKanten löschen
+            residualKanten.RemoveAll(kant => kant.ToKnoten.Wert == superQuelle.Wert);
+        }
+
+        public void delSuperSenke(List<Knoten> senken, Knoten superSenke)
+        {
+            residualKanten.RemoveAll(kant => kant.FromKnoten.Wert == superSenke.Wert);
+
+            //Kanten zur SuperSenke löschen
+            foreach (Knoten k in senken)
+            {
+                if (k.Kanten != null)
+                {
+                    k.Kanten.RemoveAll(kant => kant.ToKnoten.Wert == superSenke.Wert);
+                }
+            }
+            //Super Senke aus g entfernen
+            this.Knoten.Remove(superSenke);
+
+            //Super Senken-Kanten aus Kanten löschen
+            Kanten.RemoveAll(kant => kant.ToKnoten.Wert == superSenke.Wert);
+        }
+
         public double findSmallesKantenGewicht(out Kante kante)
         {
             double smalles = Double.MaxValue;
