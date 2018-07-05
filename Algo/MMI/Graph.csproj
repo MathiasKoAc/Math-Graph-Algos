@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algos\KMF\AbsKMF.cs" />
     <Compile Include="Algos\KMF\CycleCancelling.cs" />
     <Compile Include="Algos\KMF\StruckturException.cs" />
     <Compile Include="Algos\KMF\SuccessiveShortestPath.cs" />

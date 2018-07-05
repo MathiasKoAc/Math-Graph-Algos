@@ -15,7 +15,7 @@ namespace MMI.Algos
             do
             {
                 fluss = getKuerzesterWeg(g, startKnoten, endKnoten, out List<Kante> weg);
-                GraphOut.writeMessage(weg);
+                //GraphOut.writeMessage(weg);
                 foreach (Kante kant in weg)
                 {
                     kant.Fluss += fluss;

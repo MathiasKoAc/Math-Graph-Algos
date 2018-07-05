@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    class SuccessiveShortestPath
+    class SuccessiveShortestPath : AbsKMF
     {
         protected double[] psydoBalance;
 
@@ -67,17 +67,6 @@ namespace MMI.Algos
             wegDist = new MoorBellmanFord().ShortestWay(resiG, superQuelle, superSenke, out weg);
 
             return wegDist < double.PositiveInfinity;
-        }
-
-        //TODO in SUPER Klasse
-        private double calcFlussKosten(ref List<Kante> kanten)
-        {
-            double sum = 0;
-            foreach(Kante k in kanten)
-            {
-                sum += (k.Fluss * k.Kosten);
-            }
-            return sum;
         }
 
         private double getMinRestKapazitaet(List<Knoten> weg)

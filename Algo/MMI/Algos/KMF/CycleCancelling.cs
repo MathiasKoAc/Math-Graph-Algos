@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMI.Algos
 {
-    class CycleCancelling
+    class CycleCancelling : AbsKMF
     {
         public double calcKMF(Graph g)
         {
@@ -19,9 +19,8 @@ namespace MMI.Algos
                 resiGra = g.createResidualGraph();
                 zyclus = findNegativCycle(ref resiGra, ref g);
             }
-            
 
-            return 0d;
+            return this.calcFlussKosten(ref g.kanten);
         }
 
         //true wenn Cycle gefunden
@@ -102,11 +101,6 @@ namespace MMI.Algos
 
             return 0d;
             
-        }
-
-        private void kostenSummieren(Graph g)
-        {
-
         }
     }
 }

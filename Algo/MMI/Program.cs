@@ -61,14 +61,16 @@ namespace MMI
             //--- KMF ---//
             Graph g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal1.txt", gerichtet);
             
-            /*try
+            try
             {
                 GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
             } catch (NotBflussException e)
             {
                 GraphOut.writeMessage(e.Message);
-            }*/
-            
+            }
+
+            g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal1.txt", gerichtet);
+
             try
             {
                 GraphOut.writeMessage("KMF CCA: " + new CycleCancelling().calcKMF(g));
