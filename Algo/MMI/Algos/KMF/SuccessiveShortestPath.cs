@@ -69,6 +69,7 @@ namespace MMI.Algos
             return wegDist < double.PositiveInfinity;
         }
 
+        //TODO in SUPER Klasse
         private double calcFlussKosten(ref List<Kante> kanten)
         {
             double sum = 0;

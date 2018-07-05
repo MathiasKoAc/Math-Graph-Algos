@@ -12,59 +12,81 @@ namespace MMI.Algos
         {
             double initalKosten = calcInitalBfluss(ref g);
 
+            Graph resiGra;
             bool zyclus = true;
             while (zyclus)
             {
-                Graph resiGra = g.createResidualGraph();
-                zyclus = findNegativCycle(ref resiGra, out List<int> knotenIndex);
-                wegAnpassen(ref g, knotenIndex);
+                resiGra = g.createResidualGraph();
+                zyclus = findNegativCycle(ref resiGra, ref g);
             }
             
 
             return 0d;
         }
 
-        private void wegAnpassen(ref Graph g, List<int> knotenIndex)
-        {
-            double wertAnpassung = double.MaxValue;
-            double tmpAnpassung = 0;
-            int oldIndex = knotenIndex.Last<int>();
-            foreach (int index in knotenIndex)
-            {
-                tmpAnpassung = g.findKante(oldIndex, index).RestKapazitaet;
-                if (tmpAnpassung < wertAnpassung)
-                {
-                    wertAnpassung = tmpAnpassung;
-                }
-                oldIndex = index;
-            }
-
-            oldIndex = knotenIndex.Last<int>();
-            foreach (int index in knotenIndex)
-            {
-                g.findKante(oldIndex, index).Fluss += wertAnpassung;
-            }
-
-        }
-
         //true wenn Cycle gefunden
-        private bool findNegativCycle(ref Graph resiGra, out List<int> knotenIndex)
+        private bool findNegativCycle(ref Graph resiGra, ref Graph g)
         {
             resiGra.setupSuperQullenSenke(out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
             bool zyklus = ! (new MoorBellmanFord().ShortestWayTree(resiGra, superQuelle, out List<DijKnoten> wayTree, out Kante ex));
 
             bool[] checkArray = new bool[wayTree.Count];
-            knotenIndex = new List<int>();
 
             if(zyklus)
             {
                 Knoten fokusKnoten = ex.FromKnoten;
-                for(int i = 0; i < wayTree.Count && !checkArray[fokusKnoten.Wert]; i++)
+
+                //in den Zyclus laufen
+                for(int i = 0; i < wayTree.Count; i++)
                 {
-                    checkArray[fokusKnoten.Wert] = true;
-                    knotenIndex.Add(fokusKnoten.Wert);
                     fokusKnoten = wayTree[fokusKnoten.Wert].VorgangerKnoten;
                 }
+
+                //Anpassungs werte herausfinden
+                double wertAnpassung = double.MaxValue;
+                double tmpAnpassung = 0;
+                List<Kante> kantenForAnderung = new List<Kante>();
+                bool[] isResi = new bool[wayTree.Count];
+
+
+                for (int i = 0; i < wayTree.Count && !checkArray[fokusKnoten.Wert]; i++)
+                {
+                    checkArray[fokusKnoten.Wert] = true;
+                    Kante kant = g.findKante(wayTree[fokusKnoten.Wert].VorgangerKnoten, fokusKnoten);
+                    if(kant != null)
+                    {
+                        //hier ist die Kante normal gerichtet
+                        tmpAnpassung = kant.RestKapazitaet;
+                        isResi[i] = false;
+                    } else
+                    {
+                        //hier ist die Kante residual gerichtet
+                        kant = g.findKante(fokusKnoten, wayTree[fokusKnoten.Wert].VorgangerKnoten);
+                        tmpAnpassung = kant.Fluss;
+                        isResi[i] = true;
+                    }
+                    kantenForAnderung.Add(kant);
+
+                    if (tmpAnpassung < wertAnpassung)
+                    {
+                        wertAnpassung = tmpAnpassung;
+                    }
+                    fokusKnoten = wayTree[fokusKnoten.Wert].VorgangerKnoten;
+                }
+
+                //Anpassung durchführen
+
+                for(int i = 0; i < kantenForAnderung.Count; i++)
+                {
+                    if(isResi[i])
+                    {
+                        kantenForAnderung[i].Fluss -= wertAnpassung;
+                    } else
+                    {
+                        kantenForAnderung[i].Fluss += wertAnpassung;
+                    }
+                }
+                
             }
 
             return zyklus;
@@ -80,6 +102,11 @@ namespace MMI.Algos
 
             return 0d;
             
+        }
+
+        private void kostenSummieren(Graph g)
+        {
+
         }
     }
 }

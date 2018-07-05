@@ -162,13 +162,14 @@ namespace MMI
             }
             this.Knoten.Add(superQuelle);
 
+            kapaGrenzwert = double.PositiveInfinity;
             for (int i = 0; i < senken.Count; i++)
             {
                 if(kapaGrenze)
                 {
-                    kapaGrenzwert = senken[i].Balance;
+                    kapaGrenzwert = -1 * senken[i].Balance;
                 }
-                tmpKant = new Kante(senken[i], superSenke, double.PositiveInfinity);
+                tmpKant = new Kante(senken[i], superSenke, kapaGrenzwert);
                 this.Knoten[senken[i].Wert].AddKante(tmpKant);
                 this.Kanten.Add(tmpKant);
             }
@@ -234,7 +235,7 @@ namespace MMI
             {
                 foreach (Kante kant in Kanten)
                 {
-                    if (kant.ToKnoten == zuK && kant.FromKnoten == vonK)
+                    if (kant.ToKnoten.Wert == zuK.Wert && kant.FromKnoten.Wert == vonK.Wert)
                     {
                         findK = kant;
                         break;
