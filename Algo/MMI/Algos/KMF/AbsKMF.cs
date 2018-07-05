@@ -19,5 +19,23 @@ namespace MMI.Algos
             }
             return sum;
         }
+
+        protected double[] calcPsydoBalacnce(Graph g)
+        {
+            // Knoten muss einem Ausfluss - Einfluss > 0 sind positiv
+            double[] d = new double[g.Knoten.Count];
+
+            List<Knoten> knotenList = g.Knoten;
+            for (int i = 0; i < g.Knoten.Count; i++)
+            {
+                d[g.Knoten[i].Wert] = g.Knoten[i].calcAusfluss(false);
+            }
+
+            for (int i = 0; i < g.Kanten.Count; i++)
+            {
+                d[g.Kanten[i].ToKnoten.Wert] -= g.Kanten[i].Fluss;
+            }
+            return d;
+        }
     }
 }

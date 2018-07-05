@@ -102,9 +102,22 @@ namespace MMI
             return resiGraph;
         }
 
+        public Graph createUnrichteteKopie()
+        {
+            var listKanten = new List<Kante>();
+            
+            foreach(Kante k in this.Kanten)
+            {
+                listKanten.Add(new Kante(k.ToKnoten, k.FromKnoten, k.Kosten, k.Gewicht));
+            }
+
+            listKanten.AddRange(this.kanten);
+            return createInstance(listKanten);
+        }
+
         private void balancenAnpassen(ref Graph g)
         {
-            for(int i = 0; i < this.getAnzKnoten(); i++)
+            for(int i = 0; i < this.getAnzKnoten() && i < g.getAnzKnoten(); i++)
             {
                 g.Knoten[i].Balance = this.knoten[i].Balance;
             }
@@ -120,26 +133,6 @@ namespace MMI
                     residualKanten.Add(k.getResidualKante());
                 }
             }
-        }
-
-        public void setupSuperQullenSenke(out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
-        {
-            senken = new List<Knoten>();
-            quellen = new List<Knoten>();
-
-            foreach (Knoten k in this.Knoten)
-            {
-                if (k.Balance > 0)
-                {
-                    quellen.Add(k);
-                }
-                else if (k.Balance < 0)
-                {
-                    senken.Add(k);
-                }
-            }
-
-            setSuperQuelleSenke(quellen, senken, out superQuelle, out superSenke, kapaGrenze);
         }
 
         public void setSuperQuelleSenke(List<Knoten> quellen, List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
@@ -174,6 +167,34 @@ namespace MMI
                 this.Kanten.Add(tmpKant);
             }
             this.Knoten.Add(superSenke);
+        }
+
+        public void addSuperQuelleSenke(List<Knoten> additionalQuellen, List<Knoten> additionalSenken, ref Knoten superQuelle, ref Knoten superSenke, bool kapaGrenze = false)
+        {
+            Kante tmpKant = null;
+            double kapaGrenzwert = double.PositiveInfinity;
+            foreach (Knoten q in additionalQuellen)
+            {
+                if (kapaGrenze)
+                {
+                    kapaGrenzwert = q.Balance;
+                }
+                tmpKant = new Kante(superQuelle, q, kapaGrenzwert);
+                superQuelle.AddKante(tmpKant);
+                this.Kanten.Add(tmpKant);
+            }
+
+            kapaGrenzwert = double.PositiveInfinity;
+            for (int i = 0; i < additionalSenken.Count; i++)
+            {
+                if (kapaGrenze)
+                {
+                    kapaGrenzwert = -1 * additionalSenken[i].Balance;
+                }
+                tmpKant = new Kante(additionalSenken[i], superSenke, kapaGrenzwert);
+                this.Knoten[additionalSenken[i].Wert].AddKante(tmpKant);
+                this.Kanten.Add(tmpKant);
+            }
         }
 
         public void delSuperQuelle(Knoten superQuelle)

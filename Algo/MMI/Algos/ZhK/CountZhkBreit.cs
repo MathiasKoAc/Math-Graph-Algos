@@ -8,6 +8,24 @@ namespace MMI.Algos
 {
     class CountZhkBreit : ICountZusammenhangskomp
     {
+        public int CountZhk(Graph Gra, out List<List<Knoten>> zhks)
+        {
+            int count = CountZhk(Gra);
+
+            zhks = new List<List<Knoten>>();
+
+            for(int i = 0; i < count; i++)
+            {
+                zhks.Add(new List<Knoten>());
+            }
+
+            foreach(Knoten kno in Gra.Knoten)
+            {
+                zhks[kno.Tag].Add(kno);
+            }
+            return count;
+        }
+
         public int CountZhk(Graph Gra)
         {
             Gra.resetKantenTag();
@@ -30,8 +48,7 @@ namespace MMI.Algos
             }
 
             long tend = dTime.Millisecond;
-            Console.WriteLine("Time " + tend + "ms");
-            return tagLevel;
+            return (tagLevel);
         }
 
         private bool breit(Knoten kn, int tagLv)

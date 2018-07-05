@@ -8,8 +8,12 @@ namespace MMI.Algos
 {
     class CycleCancelling : AbsKMF
     {
+        private List<List<Knoten>> zhkList;
+
         public double calcKMF(Graph g)
         {
+            int zhkCount = new CountZhkBreit().CountZhk(g.createUnrichteteKopie(), out this.zhkList);
+
             double initalKosten = calcInitalBfluss(ref g);
 
             Graph resiGra;
@@ -20,13 +24,19 @@ namespace MMI.Algos
                 zyclus = findNegativCycle(ref resiGra, ref g);
             }
 
+            if(!this.ausgeglichenerBFluss(ref g))
+            {
+                throw new NotBflussException("Es konnte kein B-Fluss gefunden werden.");
+            }
+
             return this.calcFlussKosten(ref g.kanten);
         }
 
         //true wenn Cycle gefunden
         private bool findNegativCycle(ref Graph resiGra, ref Graph g)
         {
-            resiGra.setupSuperQullenSenke(out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
+            setupSuperQullenSenkeMitAllenZhk(ref resiGra, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
+
             bool zyklus = ! (new MoorBellmanFord().ShortestWayTree(resiGra, superQuelle, out List<DijKnoten> wayTree, out Kante ex));
 
             bool[] checkArray = new bool[wayTree.Count];
@@ -74,7 +84,6 @@ namespace MMI.Algos
                 }
 
                 //Anpassung durchführen
-
                 for(int i = 0; i < kantenForAnderung.Count; i++)
                 {
                     if(isResi[i])
@@ -93,7 +102,7 @@ namespace MMI.Algos
 
         private double calcInitalBfluss(ref Graph g)
         {
-            g.setupSuperQullenSenke(out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
+            setupSuperQullenSenke(ref g, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
             new EdmondsKarp().calcMFP(g, superQuelle, superSenke);
 
             g.delSuperSenke(senken, superSenke);
@@ -101,6 +110,89 @@ namespace MMI.Algos
 
             return 0d;
             
+        }
+
+        protected bool ausgeglichenerBFluss (ref Graph g)
+        {
+            double[] psydoBalance = this.calcPsydoBalacnce(g);
+            for(int i = 0; i < g.Knoten.Count; i++)
+            {
+                if(psydoBalance[i] != g.Knoten[i].Balance)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void setupSuperQullenSenke(ref Graph g, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
+        {
+            senken = new List<Knoten>();
+            quellen = new List<Knoten>();
+
+            foreach (Knoten k in g.Knoten)
+            {
+                if (k.Balance > 0)
+                {
+                    quellen.Add(k);
+                }
+                else if (k.Balance < 0)
+                {
+                    senken.Add(k);
+                }
+            }
+
+            g.setSuperQuelleSenke(quellen, senken, out superQuelle, out superSenke, kapaGrenze);
+        }
+
+        public void setupSuperQullenSenkeMitAllenZhk(ref Graph g, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, bool kapaGrenze = false)
+        {
+            if (this.zhkList == null)
+            {
+                throw new Exception("Zhl List fehlt!");
+            }
+
+            senken = new List<Knoten>();
+            quellen = new List<Knoten>();
+            var additionalSenken = new List<Knoten>();
+            var additionalQuellen = new List<Knoten>();
+
+            int zhkCount = zhkList.Count;
+            bool[] checkQuellen = new bool[zhkCount];
+            bool[] checkSenken = new bool[zhkCount];
+
+
+            for (int i = 0; i < zhkCount; i++)
+            {
+                foreach (Knoten k in zhkList[i])
+                {
+                    if (k.Balance > 0)
+                    {
+                        quellen.Add(k);
+                        checkQuellen[i] = true;
+                    }
+                    else if (k.Balance < 0)
+                    {
+                        senken.Add(k);
+                        checkSenken[i] = true;
+                    }
+                }
+
+                if (!checkQuellen[i])
+                {
+                    additionalQuellen.Add(zhkList[i].First<Knoten>());
+                }
+                if (!checkSenken[i])
+                {
+                    additionalSenken.Add(zhkList[i].Last<Knoten>());
+                }
+            }
+
+            g.setSuperQuelleSenke(quellen, senken, out superQuelle, out superSenke, kapaGrenze);
+            g.addSuperQuelleSenke(additionalQuellen, additionalSenken, ref superQuelle, ref superSenke);
+
+            quellen.AddRange(additionalQuellen);
+            senken.AddRange(additionalSenken);
         }
     }
 }

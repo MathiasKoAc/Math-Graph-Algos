@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Algos\KMF\AbsKMF.cs" />
     <Compile Include="Algos\KMF\CycleCancelling.cs" />
-    <Compile Include="Algos\KMF\StruckturException.cs" />
+    <Compile Include="Algos\KMF\NotBFlussException.cs" />
     <Compile Include="Algos\KMF\SuccessiveShortestPath.cs" />
     <Compile Include="Algos\MFP\EdmondsKarp.cs" />
     <Compile Include="Algos\MST\ICountMST.cs" />
