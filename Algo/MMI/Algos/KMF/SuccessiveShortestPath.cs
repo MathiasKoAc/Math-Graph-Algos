@@ -17,9 +17,11 @@ namespace MMI.Algos
             this.psydoBalance = calcPsydoBalacnce(g);
             findQuellenSenken(g, out List<Knoten> quellen, out List<Knoten> senken);
             bool hatWeg = true;
+            Graph resi = null;
             while (hatWeg && quellen.Count > 0 && senken.Count > 0)
             {
-                hatWeg = findWeg(g.createResidualGraph(), quellen, senken, out List<Knoten> weg);
+                resi = g.createResidualGraph();
+                hatWeg = findWeg(resi, quellen, senken, out List<Knoten> weg);
 
                 if (hatWeg)
                 {
@@ -69,24 +71,6 @@ namespace MMI.Algos
             return wegDist < double.PositiveInfinity;
         }
 
-        private double getMinRestKapazitaet(List<Knoten> weg)
-        {
-            double minRestKapa = double.PositiveInfinity;
-            double tmp = 0;
-
-            Knoten von = weg[0];
-            for (int i = 1; i < weg.Count; i++)
-            {
-                tmp = von.getToKante(weg[i]).RestKapazitaet;
-                if (minRestKapa > tmp)
-                {
-                    minRestKapa = tmp;
-                }
-                von = weg[i];
-            }
-            return minRestKapa;
-        }
-
         private void flussErhoehen(ref Graph g, List<Knoten> weg)
         {
             Knoten quelle = g.Knoten[weg[1].Wert];
@@ -100,22 +84,24 @@ namespace MMI.Algos
                 erhoehung = aenderung;
             }
 
+            //TODO HIER ÄNDERN!!!!
+
             //erhöhung ermitteln
-            Knoten von = g.Knoten[weg[1].Wert];
+            Knoten von = weg[1];
             for (int i = 2; i < weg.Count-1; i++) {
                 aenderung = von.getToKante(weg[i]).RestKapazitaet;
                 if (erhoehung > aenderung)
                 {
                     erhoehung = aenderung;
                 }
-                von = g.Knoten[weg[i].Wert];
+                von = weg[i];
             }
 
             //erhöhung durchführen weg[0] ist superQuelle weg[last] ist superSenke
             von = g.Knoten[weg[1].Wert];
             for (int i = 2; i < (weg.Count-1); i++)
             {
-                von.getToKante(g.Knoten[weg[i].Wert]).Fluss += erhoehung;
+                von.getToKante(weg[i]).Fluss += erhoehung;
                 von = g.Knoten[weg[i].Wert];
             }
 

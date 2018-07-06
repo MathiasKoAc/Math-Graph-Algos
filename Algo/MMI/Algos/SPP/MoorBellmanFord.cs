@@ -45,12 +45,18 @@ namespace MMI.Algos
         public bool ShortestWayTree(Graph g, Knoten StartKnoten, out List<DijKnoten> dijKnotenList, out Kante excetionKante)
         {
             HashSet<DijKnoten> sortedKnoten = createKnotenSet(g, ref StartKnoten, out dijKnotenList);
-
+            Random random = new Random();
+            int randomOffset = 0;
             int n = g.Knoten.Count;
-            for(int i = 0; i < n-1; i++)
+            int anzKanten = g.Kanten.Count;
+            randomOffset = random.Next(0, anzKanten);
+            for (int i = 0; i < n-1; i++)
             {
-                foreach(Kante kant in g.Kanten)
+                
+                for(int kantIndex = 0; kantIndex < anzKanten; kantIndex++)
                 {
+                    //Zufallswert mit dazu genommen, damit der Algo mehrfache Wege nehmen kann
+                    Kante kant = g.Kanten[(kantIndex + randomOffset) % anzKanten];
                     if(dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Kosten < dijKnotenList[kant.ToKnoten.Wert].Distanze)
                     {
                         dijKnotenList[kant.ToKnoten.Wert].Distanze = dijKnotenList[kant.FromKnoten.Wert].Distanze + kant.Kosten;

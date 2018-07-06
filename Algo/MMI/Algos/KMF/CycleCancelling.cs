@@ -53,25 +53,25 @@ namespace MMI.Algos
 
                 //Anpassungs werte herausfinden
                 double wertAnpassung = double.MaxValue;
-                double tmpAnpassung = 0;
+                double tmpAnpassung = double.MaxValue;
                 List<Kante> kantenForAnderung = new List<Kante>();
                 bool[] isResi = new bool[wayTree.Count];
 
-
                 for (int i = 0; i < wayTree.Count && !checkArray[fokusKnoten.Wert]; i++)
                 {
+
                     checkArray[fokusKnoten.Wert] = true;
                     Kante kant = g.findKante(wayTree[fokusKnoten.Wert].VorgangerKnoten, fokusKnoten);
-                    if(kant != null)
+                    if (kant != null)
                     {
-                        //hier ist die Kante normal gerichtet
                         tmpAnpassung = kant.RestKapazitaet;
+                        //hier ist die Kante normal gerichtet
                         isResi[i] = false;
                     } else
                     {
                         //hier ist die Kante residual gerichtet
                         kant = g.findKante(fokusKnoten, wayTree[fokusKnoten.Wert].VorgangerKnoten);
-                        tmpAnpassung = kant.Fluss;
+                        tmpAnpassung = kant.RestKapazitaet;
                         isResi[i] = true;
                     }
                     kantenForAnderung.Add(kant);

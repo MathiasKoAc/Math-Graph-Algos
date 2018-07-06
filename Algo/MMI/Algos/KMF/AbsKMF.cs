@@ -9,7 +9,6 @@ namespace MMI.Algos
     abstract public class AbsKMF
     {
 
-        //TODO in SUPER Klasse
         protected double calcFlussKosten(ref List<Kante> kanten)
         {
             double sum = 0;

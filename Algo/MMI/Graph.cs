@@ -55,6 +55,10 @@ namespace MMI
                 }
 
                 Kante neueKante = new Kante(knotenList[kant.FromKnoten.Wert], knotenList[kant.ToKnoten.Wert], kant.Kosten, kant.Gewicht);
+                if(kant.KantenTyp == KantenTyp.StandartKante)
+                {
+                    neueKante.Fluss = kant.Fluss;
+                }
                 knotenList[kant.FromKnoten.Wert].Kanten.Add(neueKante);
                 neueKantenList.Add(neueKante);
             }

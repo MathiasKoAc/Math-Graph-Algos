@@ -14,6 +14,7 @@ namespace MMI
         static void Main(string[] args)
         {
             GraphOut.writeMessage("Hallo Graph!", true);
+            Graph g;
 
             //--- ZHK ---//
             //Graph g = Reader.readFile(new ImportKantenList(), @"files/Graph4.txt", gerichtet);
@@ -59,29 +60,18 @@ namespace MMI
             */
 
             //--- KMF ---//
-            
-            Graph g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal3.txt", gerichtet);
-
-            try
-            {
-                GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
-            } catch (NotBflussException e)
-            {
-                GraphOut.writeMessage(e.Message);
-            }
-
-            /*
-            Graph g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal5.txt", gerichtet);
+            g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal3.txt", gerichtet);
             
             try
             {
                 GraphOut.writeMessage("KMF CCA: " + new CycleCancelling().calcKMF(g));
+                //GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
+
             }
             catch (NotBflussException e)
             {
                 GraphOut.writeMessage(e.Message);
             }
-            */
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);
         }
