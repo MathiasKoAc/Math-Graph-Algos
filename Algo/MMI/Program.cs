@@ -64,8 +64,8 @@ namespace MMI
             
             try
             {
-                GraphOut.writeMessage("KMF CCA: " + new CycleCancelling().calcKMF(g));
-                //GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
+                //GraphOut.writeMessage("KMF CCA: " + new CycleCancelling().calcKMF(g));
+                GraphOut.writeMessage("KMF SSP: " + new SuccessiveShortestPath().calcKMF(g));
 
             }
             catch (NotBflussException e)

@@ -15,7 +15,7 @@ namespace MMI
         private int tag;
         private double fluss = 0d;
         public readonly KantenTyp KantenTyp = KantenTyp.StandartKante;
-        private Kante residualKante;
+        public Kante residualKante;
         private double kosten = 0;
 
         public double Attribut;

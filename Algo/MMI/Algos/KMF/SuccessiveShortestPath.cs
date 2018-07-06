@@ -84,11 +84,9 @@ namespace MMI.Algos
                 erhoehung = aenderung;
             }
 
-            //TODO HIER ÄNDERN!!!!
-
             //erhöhung ermitteln
             Knoten von = weg[1];
-            for (int i = 2; i < weg.Count-1; i++) {
+            for (int i = 2; i < (weg.Count-1); i++) {
                 aenderung = von.getToKante(weg[i]).RestKapazitaet;
                 if (erhoehung > aenderung)
                 {
@@ -101,7 +99,7 @@ namespace MMI.Algos
             von = g.Knoten[weg[1].Wert];
             for (int i = 2; i < (weg.Count-1); i++)
             {
-                von.getToKante(weg[i]).Fluss += erhoehung;
+                von.getToKante(g.Knoten[weg[i].Wert]).Fluss += erhoehung;
                 von = g.Knoten[weg[i].Wert];
             }
 

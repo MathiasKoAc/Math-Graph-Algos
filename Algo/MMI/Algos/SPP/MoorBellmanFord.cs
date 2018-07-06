@@ -49,7 +49,7 @@ namespace MMI.Algos
             int randomOffset = 0;
             int n = g.Knoten.Count;
             int anzKanten = g.Kanten.Count;
-            randomOffset = random.Next(0, anzKanten);
+            randomOffset = 0;//random.Next(0, anzKanten);
             for (int i = 0; i < n-1; i++)
             {
                 

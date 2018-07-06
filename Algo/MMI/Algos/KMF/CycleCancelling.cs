@@ -61,7 +61,7 @@ namespace MMI.Algos
                 {
 
                     checkArray[fokusKnoten.Wert] = true;
-                    Kante kant = g.findKante(wayTree[fokusKnoten.Wert].VorgangerKnoten, fokusKnoten);
+                    Kante kant = resiGra.findKante(wayTree[fokusKnoten.Wert].VorgangerKnoten, fokusKnoten);
                     if (kant != null)
                     {
                         tmpAnpassung = kant.RestKapazitaet;
@@ -70,8 +70,8 @@ namespace MMI.Algos
                     } else
                     {
                         //hier ist die Kante residual gerichtet
-                        kant = g.findKante(fokusKnoten, wayTree[fokusKnoten.Wert].VorgangerKnoten);
-                        tmpAnpassung = kant.RestKapazitaet;
+                        kant = resiGra.findKante(fokusKnoten, wayTree[fokusKnoten.Wert].VorgangerKnoten);
+                        tmpAnpassung = -kant.RestKapazitaet;
                         isResi[i] = true;
                     }
                     kantenForAnderung.Add(kant);
@@ -79,12 +79,37 @@ namespace MMI.Algos
                     if (tmpAnpassung < wertAnpassung)
                     {
                         wertAnpassung = tmpAnpassung;
+                        if(wertAnpassung < 0)
+                        {
+                            GraphOut.writeMessage("HIER IST WAS FALSCH");
+                        }
                     }
                     fokusKnoten = wayTree[fokusKnoten.Wert].VorgangerKnoten;
                 }
 
                 //Anpassung durchführen
-                for(int i = 0; i < kantenForAnderung.Count; i++)
+                checkArray = new bool[wayTree.Count];
+                for (int i = 0; i < wayTree.Count && !checkArray[fokusKnoten.Wert]; i++)
+                {
+
+                    checkArray[fokusKnoten.Wert] = true;
+                    Kante kant = g.findKante(wayTree[fokusKnoten.Wert].VorgangerKnoten, fokusKnoten);
+                    if (kant != null)
+                    {
+                        //hier ist die Kante normal gerichtet
+                        kant.Fluss += wertAnpassung;
+                    }
+                    else
+                    {
+                        //hier ist die Kante residual gerichtet
+                        kant = g.findKante(fokusKnoten, wayTree[fokusKnoten.Wert].VorgangerKnoten);
+                        kant.Fluss -= wertAnpassung;
+                    }
+                    
+                    fokusKnoten = wayTree[fokusKnoten.Wert].VorgangerKnoten;
+                }
+                /*
+                for (int i = 0; i < kantenForAnderung.Count; i++)
                 {
                     if(isResi[i])
                     {
@@ -94,7 +119,7 @@ namespace MMI.Algos
                         kantenForAnderung[i].Fluss += wertAnpassung;
                     }
                 }
-                
+                */
             }
 
             return zyklus;
@@ -103,7 +128,7 @@ namespace MMI.Algos
         private double calcInitalBfluss(ref Graph g)
         {
             setupSuperQullenSenke(ref g, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
-            new EdmondsKarp().calcMFP(g, superQuelle, superSenke);
+            double testFluss = new EdmondsKarp().calcMFP(g, superQuelle, superSenke);
 
             g.delSuperSenke(senken, superSenke);
             g.delSuperQuelle(superQuelle);
