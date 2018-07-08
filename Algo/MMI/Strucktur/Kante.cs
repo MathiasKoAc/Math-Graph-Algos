@@ -112,10 +112,12 @@ namespace MMI
             }
             set
             {
+                /*
                 if (this.KantenTyp == KantenTyp.StandartKante)
                 {
                     throw new StruckturException("Fehler! Versucht die Kapazität zu ändern. Kapazitäten von StandardKanten sind fest!");
                 }
+                */
                 gewicht = value;
             }
         }

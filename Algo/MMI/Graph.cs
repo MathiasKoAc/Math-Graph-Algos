@@ -173,6 +173,29 @@ namespace MMI
             this.Knoten.Add(superSenke);
         }
 
+        public void setSuperQuelleSenke(List<Knoten> quellen, List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, int kapaGrenzwert)
+        {
+            superQuelle = new Knoten(this.Knoten.Count);
+            superSenke = new Knoten(this.Knoten.Count + 1);
+
+            Kante tmpKant = null;
+            foreach (Knoten q in quellen)
+            {
+                tmpKant = new Kante(superQuelle, q, kapaGrenzwert);
+                superQuelle.AddKante(tmpKant);
+                this.Kanten.Add(tmpKant);
+            }
+            this.Knoten.Add(superQuelle);
+
+            for (int i = 0; i < senken.Count; i++)
+            {
+                tmpKant = new Kante(senken[i], superSenke, kapaGrenzwert);
+                this.Knoten[senken[i].Wert].AddKante(tmpKant);
+                this.Kanten.Add(tmpKant);
+            }
+            this.Knoten.Add(superSenke);
+        }
+
         public void addSuperQuelleSenke(List<Knoten> additionalQuellen, List<Knoten> additionalSenken, ref Knoten superQuelle, ref Knoten superSenke, bool kapaGrenze = false)
         {
             Kante tmpKant = null;

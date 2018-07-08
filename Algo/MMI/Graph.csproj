@@ -48,6 +48,7 @@
     <Compile Include="Algos\KMF\NotBFlussException.cs" />
     <Compile Include="Algos\KMF\SuccessiveShortestPath.cs" />
     <Compile Include="Algos\MFP\EdmondsKarp.cs" />
+    <Compile Include="Algos\MMP\MaxMatch.cs" />
     <Compile Include="Algos\MST\ICountMST.cs" />
     <Compile Include="Algos\MST\Kruskal.cs" />
     <Compile Include="Algos\MST\Prim.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Algos\TSP\ICountTSP.cs" />
     <Compile Include="Algos\TSP\NearestNeigbor.cs" />
     <Compile Include="GraphOut.cs" />
+    <Compile Include="Imports\ImportMatchList.cs" />
     <Compile Include="Imports\ImportKantenListBalanced.cs" />
     <Compile Include="Imports\ImportKantenListGew.cs" />
     <Compile Include="Imports\ImportKantenListKosten.cs" />

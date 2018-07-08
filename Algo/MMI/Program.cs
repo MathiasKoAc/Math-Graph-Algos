@@ -54,13 +54,12 @@ namespace MMI
             }
             */
             //--- MFP ---//
-            /*
-            g = Reader.readFile(new ImportKantenListGew(), @"files/fluss.txt", gerichtet);
-            GraphOut.writeMessage("MFP EdmondsKarp: " + new EdmondsKarp().calcMFP(g, g.Knoten[0],g.Knoten[7]), needEnter);
-            */
+            //g = Reader.readFile(new ImportKantenListGew(), @"files/fluss.txt", gerichtet);
+            //GraphOut.writeMessage("MFP EdmondsKarp: " + new EdmondsKarp().calcMFP(ref g, g.Knoten[0],g.Knoten[7]), needEnter);
+
 
             //--- KMF ---//
-            g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal4.txt", gerichtet);
+            /*g = Reader.readFile(new ImportKantenListBalanced(), @"files/Kostenminimal4.txt", gerichtet);
             
             try
             {
@@ -70,7 +69,13 @@ namespace MMI
             catch (NotBflussException e)
             {
                 GraphOut.writeMessage(e.Message);
-            }
+            }*/
+
+            //--- MMP ---//
+            //g = Reader.readFile(new ImportMatchList(), @"files/Matching_100_100.txt", gerichtet);
+            g = Reader.readFile(new ImportMatchList(), @"files/Matching2_100_100.txt", gerichtet);
+            GraphOut.writeMessage("MMP MFP: " + new MaxMatch().calcMaxMatching(g, out List<Kante> matchKanten));
+            //GraphOut.writeMessage(matchKanten);
 
             GraphOut.writeMessage("--##--\nEnde ", needEnter);
         }

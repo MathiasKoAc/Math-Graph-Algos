@@ -105,7 +105,7 @@ namespace MMI.Algos
         private double calcInitalBfluss(ref Graph g)
         {
             setupSuperQullenSenke(ref g, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
-            double testFluss = new EdmondsKarp().calcMFP(g, superQuelle, superSenke);
+            double testFluss = new EdmondsKarp().calcMFP(ref g, superQuelle, superSenke);
 
             g.delSuperSenke(senken, superSenke);
             g.delSuperQuelle(superQuelle);

@@ -7,7 +7,7 @@ namespace MMI.Algos
 {
     class EdmondsKarp
     {
-        public double calcMFP(Graph g, Knoten startKnoten, Knoten endKnoten) {//, out List<Knoten> fluss) {
+        public double calcMFP(ref Graph g, Knoten startKnoten, Knoten endKnoten) {//, out List<Knoten> fluss) {
 
             prepareGraph(ref g);
 

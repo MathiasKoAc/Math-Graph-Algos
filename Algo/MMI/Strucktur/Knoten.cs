@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMI
 {
-    public class Knoten
+    public class Knoten : IComparable<Knoten>
     {
         private int wert;       //entspricht dem Namen
         private List<Kante> kanten;
@@ -92,6 +92,11 @@ namespace MMI
                 }
             }
             return ausFluss;
+        }
+
+        public int CompareTo(Knoten other)
+        {
+            return this.Wert - other.Wert;
         }
     }
 }
