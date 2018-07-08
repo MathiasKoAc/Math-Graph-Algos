@@ -130,24 +130,30 @@ namespace MMI
             }
             set
             {
-                if(this.KantenTyp == KantenTyp.ResidualKante)
+                if(this.KantenTyp.Equals(KantenTyp.ResidualKante))
                 {
-                    //gewicht = Kapazitaet
-                    this.gewicht -= value;
+                    
                     if(residualKante != null)
                     {
                         //resiKante von resiKante ist StandartKante
                         this.residualKante.Fluss -= value;
+                    } else
+                    {
+                        //gewicht = Kapazitaet
+                        this.gewicht -= value;
+                        if(gewicht < 0)
+                        {
+                            this.gewicht = 0;
+                        } 
                     }
                 } else
                 {
-                    this.fluss += value;
+                    this.fluss = value;
                     if (residualKante != null)
                     {
-                        this.residualKante.Kapazitaet += value;
+                        this.residualKante.Kapazitaet = value;
                     }
                 }
-                fluss = value;
             }
         }
 
@@ -203,7 +209,7 @@ namespace MMI
         public override string ToString()
         {
          
-            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # f: " + fluss + " u: " + gewicht + " c: "+kosten;
+            return fromKnoten.Wert + " -> " + toKnoten.Wert + " # f: " + fluss + " u: " + gewicht + " c: "+kosten + " typ: " + this.KantenTyp;
         }
     }
 }

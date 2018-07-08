@@ -16,65 +16,46 @@ namespace MMI.Algos
             setzteStartFluss(ref g.Kanten);
             this.psydoBalance = calcPsydoBalacnce(g);
             findQuellenSenken(g, out List<Knoten> quellen, out List<Knoten> senken);
-            bool hatWeg = true;
+            double wegDist = 0;
             Graph resi = null;
-            while (hatWeg && quellen.Count > 0 && senken.Count > 0)
+            bool erhoehungMoglich = true;
+            while (erhoehungMoglich && quellen.Count > 0 && senken.Count > 0)
             {
-                resi = g.createResidualGraph();
-                hatWeg = findWeg(resi, quellen, senken, out List<Knoten> weg);
-
-                if (hatWeg)
+                erhoehungMoglich = false;
+                for (int i = 0; i < quellen.Count; i++)
                 {
-                    flussErhoehen(ref g, weg);
+                    for (int j = 0; j < senken.Count && i < quellen.Count; j++) {
+                        resi = g.createResidualGraph();
+                        var weg = new List<Knoten>();
+                        
+
+                        wegDist = new MoorBellmanFord().ShortestWay(resi, quellen[i], senken[j], out weg);
+                        if (double.PositiveInfinity != wegDist)
+                        {
+                            erhoehungMoglich |= flussErhoehen(ref g, weg);
+                            this.psydoBalance = calcPsydoBalacnce(g);
+                            findQuellenSenken(g, out quellen, out senken);
+                        }
+                    }
                     this.psydoBalance = calcPsydoBalacnce(g);
                     findQuellenSenken(g, out quellen, out senken);
                 }
             }
             this.psydoBalance = calcPsydoBalacnce(g);
+            findQuellenSenken(g, out quellen, out senken);
 
-            if(!hatWeg)
+            if (quellen.Count > 0 ||senken.Count > 0 || !erhoehungMoglich)
             {
                 throw new NotBflussException("Es konnte kein B-Fluss gefunden werden.");
             }
             return calcFlussKosten(ref g.kanten);
         }
 
-        private bool findWeg(Graph resiG, List<Knoten> quellen, List<Knoten> senken, out List<Knoten> weg)
+        //return true wenn die erhoehung != 0 war
+        private bool flussErhoehen(ref Graph g, List<Knoten> weg)
         {
-            weg = new List<Knoten>();
-            double wegDist = double.PositiveInfinity;
-            List<Kante> gKanten = resiG.Kanten;
-            List<Knoten> gKnoten = resiG.Knoten;
-
-            Knoten superQuelle = new Knoten(gKnoten.Count);
-            Knoten superSenke = new Knoten(gKnoten.Count+1);
-
-            Kante tmpKant = null;
-            foreach (Knoten q in quellen)
-            {
-                tmpKant = new Kante(superQuelle, q, double.PositiveInfinity);
-                superQuelle.AddKante(tmpKant);
-                gKanten.Add(tmpKant);
-            }
-            gKnoten.Add(superQuelle);
-
-            for(int i = 0; i < senken.Count; i++)
-            {
-                tmpKant = new Kante(senken[i], superSenke, double.PositiveInfinity);
-                gKnoten[senken[i].Wert].AddKante(tmpKant);
-                gKanten.Add(tmpKant);
-            }
-            gKnoten.Add(superSenke);
-
-            wegDist = new MoorBellmanFord().ShortestWay(resiG, superQuelle, superSenke, out weg);
-
-            return wegDist < double.PositiveInfinity;
-        }
-
-        private void flussErhoehen(ref Graph g, List<Knoten> weg)
-        {
-            Knoten quelle = g.Knoten[weg[1].Wert];
-            Knoten senke = g.Knoten[weg[weg.Count - 2].Wert];
+            Knoten quelle = g.Knoten[weg.First<Knoten>().Wert];
+            Knoten senke = g.Knoten[weg.Last<Knoten>().Wert];
 
             double erhoehung = quelle.Balance - psydoBalance[quelle.Wert];
             double aenderung = psydoBalance[senke.Wert] - senke.Balance;
@@ -85,24 +66,38 @@ namespace MMI.Algos
             }
 
             //erhöhung ermitteln
-            Knoten von = weg[1];
-            for (int i = 2; i < (weg.Count-1); i++) {
-                aenderung = von.getToKante(weg[i]).RestKapazitaet;
+            Knoten von = g.Knoten[weg[0].Wert];
+            for (int i = 1; i < weg.Count; i++) {
+                aenderung = von.getToKante(g.Knoten[weg[i].Wert]).RestKapazitaet;
                 if (erhoehung > aenderung)
                 {
                     erhoehung = aenderung;
                 }
-                von = weg[i];
+                von = g.Knoten[weg[i].Wert];
             }
 
-            //erhöhung durchführen weg[0] ist superQuelle weg[last] ist superSenke
-            von = g.Knoten[weg[1].Wert];
-            for (int i = 2; i < (weg.Count-1); i++)
+            if(erhoehung == 0)
             {
+                return false;
+            }
+
+            if(erhoehung < 0)
+            {
+                GraphOut.writeMessage("Negative Änderung");
+            }
+
+            von = g.Knoten[weg[0].Wert];
+            for (int i = 1; i < weg.Count; i++)
+            {
+                if(erhoehung > von.getToKante(g.Knoten[weg[i].Wert]).RestKapazitaet)
+                {
+                    GraphOut.writeMessage("Änderung > als RestKapa");
+                }
                 von.getToKante(g.Knoten[weg[i].Wert]).Fluss += erhoehung;
                 von = g.Knoten[weg[i].Wert];
             }
 
+            return true;
         }
 
         private void setzteStartFluss(ref List<Kante> kantenList)

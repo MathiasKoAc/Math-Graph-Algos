@@ -66,6 +66,7 @@
     <Compile Include="Algos\TSP\NearestNeigbor.cs" />
     <Compile Include="GraphOut.cs" />
     <Compile Include="Imports\ImportKantenListBalanced.cs" />
+    <Compile Include="Imports\ImportKantenListGew.cs" />
     <Compile Include="Imports\ImportKantenListKosten.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Strucktur\KantenTyp.cs" />
