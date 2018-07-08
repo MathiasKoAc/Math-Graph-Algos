@@ -57,6 +57,7 @@
     <Compile Include="Algos\SPP\IShortestWay.cs" />
     <Compile Include="Algos\SPP\MoorBellmanFord.cs" />
     <Compile Include="Algos\SPP\NegativCycleExeption.cs" />
+    <Compile Include="Algos\AlgorithmException.cs" />
     <Compile Include="Algos\Traversieren\Tiefensuche.cs" />
     <Compile Include="Algos\TSP\BackTrackAll.cs" />
     <Compile Include="Algos\TSP\BackTrackAll2.cs" />

@@ -12,6 +12,7 @@ namespace MMI.Algos
 
         public double calcKMF(Graph g)
         {
+            g.resetFluss();
             int zhkCount = new CountZhkBreit().CountZhk(g.createUnrichteteKopie(), out this.zhkList);
 
             double initalKosten = calcInitalBfluss(ref g);
@@ -21,7 +22,7 @@ namespace MMI.Algos
             while (zyclus)
             {
                 resiGra = g.createResidualGraph();
-                zyclus = findNegativCycle(ref resiGra, ref g);
+                zyclus = verbessereNegativCycle(ref resiGra, ref g);
             }
 
             if(!this.ausgeglichenerBFluss(ref g))
@@ -33,7 +34,7 @@ namespace MMI.Algos
         }
 
         //true wenn Cycle gefunden
-        private bool findNegativCycle(ref Graph resiGra, ref Graph g)
+        private bool verbessereNegativCycle(ref Graph resiGra, ref Graph g)
         {
             setupSuperQullenSenkeMitAllenZhk(ref resiGra, out List<Knoten> quellen, out List<Knoten> senken, out Knoten superQuelle, out Knoten superSenke, true);
 
@@ -54,8 +55,6 @@ namespace MMI.Algos
                 //Anpassungs werte herausfinden
                 double wertAnpassung = double.MaxValue;
                 double tmpAnpassung = double.MaxValue;
-                List<Kante> kantenForAnderung = new List<Kante>();
-                bool[] isResi = new bool[wayTree.Count];
 
                 for (int i = 0; i < wayTree.Count && !checkArray[fokusKnoten.Wert]; i++)
                 {
@@ -65,24 +64,14 @@ namespace MMI.Algos
                     if (kant != null)
                     {
                         tmpAnpassung = kant.RestKapazitaet;
-                        //hier ist die Kante normal gerichtet
-                        isResi[i] = false;
                     } else
                     {
-                        //hier ist die Kante residual gerichtet
-                        kant = resiGra.findKante(fokusKnoten, wayTree[fokusKnoten.Wert].VorgangerKnoten);
-                        tmpAnpassung = -kant.RestKapazitaet;
-                        isResi[i] = true;
+                        throw new AlgorithmException("CCA: Kante im Residual-Graph nicht gefunden! Obwohl Cycle bekannt.");
                     }
-                    kantenForAnderung.Add(kant);
 
                     if (tmpAnpassung < wertAnpassung)
                     {
                         wertAnpassung = tmpAnpassung;
-                        if(wertAnpassung < 0)
-                        {
-                            GraphOut.writeMessage("HIER IST WAS FALSCH");
-                        }
                     }
                     fokusKnoten = wayTree[fokusKnoten.Wert].VorgangerKnoten;
                 }
@@ -108,18 +97,6 @@ namespace MMI.Algos
                     
                     fokusKnoten = wayTree[fokusKnoten.Wert].VorgangerKnoten;
                 }
-                /*
-                for (int i = 0; i < kantenForAnderung.Count; i++)
-                {
-                    if(isResi[i])
-                    {
-                        kantenForAnderung[i].Fluss -= wertAnpassung;
-                    } else
-                    {
-                        kantenForAnderung[i].Fluss += wertAnpassung;
-                    }
-                }
-                */
             }
 
             return zyklus;
@@ -203,10 +180,12 @@ namespace MMI.Algos
                     }
                 }
 
+                //Wenn eine Zhk keine Qullen hat bekommt diese eine kuenstliche Quelle
                 if (!checkQuellen[i])
                 {
                     additionalQuellen.Add(zhkList[i].First<Knoten>());
                 }
+                //Wenn eine Zhk keine Senke hat bekommt diese eine kuenstliche Senke
                 if (!checkSenken[i])
                 {
                     additionalSenken.Add(zhkList[i].Last<Knoten>());
@@ -214,7 +193,7 @@ namespace MMI.Algos
             }
 
             g.setSuperQuelleSenke(quellen, senken, out superQuelle, out superSenke, kapaGrenze);
-            g.addSuperQuelleSenke(additionalQuellen, additionalSenken, ref superQuelle, ref superSenke);
+            g.addSuperQuelleSenke(additionalQuellen, additionalSenken, ref superQuelle, ref superSenke);    //kuenstliche Quellen und Senken mit MaxKapa
 
             quellen.AddRange(additionalQuellen);
             senken.AddRange(additionalSenken);

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MMI
 {
-    class AlgorithmException : Exception
+    class StruckturException : Exception
     {
-        public AlgorithmException(string message) : base(message)
+        public StruckturException(string message) : base(message)
         {
         }
     }

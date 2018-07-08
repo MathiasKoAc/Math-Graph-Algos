@@ -12,23 +12,25 @@ namespace MMI.Algos
 
         public double calcKMF(Graph g)
         {
-            resetPsydoBalance(g.getAnzKnoten());
             setzteStartFluss(ref g.Kanten);
             this.psydoBalance = calcPsydoBalacnce(g);
             findQuellenSenken(g, out List<Knoten> quellen, out List<Knoten> senken);
             double wegDist = 0;
             Graph resi = null;
+
+            //ueber alle Qullen und Senken solange eine erhoehungMoeglich ist
             bool erhoehungMoglich = true;
             while (erhoehungMoglich && quellen.Count > 0 && senken.Count > 0)
             {
                 erhoehungMoglich = false;
                 for (int i = 0; i < quellen.Count; i++)
                 {
+                    //doppel Abfrage auf Quellen und Senken notig, da findQuelllen neue Listen erzeugen kann
                     for (int j = 0; j < senken.Count && i < quellen.Count; j++) {
                         resi = g.createResidualGraph();
                         var weg = new List<Knoten>();
-                        
 
+                        //wenn wegDist= PositiveInfinity dann gibt es keinen weg
                         wegDist = new MoorBellmanFord().ShortestWay(resi, quellen[i], senken[j], out weg);
                         if (double.PositiveInfinity != wegDist)
                         {
@@ -57,9 +59,9 @@ namespace MMI.Algos
             Knoten quelle = g.Knoten[weg.First<Knoten>().Wert];
             Knoten senke = g.Knoten[weg.Last<Knoten>().Wert];
 
+            //erhoehung inital auf Min aus Quelle oder Senke
             double erhoehung = quelle.Balance - psydoBalance[quelle.Wert];
             double aenderung = psydoBalance[senke.Wert] - senke.Balance;
-
             if (erhoehung > aenderung)
             {
                 erhoehung = aenderung;
@@ -76,6 +78,7 @@ namespace MMI.Algos
                 von = g.Knoten[weg[i].Wert];
             }
 
+            //wenn erhoehung == 0, muss nicht über die kanten gelaufen werden
             if(erhoehung == 0)
             {
                 return false;
@@ -83,16 +86,12 @@ namespace MMI.Algos
 
             if(erhoehung < 0)
             {
-                GraphOut.writeMessage("Negative Änderung");
+                throw new AlgorithmException("SSP erzeugt eine Negative Aenderung! Das darf nicht passieren");
             }
 
             von = g.Knoten[weg[0].Wert];
             for (int i = 1; i < weg.Count; i++)
             {
-                if(erhoehung > von.getToKante(g.Knoten[weg[i].Wert]).RestKapazitaet)
-                {
-                    GraphOut.writeMessage("Änderung > als RestKapa");
-                }
                 von.getToKante(g.Knoten[weg[i].Wert]).Fluss += erhoehung;
                 von = g.Knoten[weg[i].Wert];
             }
@@ -100,6 +99,10 @@ namespace MMI.Algos
             return true;
         }
 
+        /// <summary>
+        /// Setzt bei allen Kanten mit Kosten <0 den Fluss auf den Max Wert
+        /// </summary>
+        /// <param name="kantenList"></param>
         private void setzteStartFluss(ref List<Kante> kantenList)
         {
             foreach(Kante k in kantenList)
@@ -107,6 +110,9 @@ namespace MMI.Algos
                 if(k.Kosten < 0)
                 {
                     k.setMaxFluss();
+                } else
+                {
+                    k.Fluss = 0;
                 }
             }
         }

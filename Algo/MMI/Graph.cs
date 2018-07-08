@@ -258,14 +258,7 @@ namespace MMI
             Kante findK = null;
             if(vonK != null && zuK != null)
             {
-                foreach (Kante kant in Kanten)
-                {
-                    if (kant.ToKnoten.Wert == zuK.Wert && kant.FromKnoten.Wert == vonK.Wert)
-                    {
-                        findK = kant;
-                        break;
-                    }
-                }
+                findK = this.findKante(vonK.Wert, zuK.Wert);
             }
 
             return findK;
